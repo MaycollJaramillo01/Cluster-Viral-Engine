@@ -1,0 +1,3 @@
+# Preserve the exact bytes used by render and acceptance-evidence SHA256 hashes.
+* -text
+*.sh text eol=lf

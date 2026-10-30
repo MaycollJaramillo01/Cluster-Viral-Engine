@@ -1,0 +1,158 @@
+[
+  {
+    "ticket": "F00-01",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "docs/phase00/TRAZABILIDAD.md",
+        "sha256": "24877bdcf74f00842d7c83f3da85d514f52ef7c37468b60d7c0db832e0aadd1b"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-02",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "docs/phase00/DATASET.md",
+        "sha256": "0935548f390ac853a7e38daeec1587268abc0b6b91692dfc8b7ebcc5292fc494"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-03",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "schemas/phase00-manifest.schema.json",
+        "sha256": "af3ea06d483c394dcdd5ba5505bbeb2f757f54d9de14cd6b7673f063409c9081"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-04",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "apps/web/src/phase00/render.ts",
+        "sha256": "f3b4dc08a360f7e58182681bfbf673b44106b2e01b99d0641bd58f7231039cf0"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-05",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "apps/web/src/phase00/providers.ts",
+        "sha256": "665dab4d085098d12317fc05ea9a8bd69841e787dfc9837fdf0019e2c1f9e326"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-06",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "apps/web/src/phase00/subtitles.ts",
+        "sha256": "4e1c409c17ab90f09de99c67e59fe73ab621ee4f27bb7f98b2aa068d437604a1"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-07",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "docs/phase00/COSTOS.md",
+        "sha256": "e48fc7358d1e2571f01389df12d24644d76fd67c650483608a295cb5118a816a"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-08",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "docs/phase00/META.md",
+        "sha256": "069b59adc1122f160b28c92c7104ab7c20b27c5ae55cb6cbcc245f3392c5c386"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-09",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "apps/web/src/phase00/providers.ts",
+        "sha256": "665dab4d085098d12317fc05ea9a8bd69841e787dfc9837fdf0019e2c1f9e326"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-10",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "docs/phase00/EDITORIAL.md",
+        "sha256": "acfcebefff693fa351363caea46886218b7ac5d57890e3612d546f3961589cc8"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-11",
+    "status": "BLOCKED_EXTERNAL",
+    "evidence": [
+      {
+        "path": "fixtures/phase00/costs.json",
+        "sha256": "0c63503a1fcf47b5974956312ea7b07a472b964fa53c019bd7d1643623f086f0"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  },
+  {
+    "ticket": "F00-12",
+    "status": "PENDING_REVIEW",
+    "evidence": [
+      {
+        "path": "docs/phase00/EVIDENCIA.md",
+        "sha256": "9cb45d9b95dc92cc3718a96fcb3cf31683764ab1451bcf11c5582261e175e69f"
+      }
+    ],
+    "accepted_by": null,
+    "accepted_at": null,
+    "notes": "Preparación técnica local. Ver matriz de aceptación; sin firma humana ni verificación cloud."
+  }
+]

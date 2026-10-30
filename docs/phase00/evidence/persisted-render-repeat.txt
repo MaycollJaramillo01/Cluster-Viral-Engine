@@ -1,0 +1,5 @@
+
+> cluster-viral-engine-web-starter@0.1.0 poc
+> tsx src/phase00/cli.ts render --key F00-04-acceptance-v1 --seconds 120 --out ../../workers/render/out/persisted-demo
+
+{"id":"35402557-750e-4e42-a9a9-1ed391f4dd71","claimed":false,"status":"SUCCEEDED","reason":"Existing run; no new render started"}

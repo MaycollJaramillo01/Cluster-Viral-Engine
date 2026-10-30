@@ -1,0 +1,448 @@
+{
+  "version": "phase00-1",
+  "purpose": "TECHNICAL_POC",
+  "organization_id": "11111111-1111-4111-8111-111111111111",
+  "project_id": "22222222-2222-4222-8222-222222222222",
+  "revision": 1,
+  "title": "La historia de un segundo",
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "locale": "es-419",
+  "sources": [
+    {
+      "id": "5d0015db-bdcd-5ac1-b6b2-d194872f312a",
+      "publisher": "BIPM",
+      "url": "https://www.bipm.org/en/si-base-units/second",
+      "retrieved_on": "2026-10-30"
+    },
+    {
+      "id": "6b139293-8683-52af-9a81-b08207b9b975",
+      "publisher": "NIST",
+      "url": "https://www.nist.gov/atomic-clocks/how-do-atomic-clocks-work",
+      "retrieved_on": "2026-10-30"
+    }
+  ],
+  "claims": [
+    {
+      "id": "63b4773e-2ff1-5ea6-b1c3-8b61a91ecd6f",
+      "statement": "Mirar un reloj parece suficiente para saber cuánto dura un segundo. Pero comparar relojes exige algo más: una referencia compartida. Esta historia muestra cómo una unidad cotidiana puede apoyarse en una definición científica precisa.",
+      "source_ids": [
+        "6b139293-8683-52af-9a81-b08207b9b975"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "00c7e3f9-90b4-50d5-a925-9108031da022",
+      "statement": "El segundo es la unidad de tiempo del Sistema Internacional. Su símbolo es la letra ese. Una definición común permite expresar intervalos con el mismo lenguaje, aunque se midan en lugares diferentes y con instrumentos distintos.",
+      "source_ids": [
+        "5d0015db-bdcd-5ac1-b6b2-d194872f312a"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "c945e1a9-22ef-5029-95f1-c5c7b34a8001",
+      "statement": "Para entender la idea, imaginemos una señal que se repite. Contar sus ciclos permite describir un intervalo. Este dibujo es una explicación visual simplificada: no es una fotografía de un laboratorio ni una medición experimental.",
+      "source_ids": [
+        "6b139293-8683-52af-9a81-b08207b9b975"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "4c7d9d7a-ba73-5cac-8b7f-41ffd9e66d51",
+      "statement": "La definición del segundo utiliza una propiedad del cesio ciento treinta y tres. No depende de observar las manecillas de un reloj. Se refiere a una frecuencia asociada a una transición específica del átomo en condiciones definidas.",
+      "source_ids": [
+        "5d0015db-bdcd-5ac1-b6b2-d194872f312a"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "9583e925-7734-5137-ae4f-5000b11a0bfb",
+      "statement": "El detalle importa: la referencia corresponde a la transición entre dos niveles hiperfinos del estado fundamental no perturbado. El esquema representa esa relación de forma conceptual; las líneas y sus distancias no están dibujadas a escala.",
+      "source_ids": [
+        "5d0015db-bdcd-5ac1-b6b2-d194872f312a"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "a6bd0cc4-a597-5c61-899f-84ea779a907c",
+      "statement": "La frecuencia fijada es de nueve mil ciento noventa y dos millones seiscientos treinta y un mil setecientos setenta hercios. Ese valor conecta los ciclos de la radiación correspondiente con la unidad de tiempo que llamamos segundo.",
+      "source_ids": [
+        "5d0015db-bdcd-5ac1-b6b2-d194872f312a"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "5cdce4ce-5c5d-5d6d-940d-509245ee5f93",
+      "statement": "La definición y su realización práctica son asuntos relacionados. Los laboratorios construyen y comparan instrumentos para materializar la referencia. La página del NIST explica cómo los relojes atómicos permiten medir el tiempo a partir de propiedades de los átomos.",
+      "source_ids": [
+        "6b139293-8683-52af-9a81-b08207b9b975"
+      ],
+      "review": "PENDING"
+    },
+    {
+      "id": "a0bc2b92-9c51-5623-925b-3b439f966425",
+      "statement": "La próxima vez que veas pasar un segundo, recuerda la pregunta inicial: cómo compartir una medida. Aquí dejamos dos fuentes para comprobar la explicación. Este ensayo audiovisual requiere todavía revisión humana y una narración profesional antes de su aprobación.",
+      "source_ids": [
+        "6b139293-8683-52af-9a81-b08207b9b975"
+      ],
+      "review": "PENDING"
+    }
+  ],
+  "assets": [
+    {
+      "id": "f21540e1-7baa-547b-8464-9aab7d0ca5e6",
+      "object_key": "assets/01.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "83ec760d-a2d8-502b-b4bc-5814a1318a87",
+      "object_key": "assets/02.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "91fc1407-ac5d-51f2-a02a-96af1ea07af2",
+      "object_key": "assets/03.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "24fb4a1d-15f9-5308-a1ba-68a9c852cc77",
+      "object_key": "assets/04.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "9a58576d-482c-5fa6-a2cc-e8d2cc71151e",
+      "object_key": "assets/05.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "47644f71-fa80-5083-ba65-c28246edebb5",
+      "object_key": "assets/06.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "7a5dc2a6-34a9-5045-a4fa-f5ae5deee8df",
+      "object_key": "assets/07.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    },
+    {
+      "id": "976d6089-bfe6-5cbf-86c9-c0eaac2b74ce",
+      "object_key": "assets/08.png",
+      "source": "Original programmatic illustration: workers/render/generate_dataset.py",
+      "license": "ORIGINAL",
+      "proof": "docs/phase00/DATASET.md; editorial rights acceptance PENDING",
+      "review": "PENDING",
+      "is_reconstruction": false
+    }
+  ],
+  "scenes": [
+    {
+      "id": "19382934-e9f0-581b-ad88-15e61b9a8689",
+      "start_ms": 0,
+      "duration_ms": 15000,
+      "narration": "Mirar un reloj parece suficiente para saber cuánto dura un segundo. Pero comparar relojes exige algo más: una referencia compartida. Esta historia muestra cómo una unidad cotidiana puede apoyarse en una definición científica precisa.",
+      "visual_asset_id": "f21540e1-7baa-547b-8464-9aab7d0ca5e6",
+      "claim_ids": [
+        "63b4773e-2ff1-5ea6-b1c3-8b61a91ecd6f"
+      ],
+      "motion": "zoom_in",
+      "transition": "fade",
+      "overlay": "¿Cuánto dura un segundo?",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "Mirar un reloj parece suficiente para saber cuánto dura un segundo."
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "Pero comparar relojes exige algo más: una referencia compartida. Esta"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "historia muestra cómo una unidad cotidiana puede apoyarse en una"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "definición científica precisa."
+        }
+      ]
+    },
+    {
+      "id": "dd34ee43-4966-55e2-a9c3-855f79c6e44c",
+      "start_ms": 15000,
+      "duration_ms": 15000,
+      "narration": "El segundo es la unidad de tiempo del Sistema Internacional. Su símbolo es la letra ese. Una definición común permite expresar intervalos con el mismo lenguaje, aunque se midan en lugares diferentes y con instrumentos distintos.",
+      "visual_asset_id": "83ec760d-a2d8-502b-b4bc-5814a1318a87",
+      "claim_ids": [
+        "00c7e3f9-90b4-50d5-a925-9108031da022"
+      ],
+      "motion": "zoom_out",
+      "transition": "fade",
+      "overlay": "Una unidad compartida",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "El segundo es la unidad de tiempo del Sistema Internacional. Su"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "símbolo es la letra ese. Una definición común permite expresar"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "intervalos con el mismo lenguaje, aunque se midan en lugares"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "diferentes y con instrumentos distintos."
+        }
+      ]
+    },
+    {
+      "id": "25522e3f-67bd-5f57-8cb1-145ddf77444c",
+      "start_ms": 30000,
+      "duration_ms": 15000,
+      "narration": "Para entender la idea, imaginemos una señal que se repite. Contar sus ciclos permite describir un intervalo. Este dibujo es una explicación visual simplificada: no es una fotografía de un laboratorio ni una medición experimental.",
+      "visual_asset_id": "91fc1407-ac5d-51f2-a02a-96af1ea07af2",
+      "claim_ids": [
+        "c945e1a9-22ef-5029-95f1-c5c7b34a8001"
+      ],
+      "motion": "pan_left",
+      "transition": "fade",
+      "overlay": "Buscar una repetición",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "Para entender la idea, imaginemos una señal que se repite. Contar sus"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "ciclos permite describir un intervalo. Este dibujo es una explicación"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "visual simplificada: no es una fotografía de un laboratorio ni una"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "medición experimental."
+        }
+      ]
+    },
+    {
+      "id": "1724b75a-da96-5cb7-93f8-8787d91e3479",
+      "start_ms": 45000,
+      "duration_ms": 15000,
+      "narration": "La definición del segundo utiliza una propiedad del cesio ciento treinta y tres. No depende de observar las manecillas de un reloj. Se refiere a una frecuencia asociada a una transición específica del átomo en condiciones definidas.",
+      "visual_asset_id": "24fb4a1d-15f9-5308-a1ba-68a9c852cc77",
+      "claim_ids": [
+        "4c7d9d7a-ba73-5cac-8b7f-41ffd9e66d51"
+      ],
+      "motion": "pan_right",
+      "transition": "fade",
+      "overlay": "El cesio-133",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "La definición del segundo utiliza una propiedad del cesio ciento"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "treinta y tres. No depende de observar las manecillas de un reloj. Se"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "refiere a una frecuencia asociada a una transición específica del"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "átomo en condiciones definidas."
+        }
+      ]
+    },
+    {
+      "id": "66eccb20-3c2a-5192-8db3-4b0843cd9bc7",
+      "start_ms": 60000,
+      "duration_ms": 15000,
+      "narration": "El detalle importa: la referencia corresponde a la transición entre dos niveles hiperfinos del estado fundamental no perturbado. El esquema representa esa relación de forma conceptual; las líneas y sus distancias no están dibujadas a escala.",
+      "visual_asset_id": "9a58576d-482c-5fa6-a2cc-e8d2cc71151e",
+      "claim_ids": [
+        "9583e925-7734-5137-ae4f-5000b11a0bfb"
+      ],
+      "motion": "zoom_in",
+      "transition": "fade",
+      "overlay": "Una transición precisa",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "El detalle importa: la referencia corresponde a la transición entre"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "dos niveles hiperfinos del estado fundamental no perturbado. El"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "esquema representa esa relación de forma conceptual; las líneas y sus"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "distancias no están dibujadas a escala."
+        }
+      ]
+    },
+    {
+      "id": "56eeb484-0184-5e76-8e1f-3140649f8f30",
+      "start_ms": 75000,
+      "duration_ms": 15000,
+      "narration": "La frecuencia fijada es de nueve mil ciento noventa y dos millones seiscientos treinta y un mil setecientos setenta hercios. Ese valor conecta los ciclos de la radiación correspondiente con la unidad de tiempo que llamamos segundo.",
+      "visual_asset_id": "47644f71-fa80-5083-ba65-c28246edebb5",
+      "claim_ids": [
+        "a6bd0cc4-a597-5c61-899f-84ea779a907c"
+      ],
+      "motion": "zoom_out",
+      "transition": "fade",
+      "overlay": "9 192 631 770 ciclos",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "La frecuencia fijada es de nueve mil ciento noventa y dos millones"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "seiscientos treinta y un mil setecientos setenta hercios. Ese valor"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "conecta los ciclos de la radiación correspondiente con la unidad de"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "tiempo que llamamos segundo."
+        }
+      ]
+    },
+    {
+      "id": "7e81532c-487e-5d15-8020-d59ec79d794c",
+      "start_ms": 90000,
+      "duration_ms": 15000,
+      "narration": "La definición y su realización práctica son asuntos relacionados. Los laboratorios construyen y comparan instrumentos para materializar la referencia. La página del NIST explica cómo los relojes atómicos permiten medir el tiempo a partir de propiedades de los átomos.",
+      "visual_asset_id": "7a5dc2a6-34a9-5045-a4fa-f5ae5deee8df",
+      "claim_ids": [
+        "5cdce4ce-5c5d-5d6d-940d-509245ee5f93"
+      ],
+      "motion": "pan_left",
+      "transition": "fade",
+      "overlay": "Comparar los relojes",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "La definición y su realización práctica son asuntos relacionados. Los"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "laboratorios construyen y comparan instrumentos para materializar la"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "referencia. La página del NIST explica cómo los relojes atómicos"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "permiten medir el tiempo a partir de propiedades de los átomos."
+        }
+      ]
+    },
+    {
+      "id": "04a0927e-20e1-5bc3-8afa-7e1c7ec7fa3e",
+      "start_ms": 105000,
+      "duration_ms": 15000,
+      "narration": "La próxima vez que veas pasar un segundo, recuerda la pregunta inicial: cómo compartir una medida. Aquí dejamos dos fuentes para comprobar la explicación. Este ensayo audiovisual requiere todavía revisión humana y una narración profesional antes de su aprobación.",
+      "visual_asset_id": "976d6089-bfe6-5cbf-86c9-c0eaac2b74ce",
+      "claim_ids": [
+        "a0bc2b92-9c51-5623-925b-3b439f966425"
+      ],
+      "motion": "pan_right",
+      "transition": "fade",
+      "overlay": "Medir, documentar, revisar",
+      "subtitle_segments": [
+        {
+          "start_ms": 0,
+          "end_ms": 3750,
+          "text": "La próxima vez que veas pasar un segundo, recuerda la pregunta"
+        },
+        {
+          "start_ms": 3750,
+          "end_ms": 7500,
+          "text": "inicial: cómo compartir una medida. Aquí dejamos dos fuentes para"
+        },
+        {
+          "start_ms": 7500,
+          "end_ms": 11250,
+          "text": "comprobar la explicación. Este ensayo audiovisual requiere todavía"
+        },
+        {
+          "start_ms": 11250,
+          "end_ms": 15000,
+          "text": "revisión humana y una narración profesional antes de su aprobación."
+        }
+      ]
+    }
+  ]
+}

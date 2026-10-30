@@ -1,0 +1,20 @@
+erDiagram
+ ORGANIZATIONS ||--o{ MEMBERSHIPS: has
+ APP_USERS ||--o{ MEMBERSHIPS: has
+ ORGANIZATIONS ||--o{ PROJECTS: owns
+ PROJECTS ||--o{ SOURCES: contains
+ PROJECTS ||--o{ CLAIMS: contains
+ CLAIMS ||--o{ CLAIM_EVIDENCE: supports
+ SOURCES ||--o{ CLAIM_EVIDENCE: cites
+ PROJECTS ||--o{ SCRIPTS: owns
+ SCRIPTS ||--o{ SCRIPT_VERSIONS: versions
+ SCRIPT_VERSIONS ||--o{ SCENES: scenes
+ PROJECTS ||--o{ ASSETS: stores
+ ASSETS ||--o{ ASSET_LICENSES: licensed_by
+ PROJECTS ||--o{ RENDERS: renders
+ RENDERS ||--o{ APPROVALS: reviewed
+ RENDERS ||--o{ PUBLICATIONS: submitted
+ SOCIAL_ACCOUNTS ||--o{ PUBLICATIONS: target
+ PUBLICATIONS ||--o{ METRICS_SNAPSHOTS: measured
+ ORGANIZATIONS ||--o{ JOBS: queues
+ ORGANIZATIONS ||--o{ PROVIDER_USAGE: billed

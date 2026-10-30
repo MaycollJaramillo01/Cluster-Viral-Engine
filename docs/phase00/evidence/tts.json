@@ -1,0 +1,7 @@
+{
+  "status": "BLOCKED_EXTERNAL",
+  "provider": "mock-elevenlabs",
+  "reason": "Credenciales, voz LATAM y facturación real pendientes",
+  "remote_id": null,
+  "actual_cost_usd": null
+}

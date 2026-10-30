@@ -1,0 +1,7 @@
+escenario,videos_mes,vercel_usd,neon_usd,storage_usd,tts_usd,llm_usd,visual_ia_usd,worker_render_usd,otros_usd,total_usd,costo_promedio_video_usd,nota
+bajo,30,20,3,1,22,4,0,8,4,62,2.07,Ilustrativo sujeto a cuotas TTS
+bajo,60,20,4,2,30,7,0,18,10,91,1.52,Ilustrativo sujeto a cuotas TTS
+base,30,20,7,3,22,8,10,12,6,88,2.93,No cotizacion
+base,60,20,12,6,40,14,20,18,7,137,2.28,No cotizacion
+alto,30,30,12,8,35,20,25,10,5,145,4.83,Regeneraciones y visuales IA
+alto,60,40,20,12,60,35,45,24,10,246,4.10,Regeneraciones y visuales IA

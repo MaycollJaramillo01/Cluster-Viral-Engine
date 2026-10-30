@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine API (contrato propuesto)
+  version: 0.1.0
+  description: "Blueprint de APIs: la aplicación starter solo implementa /api/health y retorna 501 en /api/stories."
+servers:
+  - url: https://YOUR_VERCEL_DOMAIN
+security:
+  - sessionCookie: []
+paths:
+  /api/health:
+    get:
+      security: []
+      operationId: health
+      responses:
+        '200':
+          description: Estado básico; no revela infraestructura
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, enum: [ok] }
+  /api/stories:
+    get:
+      operationId: listStories
+      parameters:
+        - in: query
+          name: cursor
+          schema: { type: string }
+      responses:
+        '200':
+          description: Stories del tenant autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Story' } }
+                  nextCursor: { type: [string, 'null'] }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    post:
+      operationId: createStory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [proposed_title, summary]
+              properties:
+                proposed_title: { type: string, minLength: 8, maxLength: 180 }
+                summary: { type: string, maxLength: 4000 }
+      responses:
+        '201': { description: Created }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/projects/{projectId}/research:
+    post:
+      operationId: enqueueResearch
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      responses:
+        '202': { $ref: '#/components/responses/JobAccepted' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/projects/{projectId}/scripts:
+    post:
+      operationId: enqueueScript
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      responses:
+        '202': { $ref: '#/components/responses/JobAccepted' }
+  /api/projects/{projectId}/render:
+    post:
+      operationId: queueRender
+      parameters:
+        - $ref: '#/components/parameters/projectId'
+      responses:
+        '202': { $ref: '#/components/responses/JobAccepted' }
+  /api/renders/{renderId}/approve:
+    post:
+      operationId: approveRender
+      description: "Solo reviewer/owner/admin habilitados y render/version actual, con licencias y claims OK."
+      parameters:
+        - name: renderId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [target_sha256, decision]
+              properties:
+                target_sha256: { type: string, minLength: 64, maxLength: 64 }
+                decision: { type: string, enum: [APPROVED, REJECTED] }
+                note: { type: string }
+      responses:
+        '200': { description: Appended decision and audit }
+        '409': { description: Rendering version stale }
+        '403': { $ref: '#/components/responses/Forbidden' }
+  /api/renders/{renderId}/publish:
+    post:
+      operationId: publishApprovedRender
+      description: "Nunca acepta campo approved=true del cliente como autorización."
+      parameters:
+        - name: renderId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [social_account_id, publishing_kind, social_copy]
+              properties:
+                social_account_id: { type: string, format: uuid }
+                publishing_kind: { type: string, enum: [PAGE_VIDEO, REEL] }
+                social_copy: { type: string, maxLength: 4000 }
+      responses:
+        '202': { $ref: '#/components/responses/JobAccepted' }
+        '409': { description: No approval, asset check failed or already submitted }
+  /api/jobs/{jobId}:
+    get:
+      operationId: getJob
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Estado del job del tenant
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Job' }
+  /api/webhooks/meta:
+    post:
+      security: []
+      operationId: metaWebhook
+      description: "Validación de X-Hub-Signature-256 y procesamiento idempotente del cuerpo crudo."
+      responses:
+        '200': { description: ACK tras verificación y persistencia }
+        '403': { description: Invalid HMAC }
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: cve_session
+  parameters:
+    projectId:
+      name: projectId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    JobAccepted:
+      description: Trabajo duradero aceptado
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [job_id, status]
+            properties:
+              job_id: { type: string, format: uuid }
+              status: { type: string, enum: [QUEUED] }
+    Unauthorized: { description: No authenticated session }
+    Forbidden: { description: No permission }
+  schemas:
+    Story:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        proposed_title: { type: string }
+        summary: { type: string }
+        viral_score: { type: [number, 'null'], minimum: 0, maximum: 100 }
+    Job:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        status: { type: string, enum: [QUEUED, RUNNING, RETRY_WAIT, SUCCEEDED, DEAD, CANCELLED] }
+        attempt: { type: integer }

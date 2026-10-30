@@ -1,0 +1,307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "phase00-1"
+    },
+    "purpose": {
+      "type": "string",
+      "const": "TECHNICAL_POC"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "project_id": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+    },
+    "revision": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "width": {
+      "type": "number",
+      "const": 1080
+    },
+    "height": {
+      "type": "number",
+      "const": 1920
+    },
+    "fps": {
+      "type": "number",
+      "const": 30
+    },
+    "locale": {
+      "type": "string",
+      "const": "es-419"
+    },
+    "sources": {
+      "minItems": 2,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "publisher": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "retrieved_on": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))$"
+          }
+        },
+        "required": [
+          "id",
+          "publisher",
+          "url",
+          "retrieved_on"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "claims": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_ids": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "review": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "REJECTED",
+              "APPROVED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "statement",
+          "source_ids",
+          "review"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assets": {
+      "minItems": 8,
+      "maxItems": 12,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "object_key": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+(?:\\/[a-zA-Z0-9_.-]+)*$"
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license": {
+            "type": "string",
+            "enum": [
+              "ORIGINAL",
+              "LICENSED",
+              "UNKNOWN"
+            ]
+          },
+          "proof": {
+            "type": "string",
+            "minLength": 1
+          },
+          "review": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "REJECTED",
+              "APPROVED"
+            ]
+          },
+          "is_reconstruction": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "object_key",
+          "source",
+          "license",
+          "proof",
+          "review",
+          "is_reconstruction"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "scenes": {
+      "minItems": 8,
+      "maxItems": 24,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "start_ms": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 1000,
+            "maximum": 60000
+          },
+          "narration": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visual_asset_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "claim_ids": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            }
+          },
+          "motion": {
+            "type": "string",
+            "enum": [
+              "zoom_in",
+              "zoom_out",
+              "pan_left",
+              "pan_right"
+            ]
+          },
+          "transition": {
+            "type": "string",
+            "enum": [
+              "cut",
+              "fade"
+            ]
+          },
+          "overlay": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[^{}\\\\\\r\\n]+$"
+          },
+          "subtitle_segments": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start_ms": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "end_ms": {
+                  "type": "integer",
+                  "exclusiveMinimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 84
+                }
+              },
+              "required": [
+                "start_ms",
+                "end_ms",
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "start_ms",
+          "duration_ms",
+          "narration",
+          "visual_asset_id",
+          "claim_ids",
+          "motion",
+          "transition",
+          "overlay",
+          "subtitle_segments"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "purpose",
+    "organization_id",
+    "project_id",
+    "revision",
+    "title",
+    "width",
+    "height",
+    "fps",
+    "locale",
+    "sources",
+    "claims",
+    "assets",
+    "scenes"
+  ],
+  "additionalProperties": false
+}

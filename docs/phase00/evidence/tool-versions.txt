@@ -1,0 +1,4 @@
+v22.20.0
+Python 3.13.7
+ffmpeg version 2025-12-10-git-4f947880bd-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers
+psql (PostgreSQL) 17.7

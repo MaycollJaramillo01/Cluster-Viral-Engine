@@ -1,0 +1,15 @@
+flowchart LR
+  H[Equipo editorial] --> WEB[Next.js 16 / Vercel]
+  WEB --> AUTH[Auth RBAC]
+  WEB --> CORE[Domain services]
+  CORE --> DB[(Neon PostgreSQL)]
+  CORE --> BLOB[(Object Storage)]
+  CORE --> OUT[Transactional Outbox]
+  OUT --> JOBS[Jobs / Queue dispatcher]
+  JOBS --> LLM[LLM Providers]
+  JOBS --> TTS[TTS Provider]
+  JOBS --> RENDER[RenderProvider]
+  RENDER --> FF[FFmpeg Worker Docker]
+  JOBS --> META[Meta Graph API]
+  FF --> BLOB
+  JOBS --> DB

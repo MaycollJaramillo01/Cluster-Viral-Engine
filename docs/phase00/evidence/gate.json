@@ -1,0 +1,20 @@
+{
+  "decision": "NO_GO",
+  "blockers": [
+    "F00-01",
+    "F00-02",
+    "F00-03",
+    "F00-04",
+    "F00-05",
+    "F00-06",
+    "F00-07",
+    "F00-08",
+    "F00-09",
+    "F00-10",
+    "F00-11",
+    "F00-12"
+  ],
+  "signed": false,
+  "publication_enabled": false,
+  "notes": "Acta local; firmas deben verificarse por comité. Este informe jamás autoriza publicación."
+}

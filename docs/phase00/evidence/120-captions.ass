@@ -1,0 +1,51 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Default,Arial,44,&H00FFFFFF,&H00FFFFFF,&H00101010,&H88000000,0,0,0,0,100,100,0,0,1,3,0,2,110,110,340,1
+Style: Overlay,Arial,30,&H00FFFFFF,&H00FFFFFF,&H00101010,&H88000000,0,0,0,0,100,100,0,0,1,2,0,8,110,110,70,1
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:03.75,Default,,0,0,0,,Mirar un reloj parece suficiente para saber cuánto dura un segundo.
+Dialogue: 0,0:00:03.75,0:00:07.50,Default,,0,0,0,,Pero comparar relojes exige algo más: una referencia compartida. Esta
+Dialogue: 0,0:00:07.50,0:00:11.25,Default,,0,0,0,,historia muestra cómo una unidad cotidiana puede apoyarse en una
+Dialogue: 0,0:00:11.25,0:00:15.00,Default,,0,0,0,,definición científica precisa.
+Dialogue: 0,0:00:15.00,0:00:18.75,Default,,0,0,0,,El segundo es la unidad de tiempo del Sistema Internacional. Su
+Dialogue: 0,0:00:18.75,0:00:22.50,Default,,0,0,0,,símbolo es la letra ese. Una definición común permite expresar
+Dialogue: 0,0:00:22.50,0:00:26.25,Default,,0,0,0,,intervalos con el mismo lenguaje, aunque se midan en lugares
+Dialogue: 0,0:00:26.25,0:00:30.00,Default,,0,0,0,,diferentes y con instrumentos distintos.
+Dialogue: 0,0:00:30.00,0:00:33.75,Default,,0,0,0,,Para entender la idea, imaginemos una señal que se repite. Contar sus
+Dialogue: 0,0:00:33.75,0:00:37.50,Default,,0,0,0,,ciclos permite describir un intervalo. Este dibujo es una explicación
+Dialogue: 0,0:00:37.50,0:00:41.25,Default,,0,0,0,,visual simplificada: no es una fotografía de un laboratorio ni una
+Dialogue: 0,0:00:41.25,0:00:45.00,Default,,0,0,0,,medición experimental.
+Dialogue: 0,0:00:45.00,0:00:48.75,Default,,0,0,0,,La definición del segundo utiliza una propiedad del cesio ciento
+Dialogue: 0,0:00:48.75,0:00:52.50,Default,,0,0,0,,treinta y tres. No depende de observar las manecillas de un reloj. Se
+Dialogue: 0,0:00:52.50,0:00:56.25,Default,,0,0,0,,refiere a una frecuencia asociada a una transición específica del
+Dialogue: 0,0:00:56.25,0:01:00.00,Default,,0,0,0,,átomo en condiciones definidas.
+Dialogue: 0,0:01:00.00,0:01:03.75,Default,,0,0,0,,El detalle importa: la referencia corresponde a la transición entre
+Dialogue: 0,0:01:03.75,0:01:07.50,Default,,0,0,0,,dos niveles hiperfinos del estado fundamental no perturbado. El
+Dialogue: 0,0:01:07.50,0:01:11.25,Default,,0,0,0,,esquema representa esa relación de forma conceptual; las líneas y sus
+Dialogue: 0,0:01:11.25,0:01:15.00,Default,,0,0,0,,distancias no están dibujadas a escala.
+Dialogue: 0,0:01:15.00,0:01:18.75,Default,,0,0,0,,La frecuencia fijada es de nueve mil ciento noventa y dos millones
+Dialogue: 0,0:01:18.75,0:01:22.50,Default,,0,0,0,,seiscientos treinta y un mil setecientos setenta hercios. Ese valor
+Dialogue: 0,0:01:22.50,0:01:26.25,Default,,0,0,0,,conecta los ciclos de la radiación correspondiente con la unidad de
+Dialogue: 0,0:01:26.25,0:01:30.00,Default,,0,0,0,,tiempo que llamamos segundo.
+Dialogue: 0,0:01:30.00,0:01:33.75,Default,,0,0,0,,La definición y su realización práctica son asuntos relacionados. Los
+Dialogue: 0,0:01:33.75,0:01:37.50,Default,,0,0,0,,laboratorios construyen y comparan instrumentos para materializar la
+Dialogue: 0,0:01:37.50,0:01:41.25,Default,,0,0,0,,referencia. La página del NIST explica cómo los relojes atómicos
+Dialogue: 0,0:01:41.25,0:01:45.00,Default,,0,0,0,,permiten medir el tiempo a partir de propiedades de los átomos.
+Dialogue: 0,0:01:45.00,0:01:48.75,Default,,0,0,0,,La próxima vez que veas pasar un segundo, recuerda la pregunta
+Dialogue: 0,0:01:48.75,0:01:52.50,Default,,0,0,0,,inicial: cómo compartir una medida. Aquí dejamos dos fuentes para
+Dialogue: 0,0:01:52.50,0:01:56.25,Default,,0,0,0,,comprobar la explicación. Este ensayo audiovisual requiere todavía
+Dialogue: 0,0:01:56.25,0:02:00.00,Default,,0,0,0,,revisión humana y una narración profesional antes de su aprobación.
+Dialogue: 1,0:00:00.00,0:00:15.00,Overlay,,0,0,0,,¿Cuánto dura un segundo?
+Dialogue: 1,0:00:15.00,0:00:30.00,Overlay,,0,0,0,,Una unidad compartida
+Dialogue: 1,0:00:30.00,0:00:45.00,Overlay,,0,0,0,,Buscar una repetición
+Dialogue: 1,0:00:45.00,0:01:00.00,Overlay,,0,0,0,,El cesio-133
+Dialogue: 1,0:01:00.00,0:01:15.00,Overlay,,0,0,0,,Una transición precisa
+Dialogue: 1,0:01:15.00,0:01:30.00,Overlay,,0,0,0,,9 192 631 770 ciclos
+Dialogue: 1,0:01:30.00,0:01:45.00,Overlay,,0,0,0,,Comparar los relojes
+Dialogue: 1,0:01:45.00,0:02:00.00,Overlay,,0,0,0,,Medir, documentar, revisar

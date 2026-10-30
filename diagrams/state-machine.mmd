@@ -1,0 +1,17 @@
+stateDiagram-v2
+ [*] --> DISCOVERED
+ DISCOVERED --> RESEARCHING
+ RESEARCHING --> RESEARCH_REVIEW
+ RESEARCH_REVIEW --> RESEARCHING: rejected
+ RESEARCH_REVIEW --> SCRIPTING: approved by reviewer
+ SCRIPTING --> SCRIPT_REVIEW
+ SCRIPT_REVIEW --> SCRIPTING: revise
+ SCRIPT_REVIEW --> ASSETING: approved
+ ASSETING --> VOICING
+ VOICING --> RENDERING
+ RENDERING --> VIDEO_REVIEW
+ VIDEO_REVIEW --> ASSETING: revise
+ VIDEO_REVIEW --> APPROVED: exact render approval
+ APPROVED --> PUBLISHING: official Meta API + budget ok
+ PUBLISHING --> PUBLISHED: remote ID confirmed
+ PUBLISHING --> APPROVED: failure requiring intervention

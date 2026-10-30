@@ -1,0 +1,22 @@
+[
+  {
+    "status": "BLOCKED_EXTERNAL",
+    "provider": "mock-meta",
+    "reason": "OAuth, App Review, Page, versión Graph, formato y aprobación humana transaccional sin verificar",
+    "remote_id": null,
+    "actual_cost_usd": null,
+    "kind": "PAGE_VIDEO",
+    "manifest_sha256": "8773241a4c61423be65cbc2d914895b0ba43d234259a6a93df0c6441d4dbe504",
+    "editorial_ready": false
+  },
+  {
+    "status": "BLOCKED_EXTERNAL",
+    "provider": "mock-meta",
+    "reason": "OAuth, App Review, Page, versión Graph, formato y aprobación humana transaccional sin verificar",
+    "remote_id": null,
+    "actual_cost_usd": null,
+    "kind": "REEL",
+    "manifest_sha256": "8773241a4c61423be65cbc2d914895b0ba43d234259a6a93df0c6441d4dbe504",
+    "editorial_ready": false
+  }
+]

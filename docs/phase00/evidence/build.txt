@@ -1,0 +1,32 @@
+
+> cluster-viral-engine-web-starter@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+⚠ Warning: Next.js ignored package-lock.json in C:\Users\Mayco because it would include your home directory (C:\Users\Mayco).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config took 35ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 356ms
+  Running TypeScript ...
+  Finished TypeScript in 2.5s ...
+  Collecting page data using 6 workers ...
+  Generating static pages using 6 workers (0/5) ...
+  Generating static pages using 6 workers (1/5) 
+  Generating static pages using 6 workers (2/5) 
+  Generating static pages using 6 workers (3/5) 
+✓ Generating static pages using 6 workers (5/5) in 1214ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/health
+└ ƒ /api/stories
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

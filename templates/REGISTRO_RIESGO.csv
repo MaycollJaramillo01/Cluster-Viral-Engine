@@ -1,0 +1,2 @@
+id,descripcion,probabilidad_1_5,impacto_1_5,exposicion,owner,mitigacion,estado
+R01,Meta duración incompatibilidad,4,5,20,Integraciones,Validar Page video/Reels en PoC,OPEN

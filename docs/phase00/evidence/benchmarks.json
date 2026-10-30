@@ -1,0 +1,46 @@
+[
+  {
+    "provider": "local",
+    "duration_seconds": 120,
+    "n": 10,
+    "status": "MEASURED",
+    "p50_ms": 18001,
+    "p95_ms": 19838,
+    "cpu_ms_sampled": 48159.2,
+    "peak_rss_bytes_sampled": 217665536,
+    "mean_cost_usd": null
+  },
+  {
+    "provider": "local",
+    "duration_seconds": 240,
+    "n": 10,
+    "status": "MEASURED",
+    "p50_ms": 32942,
+    "p95_ms": 40329,
+    "cpu_ms_sampled": 95191,
+    "peak_rss_bytes_sampled": 219746304,
+    "mean_cost_usd": null
+  },
+  {
+    "provider": "vercel",
+    "duration_seconds": 120,
+    "n": 0,
+    "status": "BLOCKED_EXTERNAL",
+    "p50_ms": null,
+    "p95_ms": null,
+    "cpu_ms_sampled": null,
+    "peak_rss_bytes_sampled": null,
+    "mean_cost_usd": null
+  },
+  {
+    "provider": "vercel",
+    "duration_seconds": 240,
+    "n": 0,
+    "status": "BLOCKED_EXTERNAL",
+    "p50_ms": null,
+    "p95_ms": null,
+    "cpu_ms_sampled": null,
+    "peak_rss_bytes_sampled": null,
+    "mean_cost_usd": null
+  }
+]

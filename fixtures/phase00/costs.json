@@ -1,0 +1,8 @@
+[
+  {"category":"tts","actual_usd":null,"estimated_usd":null,"units":null,"unit":"characters","attempts":1,"evidence":"BLOCKED_EXTERNAL: sin llamada facturable"},
+  {"category":"llm","actual_usd":null,"estimated_usd":null,"units":null,"unit":"tokens","attempts":1,"evidence":"No hay factura reconciliada del proveedor"},
+  {"category":"render","actual_usd":null,"estimated_usd":null,"units":null,"unit":"CPU seconds","attempts":1,"evidence":"Tiempo local medible; tarifa y electricidad sin medir"},
+  {"category":"images","actual_usd":0,"estimated_usd":null,"units":8,"unit":"original programmatic diagrams","attempts":1,"evidence":"generate_dataset.py; sin API de imágenes"},
+  {"category":"storage","actual_usd":null,"estimated_usd":null,"units":null,"unit":"GB-month","attempts":1,"evidence":"Almacenamiento remoto no provisionado"},
+  {"category":"human","actual_usd":null,"estimated_usd":null,"units":null,"unit":"minutes","attempts":1,"evidence":"Revisión editorial y tarifa pendientes"}
+]

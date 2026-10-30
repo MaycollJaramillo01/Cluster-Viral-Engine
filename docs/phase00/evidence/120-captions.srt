@@ -1,0 +1,127 @@
+1
+00:00:00,000 --> 00:00:03,750
+Mirar un reloj parece suficiente para saber cuánto dura un segundo.
+
+2
+00:00:03,750 --> 00:00:07,500
+Pero comparar relojes exige algo más: una referencia compartida. Esta
+
+3
+00:00:07,500 --> 00:00:11,250
+historia muestra cómo una unidad cotidiana puede apoyarse en una
+
+4
+00:00:11,250 --> 00:00:15,000
+definición científica precisa.
+
+5
+00:00:15,000 --> 00:00:18,750
+El segundo es la unidad de tiempo del Sistema Internacional. Su
+
+6
+00:00:18,750 --> 00:00:22,500
+símbolo es la letra ese. Una definición común permite expresar
+
+7
+00:00:22,500 --> 00:00:26,250
+intervalos con el mismo lenguaje, aunque se midan en lugares
+
+8
+00:00:26,250 --> 00:00:30,000
+diferentes y con instrumentos distintos.
+
+9
+00:00:30,000 --> 00:00:33,750
+Para entender la idea, imaginemos una señal que se repite. Contar sus
+
+10
+00:00:33,750 --> 00:00:37,500
+ciclos permite describir un intervalo. Este dibujo es una explicación
+
+11
+00:00:37,500 --> 00:00:41,250
+visual simplificada: no es una fotografía de un laboratorio ni una
+
+12
+00:00:41,250 --> 00:00:45,000
+medición experimental.
+
+13
+00:00:45,000 --> 00:00:48,750
+La definición del segundo utiliza una propiedad del cesio ciento
+
+14
+00:00:48,750 --> 00:00:52,500
+treinta y tres. No depende de observar las manecillas de un reloj. Se
+
+15
+00:00:52,500 --> 00:00:56,250
+refiere a una frecuencia asociada a una transición específica del
+
+16
+00:00:56,250 --> 00:01:00,000
+átomo en condiciones definidas.
+
+17
+00:01:00,000 --> 00:01:03,750
+El detalle importa: la referencia corresponde a la transición entre
+
+18
+00:01:03,750 --> 00:01:07,500
+dos niveles hiperfinos del estado fundamental no perturbado. El
+
+19
+00:01:07,500 --> 00:01:11,250
+esquema representa esa relación de forma conceptual; las líneas y sus
+
+20
+00:01:11,250 --> 00:01:15,000
+distancias no están dibujadas a escala.
+
+21
+00:01:15,000 --> 00:01:18,750
+La frecuencia fijada es de nueve mil ciento noventa y dos millones
+
+22
+00:01:18,750 --> 00:01:22,500
+seiscientos treinta y un mil setecientos setenta hercios. Ese valor
+
+23
+00:01:22,500 --> 00:01:26,250
+conecta los ciclos de la radiación correspondiente con la unidad de
+
+24
+00:01:26,250 --> 00:01:30,000
+tiempo que llamamos segundo.
+
+25
+00:01:30,000 --> 00:01:33,750
+La definición y su realización práctica son asuntos relacionados. Los
+
+26
+00:01:33,750 --> 00:01:37,500
+laboratorios construyen y comparan instrumentos para materializar la
+
+27
+00:01:37,500 --> 00:01:41,250
+referencia. La página del NIST explica cómo los relojes atómicos
+
+28
+00:01:41,250 --> 00:01:45,000
+permiten medir el tiempo a partir de propiedades de los átomos.
+
+29
+00:01:45,000 --> 00:01:48,750
+La próxima vez que veas pasar un segundo, recuerda la pregunta
+
+30
+00:01:48,750 --> 00:01:52,500
+inicial: cómo compartir una medida. Aquí dejamos dos fuentes para
+
+31
+00:01:52,500 --> 00:01:56,250
+comprobar la explicación. Este ensayo audiovisual requiere todavía
+
+32
+00:01:56,250 --> 00:02:00,000
+revisión humana y una narración profesional antes de su aprobación.

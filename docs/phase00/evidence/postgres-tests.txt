@@ -1,0 +1,57 @@
+
+> cluster-viral-engine-web-starter@0.1.0 test:db
+> tsx --test tests/*.integration.ts
+
+TAP version 13
+# Subtest: PostgreSQL real aislado: migraciones, tenant/RBAC, idempotencia, auditoría y rollback
+    # Subtest: 10 solicitudes concurrentes producen una reserva, una auditoría y un outbox
+    ok 1 - 10 solicitudes concurrentes producen una reserva, una auditoría y un outbox
+      ---
+      duration_ms: 242.6983
+      type: 'test'
+      ...
+    # Subtest: RBAC, organización, proyecto y clave reutilizada con otro input son rechazados
+    ok 2 - RBAC, organización, proyecto y clave reutilizada con otro input son rechazados
+      ---
+      duration_ms: 19.0953
+      type: 'test'
+      ...
+    # Subtest: RLS niega lectura/escritura cruzada y FK compuesta niega proyecto externo
+    ok 3 - RLS niega lectura/escritura cruzada y FK compuesta niega proyecto externo
+      ---
+      duration_ms: 20.2889
+      type: 'test'
+      ...
+    # Subtest: fallo de auditoría revierte reserva y outbox atómicamente
+    ok 4 - fallo de auditoría revierte reserva y outbox atómicamente
+      ---
+      duration_ms: 9.7897
+      type: 'test'
+      ...
+    # Subtest: cierre exige tenant; estado terminal y auditoría son inmutables
+    ok 5 - cierre exige tenant; estado terminal y auditoría son inmutables
+      ---
+      duration_ms: 104.9079
+      type: 'test'
+      ...
+    # Subtest: rollback 003 conserva auditoría y permite reaplicar migración
+    ok 6 - rollback 003 conserva auditoría y permite reaplicar migración
+      ---
+      duration_ms: 169.2184
+      type: 'test'
+      ...
+    1..6
+ok 1 - PostgreSQL real aislado: migraciones, tenant/RBAC, idempotencia, auditoría y rollback
+  ---
+  duration_ms: 981.0468
+  type: 'test'
+  ...
+1..1
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1654.4004

@@ -1,0 +1,15 @@
+flowchart TD
+ A[Git Feature Branch] --> B[GitHub CI lint/tests/security]
+ B --> C[Vercel Preview]
+ C --> D[Neon Preview Branch]
+ D --> E[Run non-destructive migrations]
+ E --> F[Contract/E2E/tenant tests]
+ F --> G{Review passes?}
+ G -- No --> A
+ G -- Yes --> H[Merge main]
+ H --> I[DB migration expand in Neon Production]
+ I --> J[Deploy Vercel Production]
+ J --> K[Smoke / metrics]
+ K --> L{Healthy?}
+ L -- No --> M[Vercel rollback + forward-fix DB]
+ L -- Yes --> N[Release recorded]

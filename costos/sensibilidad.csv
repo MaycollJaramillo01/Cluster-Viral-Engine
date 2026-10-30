@@ -1,0 +1,7 @@
+variable,impacto,accion,medicion
+TTS caracteres/voz,alto,Reutilizar por hash y reducir retakes,creditos reales por 1000 caracteres
+Visual AI scenes,alto,Preferir archivo legal y animación 2D,precio por escena aprobada
+Worker minutos,medio alto,Medir x264 preset y caching,p50/p95 render segundos
+Storage y egress,medio,TTL de outputs temporales y CDs transferencia,GB-mes y GB egreso
+Regeneraciones por video,alto,Gates de guion antes del TTS,intentos por video
+LLM tokens,medio,Modelos económicos y control de longitud,tokens request y response

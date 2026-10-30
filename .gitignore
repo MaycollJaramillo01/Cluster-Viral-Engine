@@ -1,0 +1,11 @@
+**/.env
+**/.env.*
+!**/.env.example
+**/node_modules/
+**/.next/
+**/__pycache__/
+workers/render/out/*
+!workers/render/out/.gitkeep
+**/tsconfig.tsbuildinfo
+.phase00-postgres/
+.codebase-memory/

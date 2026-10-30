@@ -1,0 +1,5 @@
+
+> cluster-viral-engine-web-starter@0.1.0 poc
+> tsx src/phase00/cli.ts render --key F00-04-acceptance-v1 --seconds 120 --out ../../workers/render/out/persisted-demo
+
+{"evidence":"C:\\Users\\Mayco\\Documents\\cluster-viral-engine-vercel-neon-plan-completo\\cluster-viral-engine\\workers\\render\\out\\persisted-demo\\evidence.json","reused":false}

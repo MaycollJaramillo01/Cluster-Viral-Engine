@@ -1,0 +1,21 @@
+sequenceDiagram
+ actor R as Reviewer
+ participant W as Vercel API
+ participant D as Neon Transaction
+ participant J as Durable Job
+ participant M as Meta Graph
+ R->>W: Approve(render_id, sha256)
+ W->>D: Check role, licenses, claims, latest revision
+ D-->>W: Audit + approval for exact hash
+ R->>W: Publish(page_id, copy)
+ W->>D: Validate exact approval, budget, access; insert unique publication + outbox
+ D-->>W: Accepted job_id (202)
+ J->>D: Lease job atomically
+ J->>M: Validate page/token and post only if not already remote
+ alt known remote id
+   M-->>J: status remote
+ else new publication
+   M-->>J: remote_video_id
+ end
+ J->>D: commit remote id, status PUBLISHED
+ Note over J,M: Uncertain timeout: reconcile before retrying POST

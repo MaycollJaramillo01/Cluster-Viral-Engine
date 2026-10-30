@@ -1,0 +1,40 @@
+{
+  "checked_on_client_date": "2026-10-30",
+  "checks": [
+    {
+      "url": "https://www.bipm.org/en/si-base-units/second",
+      "http_status": 200,
+      "body_sha256": "7bc9c195b4ffb67b1ad26ba518d1ced19071fae2c529c7118426a96eadba5882",
+      "body_bytes": 228644,
+      "meaning": "Retrieval only; does not verify claims, licence or API access"
+    },
+    {
+      "url": "https://www.nist.gov/atomic-clocks/how-do-atomic-clocks-work",
+      "http_status": 200,
+      "body_sha256": "8fb030e996676b1960da41efb97cf5d6eae1aa47d595677635704cce4d2d7518",
+      "body_bytes": 95973,
+      "meaning": "Retrieval only; does not verify claims, licence or API access"
+    },
+    {
+      "url": "https://developers.facebook.com/docs/video-api/guides/reels-publishing/",
+      "http_status": 200,
+      "body_sha256": "6fdcfa648cf9186c094fcd3a87b8bdc6a98fc73536bac922d8ef254d62d66319",
+      "body_bytes": 853064,
+      "meaning": "Retrieval only; does not verify claims, licence or API access"
+    }
+  ],
+  "meta_documentary_observation": {
+    "publication_kind": "REEL",
+    "duration_min_seconds": 3,
+    "duration_max_seconds": 90,
+    "target_120_240_seconds_supported_by_this_guide": false,
+    "account_or_api_verified": false,
+    "scopes_documented": [
+      "pages_show_list",
+      "pages_read_engagement",
+      "pages_manage_posts"
+    ],
+    "page_task_documented": "CREATE_CONTENT",
+    "page_video_support": "UNVERIFIED"
+  }
+}

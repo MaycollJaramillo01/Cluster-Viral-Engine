@@ -1,0 +1,695 @@
+PROYECTO: CLUSTER VIRAL ENGINE
+
+Documento de requerimientos técnicos y desarrollo
+
+Cliente: Cluster Media
+Fecha: Octubre 2026
+Proyecto: Plataforma automatizada de producción de contenido viral para redes sociales.
+
+⸻
+
+1. OBJETIVO GENERAL
+
+Desarrollar una plataforma propia que permita investigar, producir, editar y publicar videos documentales de alto potencial viral mediante inteligencia artificial.
+
+El sistema debe automatizar la mayor parte del proceso de producción, desde la identificación de historias interesantes hasta la generación del video final y su publicación en Facebook.
+
+El objetivo principal es generar contenido original, conseguir un volumen elevado de visualizaciones y monetizarlo mediante Facebook Content Monetization.
+
+La plataforma debe diseñarse con una arquitectura escalable para que, eventualmente, pueda comercializarse como un servicio para otras empresas, agencias y creadores de contenido.
+
+2. CARACTERÍSTICAS DEL PROYECTO
+
+Temáticas principales:
+
+* Crímenes históricos y casos policiales.
+* Narcotráfico y crimen organizado.
+* Desapariciones y casos sin resolver.
+* Misterios e historias sorprendentes.
+* Historia latinoamericana y mundial.
+* Personajes polémicos.
+* Dinero, poder, corrupción y grandes fortunas.
+* Acontecimientos sociales de alto interés.
+
+Características audiovisuales:
+
+* Videos de 2 a 4 minutos.
+* Formato vertical 9:16.
+* Resolución de 1080 × 1920 píxeles.
+* Narración profesional en español latinoamericano.
+* Edición documental dinámica.
+* Fotografías y videos de archivo.
+* Mapas, documentos, titulares y elementos gráficos.
+* Recreaciones visuales generadas con inteligencia artificial.
+* Subtítulos sincronizados.
+* Música y efectos sonoros cuando corresponda.
+
+Producción inicial: 1–2 videos diarios.
+
+Plataforma prioritaria: Facebook.
+
+Supervisión: Cada video deberá ser revisado y aprobado antes de publicarse.
+
+Presupuesto operativo objetivo: Menos de US$100 mensuales, sin incluir el costo de desarrollo.
+
+Este presupuesto es una meta que deberá validarse mediante pruebas reales de producción.
+
+⸻
+
+3. ARQUITECTURA GENERAL
+
+El sistema estará compuesto por siete módulos principales:
+
+1. Radar de viralidad y descubrimiento de historias.
+2. Investigación y verificación de información.
+3. Generación de guiones mediante inteligencia artificial.
+4. Producción de narración y recursos audiovisuales.
+5. Edición y renderización automatizada.
+6. Panel de revisión y aprobación.
+7. Publicación, medición y optimización.
+
+Cada módulo deberá funcionar de manera independiente, pero conectado con los demás.
+
+Se recomienda utilizar una arquitectura modular para permitir cambiar proveedores de inteligencia artificial sin reconstruir toda la plataforma.
+
+⸻
+
+4. MÓDULO DE INTELIGENCIA EDITORIAL Y VIRALIDAD
+
+Este es uno de los componentes más importantes del proyecto.
+
+No buscamos simplemente generar videos automáticamente. Queremos desarrollar un sistema capaz de identificar historias con alto potencial de audiencia.
+
+Funcionalidades
+
+A. Análisis de referencias
+
+El administrador podrá ingresar enlaces de videos y cuentas de Facebook, TikTok, Instagram o YouTube que considere exitosos.
+
+El sistema deberá analizar, en la medida en que los datos sean accesibles mediante mecanismos autorizados:
+
+* Temática.
+* Título.
+* Gancho inicial.
+* Duración.
+* Visualizaciones.
+* Interacciones.
+* Estructura narrativa.
+* Ritmo del contenido.
+* Recursos audiovisuales utilizados.
+* Fecha de publicación.
+* Patrones de éxito.
+
+No se pretende copiar videos, sino comprender sus características editoriales y desarrollar contenido original.
+
+B. Descubrimiento de historias
+
+La inteligencia artificial deberá proponer historias relacionadas con las temáticas establecidas.
+
+Cada propuesta deberá incluir:
+
+* Título provisional.
+* Resumen.
+* Gancho sugerido.
+* Motivo por el cual podría generar interés.
+* Disponibilidad de fuentes.
+* Potencial audiovisual.
+* Posibles riesgos editoriales.
+
+C. Índice de potencial viral
+
+Desarrollar una calificación experimental de 0 a 100 basada inicialmente en:
+
+* Curiosidad que despierta la historia.
+* Fuerza del gancho.
+* Conflicto narrativo.
+* Relevancia social.
+* Potencial de generar compartidos.
+* Disponibilidad de material visual.
+* Resultados de contenidos similares.
+
+Esta calificación será orientativa. Posteriormente deberá ajustarse con datos reales de rendimiento.
+
+⸻
+
+5. MÓDULO DE INVESTIGACIÓN
+
+Integrar OpenAI API o Claude API con herramientas de búsqueda y recuperación de información.
+
+El sistema deberá investigar las historias seleccionadas y construir una base documental antes de redactar el guion.
+
+Requisitos
+
+* Consultar varias fuentes cuando sea posible.
+* Priorizar medios confiables y documentos oficiales.
+* Identificar fechas, personajes y acontecimientos.
+* Diferenciar hechos confirmados de hipótesis.
+* Evitar información inventada.
+* Guardar enlaces de las fuentes.
+* Detectar contradicciones.
+* Identificar afirmaciones que necesitan verificación humana.
+
+En temas criminales, el sistema debe distinguir entre personas investigadas, acusadas, condenadas o absueltas.
+
+También deberá diferenciar acontecimientos históricos de investigaciones judiciales todavía abiertas.
+
+El resultado será un expediente de investigación que servirá como base del guion.
+
+⸻
+
+6. MÓDULO DE GENERACIÓN DE GUIONES
+
+Integrar un modelo de lenguaje mediante API.
+
+Opciones principales:
+
+* OpenAI API.
+* Claude API.
+
+La plataforma deberá permitir comparar modelos según calidad narrativa, costos y facilidad de integración.
+
+Objetivo editorial
+
+Generar guiones originales con alto potencial de retención.
+
+Cada guion deberá incluir:
+
+A. Gancho inicial
+
+Los primeros segundos deben despertar curiosidad mediante una afirmación interesante, una pregunta o un acontecimiento sorprendente.
+
+B. Contexto
+
+Presentar rápidamente los elementos necesarios para comprender la historia.
+
+C. Desarrollo narrativo
+
+Construir progresivamente el relato, introduciendo información relevante y manteniendo el interés.
+
+D. Revelaciones
+
+Presentar los datos más sorprendentes en el momento adecuado.
+
+E. Desenlace
+
+Cerrar la historia satisfactoriamente, evitando conclusiones engañosas o información no verificada.
+
+Funcionalidades adicionales
+
+* Generar tres opciones de gancho.
+* Generar diferentes títulos.
+* Modificar el tono narrativo.
+* Ajustar la duración.
+* Regenerar párrafos específicos.
+* Dividir automáticamente el guion en escenas.
+* Vincular afirmaciones con sus fuentes.
+* Estimar la duración de la narración.
+
+El sistema deberá utilizar ejemplos de contenido exitoso como referencias editoriales.
+
+Inicialmente se recomienda implementar instrucciones especializadas, ejemplos y evaluaciones de resultados, sin necesidad de entrenar un modelo desde cero.
+
+⸻
+
+7. MÓDULO DE NARRACIÓN
+
+Proveedor inicial recomendado: ElevenLabs.
+
+Integrar su API para generar narraciones naturales y profesionales.
+
+Funcionalidades
+
+* Seleccionar voces.
+* Ajustar características de narración cuando la API lo permita.
+* Generar audio a partir del guion.
+* Regenerar fragmentos.
+* Descargar y almacenar archivos de audio.
+* Sincronizar audio con subtítulos y escenas.
+
+La voz deberá transmitir naturalidad y credibilidad, evitando una narración exageradamente artificial.
+
+Se priorizará una voz masculina o femenina en español latinoamericano, según las pruebas editoriales.
+
+El sistema debe conservar los archivos generados para evitar consumir créditos cuando únicamente se modifica una imagen o una transición.
+
+⸻
+
+8. MÓDULO DE PRODUCCIÓN AUDIOVISUAL
+
+La plataforma deberá combinar diferentes fuentes visuales.
+
+A. Material documental
+
+* Fotografías históricas.
+* Videos de archivo.
+* Mapas.
+* Documentos.
+* Titulares periodísticos.
+* Fotografías de personajes.
+* Imágenes de lugares relevantes.
+
+Todo material deberá utilizarse respetando los derechos de autor y las condiciones de licencia.
+
+B. Recursos generados con inteligencia artificial
+
+Integrar opcionalmente servicios de generación de imágenes y video mediante API.
+
+Se utilizarán principalmente para:
+
+* Recreaciones históricas.
+* Escenarios ilustrativos.
+* Ambientaciones.
+* Representaciones conceptuales.
+* Escenas donde no exista material documental adecuado.
+
+Las recreaciones que puedan confundirse con imágenes auténticas deberán identificarse claramente.
+
+C. Biblioteca de recursos
+
+Implementar almacenamiento organizado por proyecto.
+
+Cada recurso deberá incluir:
+
+* Nombre.
+* Tipo.
+* Fuente.
+* Licencia o autorización.
+* Escena asignada.
+* Estado de aprobación.
+
+D. Optimización de costos
+
+Debido al presupuesto inicial, la plataforma no deberá depender de generar video con IA para cada escena.
+
+Se priorizarán fotografías, archivos, animaciones programáticas y movimientos de cámara.
+
+La generación de escenas mediante IA se utilizará de manera selectiva.
+
+⸻
+
+9. MOTOR DE EDICIÓN AUTOMÁTICA
+
+Se recomienda evaluar inicialmente las siguientes tecnologías:
+
+FFmpeg
+
+https://github.com/FFmpeg/FFmpeg
+
+MoviePy
+
+https://github.com/Zulko/moviepy
+
+Remotion
+
+https://github.com/remotion-dev/remotion
+
+Remotion puede ser una alternativa interesante, pero deberá revisarse su licencia comercial antes de utilizarlo en una plataforma automatizada que eventualmente se venderá a terceros.
+
+Funcionalidades requeridas
+
+* Crear secuencias a partir de escenas.
+* Integrar fotografías y videos.
+* Aplicar zoom y movimientos panorámicos.
+* Crear transiciones.
+* Insertar títulos.
+* Generar subtítulos sincronizados.
+* Incorporar música.
+* Añadir efectos sonoros.
+* Sincronizar narración y recursos visuales.
+* Normalizar niveles de audio.
+* Exportar archivos MP4.
+* Generar miniaturas.
+* Permitir modificar escenas individualmente.
+
+Estructura de escenas
+
+El guion deberá transformarse en datos estructurados.
+
+Cada escena incluirá:
+
+* Identificador.
+* Duración.
+* Texto narrado.
+* Archivo de audio.
+* Recurso visual.
+* Tipo de movimiento.
+* Transición.
+* Texto en pantalla.
+* Referencia documental.
+* Estado de aprobación.
+
+Esto permitirá reemplazar imágenes o modificar fragmentos sin reconstruir todo el proyecto.
+
+Calidad visual
+
+La edición debe parecer un documental breve, no una presentación de diapositivas.
+
+Se buscará dinamismo mediante movimientos, variaciones de planos, recursos gráficos y cambios visuales relacionados con la narración.
+
+⸻
+
+10. PANEL DE ADMINISTRACIÓN
+
+Desarrollar una interfaz web sencilla e intuitiva.
+
+Pantallas principales
+
+A. Dashboard
+
+* Videos en producción.
+* Videos pendientes de aprobación.
+* Videos publicados.
+* Producción mensual.
+* Costos acumulados.
+* Resultados generales.
+
+B. Radar editorial
+
+* Historias propuestas.
+* Calificación de potencial viral.
+* Referencias.
+* Selección de temas.
+
+C. Editor de guiones
+
+* Visualización del guion.
+* Fuentes documentales.
+* Modificación de texto.
+* Regeneración mediante IA.
+* Aprobación del guion.
+
+D. Editor audiovisual
+
+* Vista previa del video.
+* Lista de escenas.
+* Reemplazo de recursos.
+* Modificación de narración.
+* Regeneración de escenas.
+* Exportación.
+
+E. Publicaciones
+
+* Videos aprobados.
+* Programación.
+* Estado de publicación.
+* Historial.
+* Errores.
+
+F. Analítica
+
+* Visualizaciones.
+* Tiempo de reproducción.
+* Retención, cuando esté disponible.
+* Interacciones.
+* Compartidos.
+* Ingresos por contenido, cuando la API permita obtenerlos.
+* Comparación entre videos.
+
+⸻
+
+11. PUBLICACIÓN AUTOMATIZADA
+
+Integrar Facebook mediante los mecanismos oficiales de Meta.
+
+El desarrollador deberá verificar:
+
+* Permisos necesarios.
+* Acceso a páginas.
+* Tipos de publicación admitidos.
+* Restricciones de duración y formato.
+* Posibilidades de programación.
+* Disponibilidad de métricas.
+* Limitaciones de las APIs.
+
+Flujo de publicación
+
+1. El sistema termina el video.
+2. El administrador recibe una notificación.
+3. Revisa el contenido.
+4. Aprueba o solicita modificaciones.
+5. El sistema prepara título, descripción y publicación.
+6. Se programa o publica el contenido.
+7. Se registra el identificador de la publicación.
+8. Se recuperan las métricas disponibles.
+
+Ningún video deberá publicarse sin aprobación humana.
+
+⸻
+
+12. ANALÍTICA Y OPTIMIZACIÓN
+
+El sistema deberá almacenar el rendimiento de los videos publicados.
+
+Indicadores prioritarios
+
+* Reproducciones.
+* Alcance.
+* Tiempo promedio de reproducción.
+* Retención.
+* Compartidos.
+* Comentarios.
+* Interacciones.
+* Ingresos generados, cuando puedan obtenerse.
+* Costo de producción.
+* Ingresos por cada mil reproducciones monetizables, cuando existan datos suficientes.
+
+El sistema deberá identificar qué temáticas, ganchos, duraciones y estructuras narrativas presentan mejores resultados.
+
+Aprendizaje editorial
+
+La plataforma deberá comparar las características de los videos con su rendimiento.
+
+Por ejemplo:
+
+* ¿Qué tipos de historias generan más reproducciones?
+* ¿Qué ganchos producen mayor retención?
+* ¿Qué duración funciona mejor?
+* ¿Qué temas generan más compartidos?
+* ¿Qué contenidos producen mayores ingresos?
+
+Estos datos servirán para mejorar futuras recomendaciones.
+
+No se requiere inicialmente entrenar un modelo nuevo. Puede utilizarse una base de datos de resultados, instrucciones dinámicas y evaluaciones automatizadas.
+
+⸻
+
+13. TECNOLOGÍAS RECOMENDADAS
+
+Backend: Python con FastAPI.
+
+Frontend: Next.js o React.
+
+Base de datos: PostgreSQL o Supabase.
+
+Inteligencia artificial: OpenAI API o Claude API.
+
+Narración: ElevenLabs API.
+
+Edición: FFmpeg y MoviePy, sujetos a pruebas.
+
+Automatizaciones: n8n o sistema de tareas propio.
+
+Almacenamiento: Servicio compatible con S3.
+
+Publicación: APIs oficiales de Meta.
+
+Infraestructura: VPS o servicios cloud económicos.
+
+Procesamiento: Cola de tareas para generación y renderización.
+
+La selección definitiva dependerá de la experiencia del desarrollador, costos y resultados de las pruebas.
+
+⸻
+
+14. PRESUPUESTO OPERATIVO
+
+El objetivo inicial es mantener el costo mensual por debajo de US$100.
+
+Distribución preliminar:
+
+* OpenAI API: US$5–12.
+* ElevenLabs: aproximadamente US$22.
+* Servidor y almacenamiento: US$10–18.
+* Generación visual: US$15–25.
+* Reserva técnica: US$13–18.
+
+Presupuesto estimado: US$65–95 mensuales.
+
+Estos valores son referencias de planificación, no cotizaciones definitivas.
+
+La viabilidad dependerá del consumo real de tokens, caracteres de voz, imágenes, almacenamiento y procesamiento.
+
+El desarrollador deberá implementar controles de consumo y costos por video.
+
+Si el costo supera el presupuesto, el sistema deberá priorizar recursos visuales existentes y reducir la generación audiovisual mediante IA.
+
+⸻
+
+15. FASES DE DESARROLLO
+
+Fase 1. Motor de producción
+
+Estimación: semanas 1–2.
+
+Implementar:
+
+* Integración con modelos de lenguaje.
+* Generación de guiones.
+* División en escenas.
+* ElevenLabs.
+* Edición programática.
+* Exportación de video.
+
+Entregable: Primer video documental completo generado desde el sistema.
+
+Fase 2. Panel editorial
+
+Estimación: semanas 3–4.
+
+Implementar:
+
+* Gestión de proyectos.
+* Editor de guiones.
+* Biblioteca audiovisual.
+* Previsualización.
+* Correcciones.
+* Aprobación.
+
+Entregable: Plataforma capaz de producir 10 videos de prueba con supervisión humana.
+
+Fase 3. Publicación y métricas
+
+Estimación: semanas 5–6.
+
+Implementar:
+
+* Integración con Facebook.
+* Programación de publicaciones.
+* Registro de resultados.
+* Dashboard de métricas.
+* Control de costos.
+
+Entregable: Flujo completo desde la generación hasta la publicación aprobada.
+
+Fase 4. Inteligencia editorial
+
+Estimación: semanas 7–8.
+
+Implementar:
+
+* Análisis de referencias.
+* Clasificación de historias.
+* Índice de potencial viral.
+* Comparación de rendimiento.
+* Recomendaciones basadas en resultados.
+
+Entregable: Primera versión del sistema de inteligencia editorial.
+
+Las ocho semanas son una estimación inicial, no un compromiso de entrega. El desarrollador deberá validar los plazos.
+
+⸻
+
+16. ARQUITECTURA PARA COMERCIALIZACIÓN FUTURA
+
+Aunque inicialmente se utilizará para Cluster Media, la arquitectura debe permitir incorporar posteriormente:
+
+* Múltiples empresas.
+* Múltiples usuarios.
+* Diferentes marcas.
+* Voces personalizadas.
+* Plantillas audiovisuales.
+* Líneas editoriales independientes.
+* Cuentas de redes sociales por cliente.
+* Límites de producción.
+* Facturación por suscripción.
+* Control de consumo por cliente.
+
+No es necesario desarrollar todas estas funciones en el MVP.
+
+Sin embargo, la estructura de base de datos, almacenamiento y permisos deberá contemplar desde el principio la separación entre clientes.
+
+⸻
+
+17. SEGURIDAD, ORIGINALIDAD Y CUMPLIMIENTO
+
+El sistema deberá incorporar mecanismos para proteger las cuentas y reducir riesgos.
+
+Requisitos obligatorios
+
+1. No publicar sin aprobación humana.
+2. Registrar fuentes de investigación.
+3. Evitar afirmaciones criminales no verificadas.
+4. Diferenciar hechos, hipótesis y acusaciones.
+5. No reutilizar material protegido sin autorización.
+6. Registrar licencias de recursos audiovisuales.
+7. Identificar recreaciones de IA cuando corresponda.
+8. Evitar imágenes de violencia gráfica.
+9. Aplicar las políticas vigentes de Meta.
+10. Mantener registros de las modificaciones y aprobaciones.
+
+La monetización deberá basarse en contenido original y transformativo, no en la simple reutilización de videos ajenos.
+
+⸻
+
+18. CRITERIOS DE ACEPTACIÓN DEL MVP
+
+Antes de considerar finalizada la primera versión, el sistema deberá demostrar que puede:
+
+* Generar una propuesta editorial.
+* Investigar una historia y presentar fuentes.
+* Producir un guion de 2–4 minutos.
+* Generar una narración natural.
+* Construir un video con material documental y recursos visuales.
+* Incorporar subtítulos y transiciones.
+* Permitir correcciones antes de publicar.
+* Exportar un video vertical en 1080p.
+* Publicar mediante un flujo autorizado de Meta.
+* Registrar los costos de producción.
+* Almacenar las métricas disponibles.
+
+Se deberán producir al menos 10 videos de prueba para evaluar:
+
+* Calidad narrativa.
+* Calidad de voz.
+* Calidad visual.
+* Errores factuales.
+* Tiempo de producción.
+* Costo por video.
+* Intervención humana requerida.
+
+El desarrollador deberá entregar documentación técnica, código fuente, instrucciones de instalación y configuración de las APIs.
+
+⸻
+
+19. ENTREGABLES QUE SOLICITAMOS AL DESARROLLADOR
+
+Antes de iniciar, necesitamos una propuesta técnica que incluya:
+
+1. Arquitectura recomendada.
+2. Tecnologías seleccionadas y justificación.
+3. Repositorios de GitHub que podrían utilizarse.
+4. APIs necesarias.
+5. Estimación de costos operativos.
+6. Estimación de horas de desarrollo.
+7. Cronograma de implementación.
+8. Riesgos y limitaciones.
+9. Funcionalidades del MVP.
+10. Recomendaciones para escalabilidad comercial.
+
+También solicitamos una prueba de concepto del motor audiovisual antes de desarrollar todo el panel.
+
+Esta prueba deberá generar un video documental corto con narración, fotografías, movimiento, subtítulos y transiciones.
+
+La finalidad es comprobar que podemos conseguir una calidad audiovisual competitiva mediante código y APIs, sin depender de costosas plataformas de edición automática.
+
+⸻
+
+20. VISIÓN FINAL
+
+Cluster Viral Engine no debe ser simplemente una herramienta para producir videos con inteligencia artificial.
+
+Debe convertirse en una plataforma de inteligencia editorial y producción audiovisual que permita identificar historias atractivas, desarrollar narrativas originales, automatizar la producción y utilizar los resultados de audiencia para mejorar continuamente.
+
+Nuestra prioridad inicial no es producir grandes cantidades de contenido, sino conseguir una fórmula repetible que combine viralidad, calidad audiovisual, bajo costo de producción y monetización.
+
+El desarrollo deberá comenzar con un MVP funcional, económicamente sostenible y técnicamente preparado para convertirse posteriormente en un producto comercial.
