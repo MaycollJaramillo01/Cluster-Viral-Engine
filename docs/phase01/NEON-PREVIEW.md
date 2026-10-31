@@ -17,6 +17,10 @@ según el ADR existente. No se migró a Neon Auth por activar su opción en Mark
 - Variables de aplicación añadidas solo a Preview de `codex/neon-preview`;
   no se cambiaron las variables globales de la integración ni las de producción.
 - La credencial migradora directa no se entrega a la aplicación desplegada.
+- Los alias de conexión PostgreSQL heredados de Marketplace también se
+  sobrescriben solo para esta rama con el rol restringido; las URLs directas
+  administrativas se dejan vacías. Así el Preview no hereda credenciales de owner
+  mediante `POSTGRES_*`, `PGPASSWORD` o `DATABASE_URL_UNPOOLED`.
 - Cuenta inicial preparada con correo sin verificar; el acceso se entrega mediante
   invitación manual privada, sin afirmar que se envió email. Owner requiere MFA
   para acceder a recursos de organización. No se publican contraseñas ni enlaces
@@ -60,6 +64,14 @@ manteniendo HTTP local en CI. El caso de cambio de contraseña usa otra IP
 sintética para no agotar el límite de login de los casos previos; no se desactiva
 el rate limiting. El correo de la primera cuenta permanece sin verificar hasta
 que su destinatario abra el enlace de invitación entregado privadamente.
+
+La prueba HTTPS detectó un error real `08P01`: el pooler rechaza `options` con
+`statement_timeout` en el paquete de conexión. Los pools de aplicación ahora
+usan un timeout de cliente y no envían GUCs al conectar. Los límites de servidor
+se configuran en los roles; cada transacción tenant además aplica `SET LOCAL`.
+La suite usa el mismo constructor de pool que el servidor y, en Neon, se conecta
+mediante el pooler. La limpieza cierra exclusivamente la base `cve_test_*` creada
+por la propia ejecución, con FORCE para retirar sus backends ociosos del pooler.
 
 Rollback de código: revertir esta PR. Dejar de usar el Preview y retirar sus
 variables específicas desde Vercel si se abandona el entorno. No eliminar ramas

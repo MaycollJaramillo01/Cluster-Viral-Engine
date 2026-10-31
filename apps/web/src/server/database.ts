@@ -2,14 +2,13 @@ import { Pool, type PoolClient } from 'pg';
 import { z } from 'zod';
 import { AppError, can, organizationIdSchema, roleSchema, type OrganizationContext, type Permission, type VerifiedIdentity } from '@cluster/contracts';
 import { parseConfig } from './config';
+import { createApplicationPool } from './pool';
 
 const state = globalThis as typeof globalThis & { cveRuntimePool?: Pool };
 export function getRuntimePool(): Pool {
   if (!state.cveRuntimePool) {
     const config = parseConfig(process.env);
-    state.cveRuntimePool = new Pool({ connectionString: config.DATABASE_URL, max: 4, connectionTimeoutMillis: 3000,
-      idleTimeoutMillis: 30000, options: '-c statement_timeout=5000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=10000' });
-    state.cveRuntimePool.on('error', () => { /* Never log connection strings or driver errors. */ });
+    state.cveRuntimePool = createApplicationPool(config.DATABASE_URL);
   }
   return state.cveRuntimePool;
 }
@@ -32,6 +31,9 @@ export class TenantDatabase {
     let begun = false, destroyConnection = false;
     try {
       await client.query('BEGIN'); begun = true;
+      await client.query("SET LOCAL statement_timeout='5000ms'");
+      await client.query("SET LOCAL lock_timeout='2000ms'");
+      await client.query("SET LOCAL idle_in_transaction_session_timeout='10000ms'");
       await assertRuntimeRole(client);
       await client.query("SELECT set_config('app.auth_subject',$1,true)", [identity.subject]);
       const actor = await client.query('SELECT id FROM app_users WHERE auth_subject=$1', [identity.subject]);

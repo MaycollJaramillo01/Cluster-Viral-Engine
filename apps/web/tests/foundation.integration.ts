@@ -11,6 +11,7 @@ import { provisionRoles, seedDevelopmentIdentity } from '../src/server/developme
 import { TenantDatabase } from '../src/server/database';
 import { createIdentityService } from '../src/server/auth';
 import { parseConfig } from '../src/server/config';
+import { createApplicationPool } from '../src/server/pool';
 import { getMigrations } from 'better-auth/db/migration';
 import { requestHandler } from '../src/server/observability';
 import { inspectDatabase, inspectMigrations, migrationChecksums } from '../../../scripts/lib/environment-readiness.mjs';
@@ -48,8 +49,15 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     const runtimeUrl = new URL(url), identityUrl = new URL(url);
     runtimeUrl.username=runtimeRole; runtimeUrl.password=rolePassword;
     identityUrl.username=authRole; identityUrl.password=rolePassword;
-    runtime=new Pool({connectionString:runtimeUrl.toString(),max:4,options:'-c statement_timeout=1000'});
-    authPool=new Pool({connectionString:identityUrl.toString(),max:4});
+    const cloudTest = new URL(url).hostname.endsWith('.neon.tech');
+    if (cloudTest) {
+      for (const target of [runtimeUrl, identityUrl]) {
+        target.hostname = target.hostname.replace(/-pooler\./, '.').replace('.c-', '-pooler.c-');
+        target.searchParams.set('sslmode', 'verify-full');
+      }
+    }
+    runtime=createApplicationPool(runtimeUrl.toString());
+    authPool=createApplicationPool(identityUrl.toString());
     await t.test('environment preflight checks real roles, migration checksums and missing grants without writes', async () => {
       const expected = await migrationChecksums(migrationDir);
       assert.equal((await inspectDatabase(runtime!, 'runtime')).status, 'READY');
@@ -91,7 +99,9 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     });
     await t.test('expired identity and statement timeout roll back without releasing data or dirty pooled state',async()=>{
       await assert.rejects(db.identityTransaction({...identity,expiresAt:new Date(0)},async()=>true),AppError);
-      await assert.rejects(db.organizationTransaction(identity,orgA,'organization:read',async c=>{await c.query('SELECT pg_sleep(2)');}),/statement timeout/);
+      await assert.rejects(db.organizationTransaction(identity,orgA,'organization:read',async c=>{
+        await c.query("SET LOCAL statement_timeout='100ms'"); await c.query('SELECT pg_sleep(2)');
+      }),/statement timeout/);
       assert.equal(await db.organizationTransaction(identity,orgA,'organization:read',async c=>(await c.query('SELECT 1 AS n')).rows[0].n),1);
     });
     await t.test('cross-organization writes fail and a swallowed SQL error cannot masquerade as a successful commit',async()=>{
@@ -105,7 +115,6 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
         return 'must not commit';
       }),e=>e instanceof AppError&&e.code==='INTERNAL_ERROR');
     });
-    const cloudTest = new URL(url).hostname.endsWith('.neon.tech');
     const configRuntime = new URL(runtimeUrl), configIdentity = new URL(identityUrl);
     if (cloudTest) {
       for (const target of [configRuntime, configIdentity]) {
@@ -223,7 +232,9 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
   } finally {
     await authPool?.end();await runtime?.end();await admin?.end();
     // Only the uniquely named database created by this test is dropped; never a supplied DB.
-    if(/^cve_test_[0-9]+_[a-f0-9]+$/.test(database))await server.query(`DROP DATABASE IF EXISTS "${database}"`);
+    // PgBouncer can retain idle backend sessions after all test clients close.
+    // FORCE is limited to the uniquely named database created by this test.
+    if(/^cve_test_[0-9]+_[a-f0-9]+$/.test(database))await server.query(`DROP DATABASE IF EXISTS "${database}" WITH (FORCE)`);
     for(const name of [runtimeRole,authRole])if(/^cve_(runtime|auth)_[0-9]+_[a-f0-9]+$/.test(name))await server.query(`DROP ROLE IF EXISTS "${name}"`);
     await server.end();
   }
