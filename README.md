@@ -28,6 +28,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
 
+La preparación de **Fase 08** solo endurece lo existente: barrido de acceso de todas las rutas de organización, CSP, auditoría de dependencias, runbook del worker y un plan de pilotos en borrador. Sin pilotos, costes reales, restore ni firmas, el gate final es **NO_GO**. Consultar [docs/phase08/README.md](docs/phase08/README.md).
+
 La preparación de **Fase 07** añade solo indicadores de operación y coste por video, por API y sin métricas de Meta. Lo que no se mide se devuelve como `null`, nunca como 0. Consultar [docs/phase07/README.md](docs/phase07/README.md).
 
 La preparación de **Fase 06** añade solo la revisión y la aprobación de un render por el hash de sus bytes, por API. No hay dashboard, publicación ni conexión con Meta, porque `AGENTS.md` lo prohíbe hasta verificar Meta. Consultar [docs/phase06/README.md](docs/phase06/README.md).

@@ -1,0 +1,21 @@
+{
+  "phase": "08",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F08-01", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "UAT-PLAN.md en borrador: matriz de 10 pilotos, criterios y motivos de parada. Sin temas ni firmas." },
+    { "id": "F08-02", "status": "BLOCKED_EXTERNAL", "evidence": "Sin LLM, voz real, Blob ni reviewer. No se fabricaron pilotos sintéticos que pasen por reales." },
+    { "id": "F08-03", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "La QA de F05 ya aplica las 13 comprobaciones de ffprobe y ebur128 a cada master. Faltan los 10 masters reales." },
+    { "id": "F08-04", "status": "VERIFIED_LOCAL", "evidence": "test:http barre los 45 endpoints de organización: con sesión en otra organización, 403 en lecturas y 400, 403 o 415 en escrituras; sin sesión, 401 en todos. Más las pruebas cross-org, de roles y RLS en PostgreSQL de F01 a F07." },
+    { "id": "F08-05", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "429 y 5xx del TTS, caída de worker, lease vencido y reintentos probados en F04 y F05 contra PostgreSQL. Sin prueba de carga ni de disco lleno. Sin publicación, el publish duplicado no aplica." },
+    { "id": "F08-06", "status": "BLOCKED_EXTERNAL", "evidence": "Sin Neon ni deployment de Vercel que restaurar o revertir: RPO y RTO sin medir. Los rollback SQL de F00 y F02 a F06 se aplican en transacción en las pruebas de PostgreSQL." },
+    { "id": "F08-07", "status": "BLOCKED_EXTERNAL", "evidence": "Sin pilotos ni facturas de proveedores. GET /usage ya da el coste por video para reconciliarlo." },
+    { "id": "F08-08", "status": "BLOCKED_EXTERNAL", "evidence": "Sin App Review de Meta ni material de pilotos. La aprobación por hash ya bloquea licencias vencidas y claims sin fuente." },
+    { "id": "F08-09", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "docs/17 con los códigos de error reales del worker. Sin responsables de guardia, y nadie de soporte ha ejecutado un incidente simulado." },
+    { "id": "F08-10", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "npm audit: 0 en runtime y 0 altas o críticas; 16 moderadas solo de desarrollo. Secret scan 0. CSP comprobada en test:http y sin violaciones en /login. Falta un pentest hecho por una persona." },
+    { "id": "F08-11", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "README por fase con ejecución, rollback y diferencias, y scripts/start-local.ps1 para DEV. Preview bloqueado, y ningún desarrollador nuevo lo ha recreado." },
+    { "id": "F08-12", "status": "NO_GO", "evidence": "Gates de F00 a F07 sin firmar; Meta, Neon, Vercel, TTS y LLM bloqueados. Sin acta ni stakeholders." }
+  ]
+}

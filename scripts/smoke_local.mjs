@@ -20,11 +20,21 @@ async function request(route, expected, body, extra = {}, method = body === unde
     if (pair.slice(i + 1)) jar.set(pair.slice(0, i), pair.slice(i + 1)); else jar.delete(pair.slice(0, i));
   }
   cookie = [...jar].map(([key, value]) => `${key}=${value}`).join('; ');
-  if (response.status !== expected) throw new Error(`${route}: expected ${expected}, got ${response.status}`);
+  if (![expected].flat().includes(response.status)) throw new Error(`${method} ${route}: expected ${expected}, got ${response.status}`);
   checks.push({ route: route.replace(/signature=[^&]+/, 'signature=REDACTED'), status: response.status, request_id: response.headers.get('x-request-id') });
   return response;
 }
-await request('/', 200); await request('/login', 200); await request('/api/health', 200); await request('/api/me', 401);
+// Todas las rutas de organización, no solo las que alguien se acordó de probar: una ruta nueva sin autorización falla aquí.
+const routesRoot = path.join(root, 'apps/web/app/api/organizations/[organizationId]');
+const endpoints = (await Promise.all((await fs.readdir(routesRoot, { recursive: true })).filter(file => path.basename(file) === 'route.ts').map(async file => {
+  const suffix = path.dirname(file).split(path.sep).map(part => part === '[revision]' ? '1' : part.startsWith('[') ? randomUUID() : part).join('/');
+  return [...(await fs.readFile(path.join(routesRoot, file), 'utf8')).matchAll(/export (?:const|async function) (GET|POST|PUT|PATCH|DELETE)\b/g)].map(match => ({ suffix, method: match[1] }));
+}))).flat();
+if (endpoints.length < 40) throw new Error('ROUTE_SWEEP_EMPTY');
+const sweep = async (organization, expected) => { for (const { suffix, method } of endpoints) await request(`/api/organizations/${organization}/${suffix}`, method === 'GET' ? expected.read : expected.write, method === 'GET' ? undefined : {}, {}, method); };
+await request('/', 200);
+if (!(await request('/login', 200)).headers.get('content-security-policy')?.includes("frame-ancestors 'none'")) throw new Error('CSP_MISSING');
+await request('/api/health', 200); await request('/api/me', 401);
 await request('/account', 307);
 await request('/api/auth/sign-in/email', 200, { email, password, rememberMe: false });
 const me = await (await request('/api/me', 200)).json();
@@ -112,7 +122,10 @@ await request(`${rendersPath}/${randomUUID()}/review`, 409);
 await request(`${rendersPath}/${randomUUID()}/decision`, 403, renderDecision);
 await request(`${rendersPath}/${randomUUID()}/decision`, 400, { approved: true });
 await request(`${rendersPath}/${randomUUID()}/decision`, 403, renderDecision, { origin: 'https://evil.example' });
+// Las escrituras validan el cuerpo antes de autorizar: 400 tampoco entrega nada. Lo que no vale es 2xx, 404 ni 409, que delatarían haber pasado la organización.
+await sweep(randomUUID(), { read: 403, write: [400, 403, 415] });
 await request('/api/auth/sign-out', 200, {}); await request('/api/me', 401);
+await sweep(me.memberships[0].organization_id, { read: 401, write: 401 });
 await request(url, 200);
 await request(rendersPath, 401, {});
 await request(`${org}/operations`, 401);
