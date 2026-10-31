@@ -1,0 +1,32 @@
+{
+  "checked_at_utc": "2026-10-31T17:20:00Z",
+  "base_commit": "f13fbe478485ca6eb08e42c27f61c48818cb751d",
+  "execution": "Vercel Sandbox, temporary session, no production credentials",
+  "checks": {
+    "unit_tests": { "status": "PASS", "passed": 18, "skipped": 0 },
+    "lint": "PASS",
+    "typecheck": "PASS",
+    "next_build": "PASS",
+    "client_bundle": { "status": "PASS", "js_files": 14, "configured_secret_values_checked": 0 },
+    "package_validation": { "status": "PASS", "tasks": 108 },
+    "secret_scan": "PASS",
+    "bash_syntax": "PASS",
+    "environment_without_configuration": { "expected_status": "BLOCKED_EXTERNAL", "exit_code": 1 },
+    "postgres_integration": "PENDING_CI",
+    "full_unix_launcher": "NOT_VERIFIED_WITH_POSTGRESQL"
+  },
+  "neon": {
+    "connector": "RESPONDING",
+    "organization_managed_by": "vercel",
+    "dedicated_project_found": false,
+    "create_project_result": "action restricted; organization is managed by Vercel",
+    "project_created": false
+  },
+  "vercel": {
+    "project": "cluster-viral-engine",
+    "environment_variables_found": 0,
+    "production_modified": false
+  },
+  "publication_enabled": false,
+  "phase_gate": "NO_GO"
+}

@@ -13,7 +13,8 @@
     "test:db": "tsx --test tests/*.integration.ts",
     "poc": "tsx src/phase00/cli.ts",
     "db:migrate": "tsx src/server/migrate-cli.ts",
-    "local:bootstrap": "tsx src/server/local-bootstrap.ts"
+    "local:bootstrap": "tsx src/server/local-bootstrap.ts",
+    "check:environment": "tsx src/server/environment-check-cli.ts"
   },
   "dependencies": {
     "@cluster/contracts": "*",
