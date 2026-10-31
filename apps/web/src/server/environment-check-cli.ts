@@ -2,10 +2,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnvConfig } from '@next/env';
 import { Pool } from 'pg';
-import { parseConfig, validateMigrationUrl } from '../apps/web/src/server/config';
-import { migrationChecksums, inspectDatabase, inspectMigrations } from './lib/environment-readiness.mjs';
+import { parseConfig, validateMigrationUrl } from './config';
+import { migrationChecksums, inspectDatabase, inspectMigrations } from '../../../../scripts/lib/environment-readiness.mjs';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
 loadEnvConfig(path.join(root, 'apps/web'));
 
 async function main() {

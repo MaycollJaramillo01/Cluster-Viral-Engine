@@ -16,7 +16,7 @@
     "db:migrate": "npm run db:migrate --workspace=apps/web --",
     "local:bootstrap": "npm run local:bootstrap --workspace=apps/web",
     "local:start": "bash scripts/start-local.sh",
-    "check:environment": "tsx scripts/check-environment.ts",
+    "check:environment": "npm run check:environment --workspace=apps/web",
     "scan:secrets": "python scripts/scan_secrets.py",
     "verify:client": "node scripts/verify_client_bundle.mjs",
     "test:http": "node scripts/smoke_local.mjs"

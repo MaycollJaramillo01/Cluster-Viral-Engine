@@ -24,7 +24,6 @@
     ]
   },
   "include": [
-    "../../scripts/check-environment.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "**/*.ts",

@@ -2,6 +2,11 @@
 
 Fecha: 30-10-2026. **NO_GO para aceptación completa de fase y producción.** El usuario autorizó avanzar técnicamente después de levantar la aplicación local. Esa instrucción permite preparar estas fundaciones; no firma Fase 00, no aprueba material editorial ni habilita publicación. El acta F00 conserva NO_GO.
 
+Actualización de acceso del 31-10-2026: la integración Neon ya responde, pero
+la organización administrada por Vercel rechaza crear el proyecto desde Neon.
+Ver [desbloqueo y diagnóstico](DESBLOQUEO-NEON.md) y
+[evidencia actual](evidence/environment-preflight-2026-10-31.json).
+
 ## Arranque local
 
 Aplicación: **http://127.0.0.1:3000**. Acceso: **http://127.0.0.1:3000/login**. PostgreSQL de este proyecto: loopback:55432; no se alteró el servicio existente en 5432.

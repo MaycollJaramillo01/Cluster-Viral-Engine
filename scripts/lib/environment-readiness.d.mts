@@ -1,4 +1,7 @@
-import type { Pool } from 'pg';
+type Pool = { connect(): Promise<{
+  query(sql: string, values?: unknown[]): Promise<{ rows: unknown[] }>;
+  release(destroy?: boolean): void;
+}> };
 
 export type MigrationChecksum = { version: string; checksum_sha256: string };
 export type CheckResult = { status: 'READY' | 'BLOCKED'; code: string; count?: number };
