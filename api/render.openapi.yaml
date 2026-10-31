@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine render API
+  version: 0.5.0
+  description: Implementado y probado en local. El render corre en un worker aparte, nunca dentro de una petición HTTP. Almacenamiento real y worker facturado siguen BLOCKED_EXTERNAL. Todas las rutas exigen sesión. Aquí no se aprueba ni se publica nada; eso exige revisión humana por render y queda para F06.
+servers:
+  - url: /api/organizations/{organizationId}
+    variables:
+      organizationId: { default: '00000000-0000-0000-0000-000000000000' }
+paths:
+  /projects/{projectId}/renders:
+    get: { summary: 'Listar renders con estado, intentos, QA y métricas; limit 1-100', responses: { '200': { description: Renders }, '400': { description: limit inválido } } }
+    post:
+      summary: 'Pedir un render del material vigente (project:write). Idempotente por hash del manifest: lo igual devuelve el mismo render y lo fallido o cancelado se reencola. Cancela lo que siga activo con material anterior'
+      requestBody: { required: true, content: { application/json: { schema: { $ref: '#/components/schemas/RenderRequest' } } } }
+      responses:
+        '202': { description: 'Aceptado en cola, o ya existente: id, status, manifest_sha256 y created' }
+        '400': { description: 'INVALID_INPUT: campo desconocido (por ejemplo approved) o título inexistente' }
+        '403': { description: FORBIDDEN }
+        '404': { description: Proyecto de otra organización o inexistente }
+        '409': { description: 'CONFLICT sin guion aprobado o fuera de etapa; BLOCKED_BY_POLICY con bloqueos de medios o tope de gasto' }
+  /projects/{projectId}/renders/{renderId}:
+    get: { summary: 'Leer un render con su manifest, QA, métricas y estado del job', responses: { '200': { description: Render }, '404': { description: NOT_FOUND } } }
+  /projects/{projectId}/renders/{renderId}/cancel:
+    post:
+      summary: 'Cancelar (project:write). En cola se cancela al momento; en ejecución el worker detiene el proceso y limpia (CANCELLING). Cuerpo vacío {}'
+      requestBody: { required: true, content: { application/json: { schema: { type: object, additionalProperties: false } } } }
+      responses: { '202': { description: 'id y status CANCELLED o CANCELLING' }, '404': { description: NOT_FOUND }, '409': { description: CONFLICT si ya terminó } }
+  /projects/{projectId}/renders/{renderId}/urls:
+    get: { summary: 'URL firmadas de 5 minutos para master, preview, póster y SRT', responses: { '200': { description: URL y caducidad }, '404': { description: NOT_FOUND }, '409': { description: CONFLICT si no terminó con éxito } } }
+components:
+  schemas:
+    RenderRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        title_index: { type: [integer, 'null'], minimum: 0, maximum: 9, description: 'Índice de title_options del guion aprobado para el título en pantalla; null sin título. Forma parte del manifest' }

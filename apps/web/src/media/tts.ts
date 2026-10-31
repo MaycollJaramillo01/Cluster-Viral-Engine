@@ -51,7 +51,7 @@ export function elevenLabsProvider(apiKey: string, usdPer1kChars: number, fetche
 }
 
 // Tono audible, no silencio: la mezcla y la medición de loudness de F05 necesitan señal.
-function toneWav(milliseconds: number) {
+export function toneWav(milliseconds: number) {
   const rate = 8000, samples = Math.round(milliseconds * rate / 1000), out = Buffer.alloc(44 + samples * 2);
   out.write('RIFF', 0); out.writeUInt32LE(36 + samples * 2, 4); out.write('WAVEfmt ', 8); out.writeUInt32LE(16, 16); out.writeUInt16LE(1, 20); out.writeUInt16LE(1, 22);
   out.writeUInt32LE(rate, 24); out.writeUInt32LE(rate * 2, 28); out.writeUInt16LE(2, 32); out.writeUInt16LE(16, 34); out.write('data', 36); out.writeUInt32LE(samples * 2, 40);

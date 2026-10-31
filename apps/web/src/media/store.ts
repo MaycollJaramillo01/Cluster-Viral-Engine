@@ -157,8 +157,8 @@ export async function mediaState(client: Client, projectId: string, now = new Da
   const voices = new Map(((await client.query('SELECT id,object_key,content_sha256,text_sha256,duration_ms,timing_source,alignment FROM voice_generations WHERE id=ANY($1::uuid[])', [linked.flatMap(l => l.voice_generation_id ?? [])])).rows as VoiceRow[]).map(v => [v.id, v]));
   const visualByScene = new Map(linked.flatMap(l => l.visual_asset_id ? [[l.scene_key, licensed.get(l.visual_asset_id)!] as const] : []));
   const voiceByScene = new Map(linked.flatMap(l => l.voice_generation_id ? [[l.scene_key, voices.get(l.voice_generation_id)!] as const] : []));
-  const result = evaluateMedia({ scenes: version.scenes, visuals: visualByScene, voices: voiceByScene, music: music ? licensed.get(music)! : null, now });
-  return { state: { script_version: version.script_version, script_sha256: version.script_sha256, music_asset_id: music ?? null, ...result }, assets: licensed, voices };
+  const { cues, overlays, ...result } = evaluateMedia({ scenes: version.scenes, visuals: visualByScene, voices: voiceByScene, music: music ? licensed.get(music)! : null, now });
+  return { state: { script_version: version.script_version, script_sha256: version.script_sha256, music_asset_id: music ?? null, ...result }, assets: licensed, voices, timed: { cues, overlays } };
 }
 export const readMedia = async (client: Client, projectId: string) => (await mediaState(client, projectId)).state;
 

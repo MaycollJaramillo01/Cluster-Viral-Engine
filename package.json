@@ -15,6 +15,8 @@
     "test:db": "npm run test:db --workspace=apps/web",
     "db:migrate": "npm run db:migrate --workspace=apps/web --",
     "local:bootstrap": "npm run local:bootstrap --workspace=apps/web",
+    "render:worker": "npm run render:worker --workspace=apps/web --",
+    "render:benchmark": "npm run render:benchmark --workspace=apps/web --",
     "scan:secrets": "python scripts/scan_secrets.py",
     "verify:client": "node scripts/verify_client_bundle.mjs",
     "test:http": "node scripts/smoke_local.mjs"

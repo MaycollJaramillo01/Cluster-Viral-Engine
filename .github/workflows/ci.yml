@@ -26,6 +26,9 @@ jobs:
           node-version: '22'
       - name: Install locked dependencies
         run: npm ci --no-fund
+      # Las pruebas de render corren contra FFmpeg real; sin este paso se omitirían sin avisar.
+      - name: Install FFmpeg and subtitle fonts
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg fonts-liberation
       - name: Unit and contract tests
         run: npm test
       - name: Lint
@@ -62,6 +65,9 @@ jobs:
         with:
           node-version: '22'
       - run: npm ci --no-fund
+      # Las pruebas de render corren contra FFmpeg real; sin este paso se omitirían sin avisar.
+      - name: Install FFmpeg and subtitle fonts
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg fonts-liberation
       - name: Real PostgreSQL isolation, concurrency and rollback tests
         env:
           PHASE00_TEST_ADMIN_URL: postgresql://postgres:postgres@localhost:5432/phase00_ci
