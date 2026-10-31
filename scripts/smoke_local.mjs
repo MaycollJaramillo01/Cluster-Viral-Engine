@@ -10,8 +10,8 @@ const password = lines.find(line => line.startsWith('Contrase'))?.split(': ').sl
 if (!email || !password) throw new Error('LOCAL_CREDENTIAL_FILE_REQUIRED');
 const base = 'http://127.0.0.1:3000', checks = [];
 let cookie = '';
-async function request(route, expected, body, extra = {}) {
-  const response = await fetch(base + route, { method: body === undefined ? 'GET' : 'POST',
+async function request(route, expected, body, extra = {}, method = body === undefined ? 'GET' : 'POST') {
+  const response = await fetch(base + route, { method,
     headers: { origin: base, ...(body !== undefined ? { 'content-type': 'application/json' } : {}), ...(cookie ? { cookie } : {}), ...extra },
     body: body === undefined ? undefined : JSON.stringify(body), redirect: 'manual' });
   const jar = new Map(cookie.split('; ').filter(Boolean).map(item => { const i = item.indexOf('='); return [item.slice(0, i), item.slice(i + 1)]; }));
@@ -49,6 +49,20 @@ const dossier = await (await request(`${projectPath}/dossiers`, 201, {})).json()
 await request(`${projectPath}/dossiers/${dossier.revision}`, 200);
 // La cuenta local es editor: no puede decidir sobre un dossier aunque envíe el hash correcto.
 await request(`${projectPath}/dossiers/${dossier.revision}/decision`, 403, { decision: 'APPROVED', target_sha256: dossier.content_sha256 });
+// Sin dossier aprobado no hay guion: la cuenta editor recibe 409 aunque el cuerpo sea válido. El flujo aprobado se prueba contra PostgreSQL.
+const scriptPath = `${projectPath}/script`, sectionKey = randomUUID();
+const scriptContent = { tone: 'Sobrio', target_seconds: 120, title_options: ['[SMOKE] título 1', '[SMOKE] título 2', '[SMOKE] título 3'], hooks: ['[SMOKE] gancho 1', '[SMOKE] gancho 2', '[SMOKE] gancho 3'], selected_hook: 0,
+  sections: [{ key: sectionKey, beat: 'HOOK', text: '[SMOKE] Texto sintético.', claim_ids: [], non_factual: true }] };
+await request(scriptPath, 404);
+await request(scriptPath, 400, { base_version: 0, content: { ...scriptContent, approved: true } });
+await request(scriptPath, 409, { base_version: 0, content: scriptContent });
+await request(`/api/organizations/${randomUUID()}/projects/${project}/script`, 403, { base_version: 0, content: scriptContent });
+await request(`${scriptPath}/generate`, 503, { idempotency_key: `smoke-${tag}`, tone: 'Sobrio', target_seconds: 120 });
+await request(`${scriptPath}/sections/${sectionKey}`, 409, { base_version: 1, text: '[SMOKE] Otro texto.', claim_ids: [], non_factual: true }, {}, 'PUT');
+await request(`${scriptPath}/sections/${sectionKey}/regenerate`, 503, { idempotency_key: `smoke-${tag}`, base_version: 1 });
+await request(`${scriptPath}/versions/1`, 404);
+await request(`${scriptPath}/versions/1/submit`, 409, {});
+await request(`${scriptPath}/versions/1/decision`, 403, { decision: 'APPROVED', target_sha256: 'a'.repeat(64) });
 await request('/api/auth/sign-out', 200, {}); await request('/api/me', 401);
 await request(`${org}/stories`, 401);
 await request('/account', 307);

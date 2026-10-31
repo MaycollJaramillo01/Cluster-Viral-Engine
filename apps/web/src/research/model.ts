@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AppError } from '@cluster/contracts';
+import { mockScriptOutput } from '../scripts/model';
 import { categories, classifications, legalStatuses, riskCategories } from './contract';
 
 export type ModelPrompt = { system: string; user: string };
@@ -66,6 +67,7 @@ export function acceptClaims(raw: string, sources: { id: string; evidence_excerp
 export const mockModel: EditorialModel = {
   provider: 'mock', origin: 'MOCK',
   async complete(prompt) {
+    if (prompt.system.includes('guion ORIGINAL')) return mockScriptOutput(prompt);
     const { untrusted_data: data } = JSON.parse(prompt.user) as { untrusted_data: { topic?: string; category?: string | null; sources?: { id: string; excerpt: string | null }[] } };
     if (data.sources) return JSON.stringify({ claims: data.sources.filter(s => s.excerpt).map(s => ({ statement: `[MOCK] ${s.excerpt}`.slice(0, 1000), classification: 'UNVERIFIED', evidence: [{ source_id: s.id, excerpt: s.excerpt }] })) });
     return JSON.stringify({ proposals: ['A', 'B', 'C'].map(option => ({ proposed_title: `[MOCK ${option}] ${data.topic}`, summary: '[MOCK] Texto sintético, no es una propuesta editorial.',
