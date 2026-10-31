@@ -8,12 +8,12 @@
     {
       "id": "F01-01",
       "status": "PROTECTED_REVIEW_PENDING",
-      "evidence": "Workspace y main protegido: PR obligatoria, tres checks y force-push deshabilitado; evidencia branch-protection.json."
+      "evidence": "Workspace y main protegido; PR #1 en borrador con tres checks verdes. Falta revisión humana."
     },
     {
       "id": "F01-02",
-      "status": "PREVIEW_PENDING",
-      "evidence": "Proyecto Vercel creado; deployment/HTTPS se verifica después de build READY."
+      "status": "PREVIEW_READY_INCIDENT_OPEN",
+      "evidence": "Preview READY tras SSO; deployment Production accidental pendiente de retirada. Ver evidence/vercel-preview.json."
     },
     {
       "id": "F01-03",
@@ -52,8 +52,8 @@
     },
     {
       "id": "F01-10",
-      "status": "CI_PENDING",
-      "evidence": "Lint, tests, audit y secret scan preparados; CI remota se registra después."
+      "status": "CI_VERIFIED",
+      "evidence": "validate-blueprint, web-build y phase00-postgres verdes en PR #1. Gate de audit relajado para dev; ver EVIDENCIA.md."
     },
     {
       "id": "F01-11",
@@ -65,5 +65,6 @@
       "status": "PENDING_REVIEW",
       "evidence": "Bootstrap y rollback reproducibles localmente; recreación cloud depende de Neon."
     }
-  ]
+  ],
+  "production_incident_open": true
 }

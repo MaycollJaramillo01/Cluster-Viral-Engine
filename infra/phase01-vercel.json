@@ -8,6 +8,7 @@
   "build_command": "npm run build",
   "source_files_outside_root_directory": true,
   "deployment_target": "preview",
-  "production_promoted": false,
+  "production_promoted": true,
+  "production_promoted_note": "Accidental, pending removal; see docs/phase01/evidence/vercel-preview.json",
   "secrets_in_file": false
 }

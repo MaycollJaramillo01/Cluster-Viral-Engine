@@ -57,7 +57,9 @@ Evidencia de ejecución y estado externo: [EVIDENCIA.md](EVIDENCIA.md), [estado 
 
 ## Vercel y Neon
 
-Vercel: proyecto `cluster-viral-engine`, equipo del usuario, Node 22, Root Directory `apps/web`, instalación `npm ci --prefix ../..`, fuentes fuera de raíz activadas. Metadatos sin secretos en `infra/phase01-vercel.json`; despliegue solo **Preview**, sin promoción ni enlace de producción automático. URL y pruebas HTTPS deben constar en `evidence/vercel-preview.json` tras terminar el build.
+Vercel: proyecto `cluster-viral-engine`, equipo del usuario, Node 22, Root Directory `apps/web`, instalación `npm ci --prefix ../..`, fuentes fuera de raíz activadas. Metadatos sin secretos en `infra/phase01-vercel.json`; el despliegue previsto es solo **Preview**. URL y pruebas HTTPS en `evidence/vercel-preview.json`.
+
+**Incidente abierto (31-10-2026):** el primer deploy se creó como Production pese a `--target preview` y sirve públicamente `cluster-viral-engine.vercel.app`, sin base de datos ni secretos. Debe retirarse con el comando registrado en la evidencia. Para desplegar, usar `vercel deploy` sin `--target` y confirmar con `vercel inspect`. Desplegar desde `git archive`, no desde el árbol de trabajo, para no subir archivos privados.
 
 Neon: la integración anunciada devolvió `Unknown tool` al listar proyectos y describir el proyecto. Se registra **BLOCKED_EXTERNAL**; no se inventan project IDs, ramas DEV/PREVIEW/PROD, credenciales, pruebas de pooler ni restauraciones. Los contratos exigen host Neon, `sslmode=verify-full` y endpoint pooled para runtime; migrador directo independiente. Las tres ramas deben tener endpoints/bases distintos, retención/límites definidos y aislamiento probado antes de marcar verificado. Desbloquearlo requiere una acción de cuenta: una `NEON_API_KEY` en el entorno o la integración Neon de Vercel.
 
