@@ -51,7 +51,7 @@ Repetir tras una respuesta perdida puede cobrarse dos veces si el proveedor lleg
 - **Tarifas:** las pruebas usan tarifas ficticias. `ELEVENLABS_USD_PER_1K_CHARS` debe venir del plan contratado, y el coste real por video sigue desconocido.
 - **Recreaciones (F04-09):** no hay proveedor de imagen. El gasto lo declara quien sube el archivo y nadie ha evaluado un prompt seguro.
 - **Revisor humano:** el flujo editor y reviewer se prueba contra PostgreSQL. Por HTTP solo se prueban errores y permisos, porque la cuenta local es editor.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan y los requisitos
 

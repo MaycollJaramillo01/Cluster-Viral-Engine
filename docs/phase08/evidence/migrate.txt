@@ -1,4 +1,4 @@
-
+﻿
 > cluster-viral-engine@0.2.0 db:migrate
 > npm run db:migrate --workspace=apps/web --
 

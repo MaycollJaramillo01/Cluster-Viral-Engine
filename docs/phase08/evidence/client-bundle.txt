@@ -1,4 +1,4 @@
-
+﻿
 > cluster-viral-engine@0.2.0 verify:client
 > node scripts/verify_client_bundle.mjs
 

@@ -34,7 +34,7 @@ Sigue la regla de `docs/16`. Con `null`, `0` queda reservado para "medido y es c
 - **Tope para LLM (F07-06):** no hay adaptador LLM. Cuando exista, debe pasar por `reserveSpend`, igual que TTS e imágenes. Hoy el tope bloquea TTS, imágenes generadas y renders.
 - **Ledger incompleto (F07-05):** registra caracteres de TTS, imágenes y segundos de CPU de los renders correctos. No registra tokens, porque no hay LLM, ni almacenamiento. El CPU no tiene precio hasta que exista un worker facturado.
 - **Presupuesto mensual (F07-12):** comparar con US$100 y 30/60 videos exige los 10 pilotos.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan y los requisitos
 
@@ -59,4 +59,4 @@ npm run test:http
 
 Rollback: revertir la PR. No hay migración ni datos nuevos.
 
-Coste: sin llamadas a proveedores ni servicios contratados. Evidencia en [evidence/](evidence/).
+Coste: sin llamadas a proveedores ni servicios contratados. Evidencia: se verificó junto con F08, en [phase08/evidence](../phase08/evidence/).

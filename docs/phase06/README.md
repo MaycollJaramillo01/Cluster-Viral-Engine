@@ -36,7 +36,7 @@ Lo aprobado queda congelado. Guion, material, licencias y nuevos renders devuelv
 - `BLOCKED_EXTERNAL` **Meta (F06-05 y F06-08):** sin credenciales, Page de prueba ni App Review. No se sabe si un video de 2–4 min se acepta.
 - **Revisor humano:** el flujo se prueba contra PostgreSQL con actores de prueba. Por HTTP solo se prueban errores y permisos, porque la cuenta local es editor. Nadie ha hecho aún el piloto de F06-12.
 - **Vídeo real:** los renders de prueba usan material y voz sintéticos. El paquete de revisión se ha comprobado por sus datos, no con una persona decidiendo con él.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan y los requisitos
 

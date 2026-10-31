@@ -24,7 +24,7 @@ No se aprueba un dossier con: claims sin evidencia; `CONFIRMED` sin soporte o co
 - `BLOCKED_EXTERNAL` **recuperación automática de fuentes:** las fuentes se registran a mano.
 - **F02-12 es parcial:** prueba los validadores con diez historias ficticias y salidas hostiles simuladas. No mide un modelo real ni sustituye la prueba editorial con personas.
 - Los límites de la heurística de riesgo y de la independencia por dominio están marcados en el código. La verificación humana los cubre, no los elimina.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan
 

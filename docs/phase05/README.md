@@ -59,7 +59,7 @@ El diagnóstico está en [clip-frames-diagnosis.txt](evidence/clip-frames-diagno
 - **Revisión humana (F05-03 y F05-04):** nadie ha juzgado legibilidad, variedad documental ni mezcla. Revisé fotogramas sintéticos del host y del contenedor, y ninguno de los dos sustituye a la revisión de una persona. En [container-frames.jpg](evidence/container-frames.jpg) el encuadre es correcto, y el título, los subtítulos y el rótulo de IA se leen con tildes. El estilo pide Arial; el contenedor usa Liberation Sans, de medidas equivalentes. El rótulo de IA, a 30 px sobre 1080, es lo más pequeño y habría que comprobarlo en un teléfono.
 - **Worker fuera de esta máquina:** nunca se ha desplegado. Las mediciones son de un portátil o sobremesa local, no del servidor final.
 - **Transferencias:** no se midió subir ni descargar de almacenamiento, porque no hay almacenamiento real.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan y los requisitos
 

@@ -38,7 +38,7 @@ Las secciones no factuales y el lenguaje absoluto en titulares quedan como aviso
 - **`asset_hint`** es el inicio de la narración, no una sugerencia real de material.
 - **F03-12:** el flujo completo editor y reviewer se prueba contra PostgreSQL. Por HTTP solo se prueban errores y permisos, porque la cuenta local es editor.
 - La rúbrica de `docs/08` existe como función, pero nadie ha puntuado guiones todavía.
-- Neon sigue bloqueado: todo se probó en PostgreSQL 17 local.
+- Sin probar contra Neon: todo se probó en PostgreSQL 17 local.
 
 ## Diferencias con el plan y los requisitos
 

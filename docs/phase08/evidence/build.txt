@@ -1,4 +1,4 @@
-
+﻿
 > cluster-viral-engine@0.2.0 build
 > npm run build --workspace=apps/web
 
@@ -8,18 +8,18 @@
 
 ▲ Next.js 16.4.3 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 160ms
+✓ Running next.config.ts took 226ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 1871ms
+✓ Compiled successfully in 1902ms
   Running TypeScript ...
-  Finished TypeScript in 4.8s ...
+  Finished TypeScript in 4.0s ...
   Collecting page data using 19 workers ...
   Generating static pages using 19 workers (0/9) ...
   Generating static pages using 19 workers (2/9) 
   Generating static pages using 19 workers (4/9) 
   Generating static pages using 19 workers (6/9) 
-✓ Generating static pages using 19 workers (9/9) in 378ms
+✓ Generating static pages using 19 workers (9/9) in 1156ms
   Finalizing page optimization ...
 
 Route (app)
