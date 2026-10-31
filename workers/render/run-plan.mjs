@@ -19,7 +19,8 @@ function runStep(step, cwd, { signal, stepTimeoutMs }) {
   return new Promise((resolve, reject) => {
     if (!Object.hasOwn(prefixes, step.tool) || !Array.isArray(step.args) || step.args.some(arg => typeof arg !== 'string')) return reject(new PlanError('INVALID_PLAN', step.name));
     const started = performance.now();
-    const child = spawn(step.tool, [...prefixes[step.tool], ...step.args], { cwd, shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], signal, timeout: stepTimeoutMs });
+    // FFmpeg atrapa SIGTERM, sale con código propio y puede no salir si está colgado: SIGKILL corta siempre y 'close' informa la señal.
+    const child = spawn(step.tool, [...prefixes[step.tool], ...step.args], { cwd, shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], signal, timeout: stepTimeoutMs, killSignal: 'SIGKILL' });
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += chunk; });
     child.stderr.on('data', chunk => { stderr = (stderr + chunk).slice(-TAIL_CHARS); });
