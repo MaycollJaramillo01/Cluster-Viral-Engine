@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Cluster Viral Engine media API
-  version: 0.4.0
+  version: 0.7.0
   description: Implementado y probado en local. Almacenamiento real y ElevenLabs real siguen BLOCKED_EXTERNAL. Todas las rutas exigen sesión salvo /api/objects, autorizada por firma; las escrituras exigen el mismo origen. Errores comunes 400, 401, 403, 404, 409 y 503.
 servers:
   - url: /api/organizations/{organizationId}
@@ -30,7 +30,11 @@ paths:
   /projects/{projectId}/voice/estimate:
     post: { summary: Calcular lo que falta generar y su coste estimado sin llamar al proveedor, responses: { '200': { description: Estimación marcada como tal }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
   /usage:
-    get: { summary: Gasto del mes frente al tope y últimas 100 filas del ledger, responses: { '200': { description: Uso } } }
+    get: { summary: 'Gasto del mes frente al tope, últimas 100 filas del ledger y coste estimado y final por video (by_project)', responses: { '200': { description: Uso } } }
+  /operations:
+    get:
+      summary: 'Indicadores de operación de los últimos days días (1-366, por defecto 30): plazos, renders, reproceso, causas de fallo, decisiones, coste por proveedor y presupuesto. null significa que no se registra, nunca cero: tiempo humano, CPU de renders fallidos y audiencia'
+      responses: { '200': { description: Indicadores }, '400': { description: days inválido } }
   /api/objects:
     servers: [{ url: / }]
     get: { summary: 'Descargar objeto con firma vigente como attachment; query key, expires y signature', responses: { '200': { description: Bytes }, '403': { description: Firma inválida o caducada }, '404': { description: No existe } } }

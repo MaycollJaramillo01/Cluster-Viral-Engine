@@ -35,7 +35,9 @@ export async function spendSummary(client: Client, organizationId: string) {
 }
 export async function usageReport(client: Client, organizationId: string) {
   const rows = await client.query(`SELECT id,project_id,job_id,provider,operation,input_units::float8,output_units::float8,unit_name,estimated_cost_usd::float8,actual_cost_usd::float8,provider_request_id,created_at FROM provider_usage ORDER BY created_at DESC LIMIT 100`);
-  return { ...await spendSummary(client, organizationId), rows: rows.rows };
+  // Coste aproximado y final por video. actual_usd se queda en null hasta que algo se liquida; unsettled dice cuánto falta, y el render no cuenta porque aún no tiene precio.
+  const byProject = await client.query(`SELECT project_id,sum(estimated_cost_usd)::float8 AS estimated_usd,sum(actual_cost_usd)::float8 AS actual_usd,count(*) FILTER (WHERE actual_cost_usd IS NULL AND estimated_cost_usd>0)::int AS unsettled FROM provider_usage WHERE project_id IS NOT NULL GROUP BY project_id ORDER BY max(created_at) DESC LIMIT 100`);
+  return { ...await spendSummary(client, organizationId), rows: rows.rows, by_project: byProject.rows };
 }
 // El candado por organización serializa la comprobación: dos peticiones simultáneas no pueden sumar más que el tope.
 // Lo sin liquidar cuenta por su estimación, así que un fallo ambiguo sigue consumiendo presupuesto hasta conciliarlo.

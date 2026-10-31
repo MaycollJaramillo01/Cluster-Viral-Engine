@@ -93,6 +93,9 @@ await request(`${projectPath}/voice`, 503, voice);
 await request(`${projectPath}/voice/estimate`, 503, voice);
 await request(`${org}/usage`, 200);
 await request(`/api/organizations/${randomUUID()}/usage`, 403);
+await request(`${org}/operations?days=7`, 200);
+await request(`${org}/operations?days=0`, 400);
+await request(`/api/organizations/${randomUUID()}/operations`, 403);
 const rendersPath = `${projectPath}/renders`;
 await request(`${rendersPath}?limit=5`, 200);
 await request(`${rendersPath}?limit=0`, 400);
@@ -112,6 +115,7 @@ await request(`${rendersPath}/${randomUUID()}/decision`, 403, renderDecision, { 
 await request('/api/auth/sign-out', 200, {}); await request('/api/me', 401);
 await request(url, 200);
 await request(rendersPath, 401, {});
+await request(`${org}/operations`, 401);
 await request(`${rendersPath}/${randomUUID()}/review`, 401);
 await request(`${rendersPath}/${randomUUID()}/decision`, 401, renderDecision);
 await request(assetsPath, 401, form(png, photo));
