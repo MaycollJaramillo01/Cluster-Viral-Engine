@@ -15,7 +15,8 @@
     "render:worker": "tsx src/render/worker-cli.ts",
     "render:benchmark": "tsx src/render/benchmark-cli.ts",
     "db:migrate": "tsx src/server/migrate-cli.ts",
-    "local:bootstrap": "tsx src/server/local-bootstrap.ts"
+    "local:bootstrap": "tsx src/server/local-bootstrap.ts",
+    "check:environment": "tsx src/server/environment-check-cli.ts"
   },
   "dependencies": {
     "@cluster/contracts": "*",
