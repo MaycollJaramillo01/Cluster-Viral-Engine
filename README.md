@@ -28,6 +28,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
 
+La preparación de **Fase 05** añade el motor de render con FFmpeg, el worker aislado en Docker y la cola durable, con audio y material sintéticos, sin interfaz y sin aprobación ni publicación. Consultar [docs/phase05/README.md](docs/phase05/README.md).
+
 La preparación de **Fase 04** añade la biblioteca privada, las licencias, la voz por escena con ElevenLabs sin probar contra el servicio real y el control de gasto, sin interfaz. Consultar [docs/phase04/README.md](docs/phase04/README.md).
 
 La preparación de **Fase 02** añade la API de radar, fuentes, claims y revisión de dossier, sin interfaz ni LLM real. Consultar [docs/phase02/README.md](docs/phase02/README.md).

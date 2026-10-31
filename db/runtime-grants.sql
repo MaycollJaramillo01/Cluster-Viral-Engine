@@ -18,5 +18,10 @@ GRANT UPDATE (reviewed_by,reviewed_at) ON asset_licenses TO :"runtime_role";
 GRANT UPDATE (actual_cost_usd,output_units,provider_request_id) ON provider_usage TO :"runtime_role";
 GRANT SELECT,INSERT,UPDATE ON scene_media TO :"runtime_role";
 GRANT SELECT,INSERT,UPDATE,DELETE ON project_music TO :"runtime_role";
+-- F05. Manifest, job y solicitante no cambian; solo se liquidan estado y resultado.
+-- ponytail: el worker usa este mismo rol. Darle uno propio cuando corra fuera del proceso web.
+GRANT SELECT,INSERT ON renders TO :"runtime_role";
+GRANT UPDATE (status,artifact_sha256,output_object_key,preview_object_key,poster_object_key,captions_object_key,duration_ms,provider,qa,metrics,error_code,cancel_requested_at,finished_at) ON renders TO :"runtime_role";
+GRANT EXECUTE ON FUNCTION claim_render_job(text,integer) TO :"runtime_role";
 GRANT SELECT,INSERT,UPDATE,DELETE ON auth_users,auth_sessions,auth_accounts,auth_verifications,auth_two_factors,auth_rate_limits TO :"auth_role";
 GRANT INSERT ON auth_events TO :"auth_role";

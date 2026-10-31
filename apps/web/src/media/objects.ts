@@ -4,9 +4,9 @@ import path from 'node:path';
 import { AppError } from '@cluster/contracts';
 
 export type ObjectStore = { put(key: string, bytes: Uint8Array): Promise<void>; get(key: string): Promise<Uint8Array | null>; remove(key: string): Promise<void> };
-const extensions = { png: 'image/png', jpg: 'image/jpeg', mp4: 'video/mp4', mp3: 'audio/mpeg', wav: 'audio/wav', pdf: 'application/pdf' } as const;
+const extensions = { png: 'image/png', jpg: 'image/jpeg', mp4: 'video/mp4', mp3: 'audio/mpeg', wav: 'audio/wav', pdf: 'application/pdf', srt: 'application/x-subrip' } as const;
 type Extension = keyof typeof extensions;
-const keyPattern = /^org\/[0-9a-f-]{36}\/project\/[0-9a-f-]{36}\/[a-z]+\/[0-9a-f]{64}(?:-[a-z]+)?\.(png|jpg|mp4|mp3|wav|pdf)$/;
+const keyPattern = /^org\/[0-9a-f-]{36}\/project\/[0-9a-f-]{36}\/[a-z]+\/[0-9a-f]{64}(?:-[a-z]+)?\.(png|jpg|mp4|mp3|wav|pdf|srt)$/;
 export const objectKey = (organizationId: string, projectId: string, folder: string, hash: string, extension: Extension) => `org/${organizationId}/project/${projectId}/${folder}/${hash}.${extension}`;
 export const contentTypeOf = (key: string) => extensions[key.split('.').at(-1) as Extension] ?? 'application/octet-stream';
 export const bytesHash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');

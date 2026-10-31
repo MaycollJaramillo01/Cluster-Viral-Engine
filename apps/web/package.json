@@ -12,6 +12,8 @@
     "test": "tsx --test tests/*.test.ts",
     "test:db": "tsx --test tests/*.integration.ts",
     "poc": "tsx src/phase00/cli.ts",
+    "render:worker": "tsx src/render/worker-cli.ts",
+    "render:benchmark": "tsx src/render/benchmark-cli.ts",
     "db:migrate": "tsx src/server/migrate-cli.ts",
     "local:bootstrap": "tsx src/server/local-bootstrap.ts"
   },

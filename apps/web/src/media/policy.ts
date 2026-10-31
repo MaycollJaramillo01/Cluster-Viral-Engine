@@ -87,5 +87,5 @@ export function evaluateMedia(input: { scenes: ScenePlan[]; visuals: Map<string,
     { check: 'human_visual_review', status: 'NEEDS_HUMAN', detail: 'Contraste sobre la imagen real, legibilidad y movimiento: requieren revisión de una persona.' },
   ];
   for (const failed of qa) if (failed.status === 'FAIL') warnings.push({ code: `QA_${failed.check.toUpperCase()}` });
-  return { blockers, warnings, qa, timeline, total_ms: clock, duration_is_estimate: timeline.some(t => t.timing === 'ESTIMATED'), captions: { srt: toSrt(cues), ass: toAss(cues, overlays) }, cue_count: cues.length };
+  return { blockers, warnings, qa, timeline, total_ms: clock, duration_is_estimate: timeline.some(t => t.timing === 'ESTIMATED'), captions: { srt: toSrt(cues), ass: toAss(cues, overlays) }, cue_count: cues.length, cues, overlays };
 }
