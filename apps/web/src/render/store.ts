@@ -6,13 +6,19 @@ import { signedObjectUrl } from '../media/objects';
 import { mediaState, spendSummary } from '../media/store';
 import { sha256 } from '../phase00/contract';
 import { requireProject } from '../research/store';
+import type { ScriptContent, ScriptDecision } from '../scripts/contract';
+import { evaluateScript } from '../scripts/policy';
+import { approvedDossier } from '../scripts/store';
 import { audit, emit } from '../server/audit';
-import { buildManifest } from './manifest';
+import { buildManifest, type RenderManifest } from './manifest';
+import type { evaluateOutput } from './qa';
 
 type Client = PoolClient;
 type Context = OrganizationContext;
 type Options = { requestId?: string };
+type ReviewedRender = { manifest: RenderManifest; manifest_sha256: string; artifact_sha256: string | null; provider: string | null; qa: ReturnType<typeof evaluateOutput> | null };
 export const renderInput = z.strictObject({ title_index: z.int().min(0).max(9).nullable().default(null) });
+const reviewStages: readonly string[] = ['VIDEO_REVIEW', 'APPROVED'];
 
 // Otro render puede seguir activo si se pidió uno nuevo con otro material: entonces el proyecto sigue en RENDERING.
 export const leaveRendering = (client: Client, projectId: string, renderId: string) => client.query(`UPDATE projects SET status='ASSETING',updated_at=now(),revision=revision+1 WHERE id=$1 AND status='RENDERING'
@@ -94,4 +100,51 @@ export async function cancelRender(client: Client, context: Context, projectId: 
   }
   await audit(client, context, 'RENDER_CANCEL_REQUESTED', 'render', renderId, options);
   return { id: renderId, status };
+}
+
+// Todo lo que debe ser cierto para aprobar, releído en esta transacción. Publicar tendrá que repetirlo y rehashear los bytes: una licencia puede vencer después.
+async function renderGate(client: Client, context: Context, projectId: string, render: ReviewedRender) {
+  const media = await mediaState(client, projectId), dossier = await approvedDossier(client, projectId);
+  const script = (await client.query(`SELECT v.content,v.dossier_sha256 FROM script_versions v JOIN scripts s ON s.id=v.script_id WHERE s.project_id=$1 AND v.status='APPROVED'`, [projectId])).rows[0] as { content: ScriptContent; dossier_sha256: string };
+  const blockers: { code: string }[] = [...media.state.blockers, ...evaluateScript(script.content, dossier.content).blockers];
+  if (script.dossier_sha256 !== dossier.sha256) blockers.push({ code: 'DOSSIER_CHANGED' });
+  // El doble de pruebas produce bytes sin valor editorial: nunca se aprueba.
+  if (render.provider === 'fake') blockers.push({ code: 'RENDER_PROVIDER_FAKE' });
+  if (!render.qa?.passed) blockers.push({ code: 'RENDER_QA_FAILED' });
+  // Sin bloqueos de material, el manifest se reconstruye: otro hash significa que este render ya no es el del material vigente.
+  if (!media.state.blockers.length && sha256(buildManifest(context.organizationId, projectId, media, render.manifest.title)) !== render.manifest_sha256) blockers.push({ code: 'RENDER_STALE' });
+  return { blockers, media, dossier };
+}
+const latestDecision = async (client: Client, projectId: string) => (await client.query(`SELECT render_id FROM approvals WHERE project_id=$1 AND approval_type='RENDER' ORDER BY decided_at DESC,id DESC LIMIT 1`, [projectId])).rows[0] as { render_id: string } | undefined;
+// Decide sobre los bytes exactos y reevalúa dentro de esta transacción; nunca confía en un approved=true del cliente. Aprobar no publica nada.
+export async function decideRender(client: Client, context: Context, projectId: string, renderId: string, input: ScriptDecision, options: Options = {}) {
+  const project = await requireProject(client, projectId, reviewStages);
+  const render = (await client.query('SELECT manifest,manifest_sha256,artifact_sha256,provider,qa FROM renders WHERE id=$1 AND project_id=$2 FOR UPDATE', [renderId, projectId])).rows[0] as ReviewedRender | undefined;
+  if (!render) throw new AppError('NOT_FOUND', 404);
+  if (render.artifact_sha256 !== input.target_sha256) throw new AppError('CONFLICT', 409);
+  // Se puede retirar la aprobación vigente, no repetirla.
+  if (project.status === 'APPROVED' && (input.decision === 'APPROVED' || (await latestDecision(client, projectId))?.render_id !== renderId)) throw new AppError('CONFLICT', 409);
+  if (input.decision === 'APPROVED' && (await renderGate(client, context, projectId, render)).blockers.length) throw new AppError('BLOCKED_BY_POLICY', 409);
+  // clock_timestamp bajo el candado del proyecto: el orden de las filas es el orden real de las decisiones.
+  const row = await client.query(`INSERT INTO approvals(organization_id,project_id,render_id,target_sha256,approval_type,decision,decided_by,note,decided_at) VALUES($1,$2,$3,$4,'RENDER',$5,$6,$7,clock_timestamp()) RETURNING decided_at`,
+    [context.organizationId, projectId, renderId, input.target_sha256, input.decision, context.actorId, input.note || null]);
+  const projectStatus = input.decision === 'APPROVED' ? 'APPROVED' : 'ASSETING';
+  await setProjectStatus(client, projectId, projectStatus);
+  await audit(client, context, `RENDER_${input.decision}`, 'render', renderId, { ...options, afterHash: input.target_sha256, reason: input.note || undefined });
+  await emit(client, context, 'render', renderId, `RENDER_${input.decision}`, { project_id: projectId, artifact_sha256: input.target_sha256 });
+  return { id: renderId, decision: input.decision, target_sha256: input.target_sha256, decided_by: context.actorId, decided_at: row.rows[0].decided_at as Date, project_status: projectStatus };
+}
+// Lo que el revisor debe tener delante antes de decidir: video, fuentes y claims citados, derechos, coste y por qué no se podría aprobar.
+export async function reviewRender(client: Client, context: Context, projectId: string, renderId: string, secret: string) {
+  const project = (await client.query('SELECT status FROM projects WHERE id=$1', [projectId])).rows[0] as { status: string } | undefined;
+  if (!project) throw new AppError('NOT_FOUND', 404);
+  if (!reviewStages.includes(project.status)) throw new AppError('CONFLICT', 409);
+  const render = await readRender(client, projectId, renderId), urls = await renderUrls(client, projectId, renderId, secret);
+  const { blockers, media, dossier } = await renderGate(client, context, projectId, render);
+  const cited = new Set((render.manifest as RenderManifest).scenes.flatMap(scene => scene.claim_ids)), claims = dossier.content.claims.filter(claim => cited.has(claim.id));
+  const sourceIds = new Set(claims.flatMap(claim => claim.evidence.map(item => item.source_id)));
+  const usage = await client.query(`SELECT provider,operation,unit_name,sum(input_units)::float8 AS units,sum(COALESCE(actual_cost_usd,estimated_cost_usd))::float8 AS cost_usd FROM provider_usage WHERE project_id=$1 GROUP BY provider,operation,unit_name ORDER BY provider,operation,unit_name`, [projectId]);
+  const decisions = await client.query('SELECT decision,target_sha256,decided_by,decided_at,note FROM approvals WHERE render_id=$1 ORDER BY decided_at DESC,id DESC', [renderId]);
+  return { render, urls, project_status: project.status, approved: project.status === 'APPROVED' && (await latestDecision(client, projectId))?.render_id === renderId,
+    blockers, warnings: media.state.warnings, needs_human: render.qa?.needs_human ?? [], claims, sources: dossier.content.sources.filter(source => sourceIds.has(source.id)), rights: [...media.assets.values()], usage: usage.rows, decisions: decisions.rows };
 }

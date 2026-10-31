@@ -414,12 +414,15 @@ test('F05 PostgreSQL real: cola durable, leases, cancelación, aislamiento y rol
       assert(row.metrics.cpu_ms > 0 && row.metrics.max_rss_kib > 0 && row.metrics.wall_ms > 0);
       assert.equal((await store.get(row.captions_object_key))!.toString().startsWith('1\n'), true);
       if (process.env.PHASE05_EVIDENCE_DIR) await writeFile(path.join(process.env.PHASE05_EVIDENCE_DIR, 'real-render.json'), `${JSON.stringify({ note: 'Material y voz sintéticos (mock BLOCKED_EXTERNAL); mide la canalización, no la calidad editorial.', provider: row.provider, duration_ms: row.duration_ms, artifact_sha256: row.artifact_sha256, output_bytes: master.length, qa: row.qa, metrics: row.metrics, stale: row.metrics.stale }, null, 2)}\n`);
+      const decision = await asReviewer((c, x) => renders.decideRender(c, x, project, id, { decision: 'APPROVED', target_sha256: row.artifact_sha256, note: '' }));
+      assert.deepEqual([decision.project_status, await projectStatus(project)], ['APPROVED', 'APPROVED']);
     });
     await t.test('rollback de 010: quita lo de render, conserva auditoría y se puede volver a aplicar', async () => {
       const c = await f.admin.connect();
       try {
         const audits = (await c.query('SELECT count(*)::int AS n FROM audit_events')).rows[0].n, usage = (await c.query('SELECT count(*)::int AS n FROM provider_usage')).rows[0].n, outbox = (await c.query('SELECT count(*)::int AS n FROM outbox_events')).rows[0].n;
         await c.query('BEGIN');
+        await c.query(await readFile('../../db/rollback/011_render_approval.sql', 'utf8'));
         await c.query(await readFile('../../db/rollback/010_render.sql', 'utf8'));
         assert.equal((await c.query(`SELECT count(*)::int AS n FROM information_schema.columns WHERE table_name='renders' AND column_name='manifest'`)).rows[0].n, 0);
         assert.equal((await c.query(`SELECT to_regprocedure('claim_render_job(text,integer)') AS f`)).rows[0].f, null);

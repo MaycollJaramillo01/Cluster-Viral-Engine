@@ -20,8 +20,8 @@ const mediaStages = ['ASSETING', 'VOICING', 'RENDERING', 'VIDEO_REVIEW'] as cons
 const usdFor = (characters: number, provider: Pick<TtsProvider, 'usdPer1kChars'>) => characters / 1000 * provider.usdPer1kChars;
 const settingsHash = (target: VoiceTarget) => sha256({ settings: target.settings, locale: 'es-419' });
 
-// ponytail: VOICING no se usa; voz y material se trabajan a la vez en ASSETING. Un render o revisión en curso deja de valer al cambiar el material.
-const backToAssets = (client: Client, projectId: string) => client.query(`UPDATE projects SET status='ASSETING',updated_at=now(),revision=revision+1 WHERE id=$1 AND status IN ('RENDERING','VIDEO_REVIEW')`, [projectId]);
+// ponytail: VOICING no se usa; voz y material se trabajan a la vez en ASSETING. Un render, revisión o aprobación en curso deja de valer al cambiar el material.
+const backToAssets = (client: Client, projectId: string) => client.query(`UPDATE projects SET status='ASSETING',updated_at=now(),revision=revision+1 WHERE id=$1 AND status IN ('RENDERING','VIDEO_REVIEW','APPROVED')`, [projectId]);
 async function assetChanged(client: Client, projectId: string, assetId: string) {
   const used = await client.query('SELECT 1 FROM scene_media WHERE project_id=$1 AND visual_asset_id=$2 UNION ALL SELECT 1 FROM project_music WHERE project_id=$1 AND asset_id=$2 LIMIT 1', [projectId, assetId]);
   if (used.rowCount) await backToAssets(client, projectId);
