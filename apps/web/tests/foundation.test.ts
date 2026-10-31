@@ -35,6 +35,17 @@ test('roles deny by default; editor cannot manage organization or approve; worke
   assert.equal(can('worker', 'organization:read'), false);
   assert.equal(roleSchema.safeParse('worker').success, false);
 });
+test('Preview auth origin uses only the trusted Vercel branch hostname when no explicit origin is set', () => {
+  const cloud = { ...config, APP_ENV: 'preview', BETTER_AUTH_URL: undefined,
+    DATABASE_URL: 'postgresql://runtime@ep-preview-pooler.neon.tech/db?sslmode=verify-full',
+    AUTH_DATABASE_URL: 'postgresql://identity@ep-preview-pooler.neon.tech/db?sslmode=verify-full',
+    VERCEL: '1', VERCEL_ENV: 'preview', VERCEL_BRANCH_URL: 'project-git-preview-team.vercel.app' };
+  assert.equal(parseConfig(cloud).BETTER_AUTH_URL, `https://${cloud.VERCEL_BRANCH_URL}`);
+  for (const patch of [{ VERCEL: undefined }, { VERCEL_ENV: 'production' }, { APP_ENV: 'production' },
+    { VERCEL_BRANCH_URL: 'evil.example' }, { VERCEL_BRANCH_URL: 'project.vercel.app/path' },
+    { VERCEL_BRANCH_URL: 'project.vercel.app@evil.example' }]) assert.throws(() => parseConfig({ ...cloud, ...patch }));
+  assert.equal(parseConfig({ ...cloud, BETTER_AUTH_URL: 'https://explicit.example' }).BETTER_AUTH_URL, 'https://explicit.example');
+});
 test('state-changing requests require exact server-configured origin', () => {
   for (const origin of [undefined, 'https://evil.example']) {
     const request = new Request('http://127.0.0.1:3000/api/me', { method: 'POST', headers: origin ? { origin } : {} });

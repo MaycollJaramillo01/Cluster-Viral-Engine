@@ -14,6 +14,9 @@ export async function provisionRoles(admin: Pool, runtimeRole: string, authRole:
     if ((await admin.query('SELECT 1 FROM pg_roles WHERE rolname=$1', [name])).rowCount) throw new Error('ROLE_ALREADY_EXISTS');
     const ddl = await admin.query("SELECT format('CREATE ROLE %I LOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOINHERIT PASSWORD %L',$1::text,$2::text) AS sql", [name, password]);
     await admin.query(ddl.rows[0].sql);
+    await admin.query(`ALTER ROLE ${identifier(name)} SET statement_timeout='5000ms'`);
+    await admin.query(`ALTER ROLE ${identifier(name)} SET lock_timeout='2000ms'`);
+    await admin.query(`ALTER ROLE ${identifier(name)} SET idle_in_transaction_session_timeout='10000ms'`);
   }
   const runtime = identifier(runtimeRole), auth = identifier(authRole);
   await admin.query(`GRANT USAGE ON SCHEMA public TO ${runtime},${auth}`);

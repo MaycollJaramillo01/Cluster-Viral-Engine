@@ -11,6 +11,7 @@ import { provisionRoles, seedDevelopmentIdentity } from '../src/server/developme
 import { TenantDatabase } from '../src/server/database';
 import { createIdentityService } from '../src/server/auth';
 import { parseConfig } from '../src/server/config';
+import { createApplicationPool } from '../src/server/pool';
 import { getMigrations } from 'better-auth/db/migration';
 import { requestHandler } from '../src/server/observability';
 import { inspectDatabase, inspectMigrations, migrationChecksums } from '../../../scripts/lib/environment-readiness.mjs';
@@ -48,8 +49,15 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     const runtimeUrl = new URL(url), identityUrl = new URL(url);
     runtimeUrl.username=runtimeRole; runtimeUrl.password=rolePassword;
     identityUrl.username=authRole; identityUrl.password=rolePassword;
-    runtime=new Pool({connectionString:runtimeUrl.toString(),max:4,options:'-c statement_timeout=1000'});
-    authPool=new Pool({connectionString:identityUrl.toString(),max:4});
+    const cloudTest = new URL(url).hostname.endsWith('.neon.tech');
+    if (cloudTest) {
+      for (const target of [runtimeUrl, identityUrl]) {
+        target.hostname = target.hostname.replace(/-pooler\./, '.').replace('.c-', '-pooler.c-');
+        target.searchParams.set('sslmode', 'verify-full');
+      }
+    }
+    runtime=createApplicationPool(runtimeUrl.toString());
+    authPool=createApplicationPool(identityUrl.toString());
     await t.test('environment preflight checks real roles, migration checksums and missing grants without writes', async () => {
       const expected = await migrationChecksums(migrationDir);
       assert.equal((await inspectDatabase(runtime!, 'runtime')).status, 'READY');
@@ -91,7 +99,9 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     });
     await t.test('expired identity and statement timeout roll back without releasing data or dirty pooled state',async()=>{
       await assert.rejects(db.identityTransaction({...identity,expiresAt:new Date(0)},async()=>true),AppError);
-      await assert.rejects(db.organizationTransaction(identity,orgA,'organization:read',async c=>{await c.query('SELECT pg_sleep(2)');}),/statement timeout/);
+      await assert.rejects(db.organizationTransaction(identity,orgA,'organization:read',async c=>{
+        await c.query("SET LOCAL statement_timeout='100ms'"); await c.query('SELECT pg_sleep(2)');
+      }),/statement timeout/);
       assert.equal(await db.organizationTransaction(identity,orgA,'organization:read',async c=>(await c.query('SELECT 1 AS n')).rows[0].n),1);
     });
     await t.test('cross-organization writes fail and a swallowed SQL error cannot masquerade as a successful commit',async()=>{
@@ -105,8 +115,15 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
         return 'must not commit';
       }),e=>e instanceof AppError&&e.code==='INTERNAL_ERROR');
     });
-    const config=parseConfig({APP_ENV:'local',DATABASE_URL:runtimeUrl.toString(),AUTH_DATABASE_URL:identityUrl.toString(),
-      BETTER_AUTH_URL:'http://127.0.0.1:3000',BETTER_AUTH_SECRET:randomBytes(48).toString('hex')});
+    const configRuntime = new URL(runtimeUrl), configIdentity = new URL(identityUrl);
+    if (cloudTest) {
+      for (const target of [configRuntime, configIdentity]) {
+        target.hostname = target.hostname.replace(/-pooler\./, '.').replace('.c-', '-pooler.c-');
+        target.searchParams.set('sslmode', 'verify-full');
+      }
+    }
+    const config=parseConfig({APP_ENV:cloudTest?'preview':'local',DATABASE_URL:configRuntime.toString(),AUTH_DATABASE_URL:configIdentity.toString(),
+      BETTER_AUTH_URL:cloudTest?'https://preview.example.test':'http://127.0.0.1:3000',BETTER_AUTH_SECRET:randomBytes(48).toString('hex')});
     const service=createIdentityService(authPool,config);
     await t.test('versioned identity DDL matches installed library including MFA/rate limiting',async()=>{
       const check=await getMigrations(service.options);
@@ -182,6 +199,24 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
       assert.equal((await admin!.query('SELECT count(*)::int AS n FROM auth_sessions')).rows[0].n,before);
       await assert.rejects(admin!.query("UPDATE auth_events SET action='SESSION_REVOKED'"),/append-only/);
     });
+    await t.test('password change requires the current password and revokes other browser sessions', async () => {
+      const email = 'password-change@example.test', nextPassword = randomBytes(24).toString('base64url');
+      const passwordRequest = (endpoint: string, body?: unknown) => request(endpoint, body, { 'x-cve-client-ip': '127.0.0.2' });
+      await seedDevelopmentIdentity(admin!, { email, password, organizationId: orgA, role: 'editor' });
+      cookie = '';
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 200);
+      const otherBrowser = cookie;
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 200);
+      assert((await passwordRequest('change-password', { currentPassword: 'incorrect-password', newPassword: nextPassword, revokeOtherSessions: true })).status >= 400);
+      assert((await passwordRequest('change-password', { currentPassword: password, newPassword: 'short', revokeOtherSessions: true })).status >= 400);
+      const changed = await passwordRequest('change-password', { currentPassword: password, newPassword: nextPassword, revokeOtherSessions: true });
+      assert.equal(changed.status, 200, await changed.clone().text());
+      cookie = otherBrowser;
+      assert.equal(await (await passwordRequest('get-session')).json(), null);
+      cookie = '';
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 401);
+      assert.equal((await passwordRequest('sign-in/email', { email, password: nextPassword })).status, 200);
+    });
     await t.test('rollback of 006/005/004 retains identity audit; transaction rollback restores complete schema',async()=>{
       const c=await admin!.connect();
       try {
@@ -197,7 +232,9 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
   } finally {
     await authPool?.end();await runtime?.end();await admin?.end();
     // Only the uniquely named database created by this test is dropped; never a supplied DB.
-    if(/^cve_test_[0-9]+_[a-f0-9]+$/.test(database))await server.query(`DROP DATABASE IF EXISTS "${database}"`);
+    // PgBouncer can retain idle backend sessions after all test clients close.
+    // FORCE is limited to the uniquely named database created by this test.
+    if(/^cve_test_[0-9]+_[a-f0-9]+$/.test(database))await server.query(`DROP DATABASE IF EXISTS "${database}" WITH (FORCE)`);
     for(const name of [runtimeRole,authRole])if(/^cve_(runtime|auth)_[0-9]+_[a-f0-9]+$/.test(name))await server.query(`DROP ROLE IF EXISTS "${name}"`);
     await server.end();
   }
