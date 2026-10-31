@@ -1,0 +1,21 @@
+{
+  "phase": "03",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F03-01", "status": "VERIFIED_LOCAL", "evidence": "Esquema con casos válidos e inválidos, tenant scope y auditoría en PostgreSQL." },
+    { "id": "F03-02", "status": "BLOCKED_EXTERNAL", "evidence": "Sin credenciales OpenAI ni Anthropic: no hay comparativa de calidad y coste." },
+    { "id": "F03-03", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Datos separados de instrucciones y citas obligatorias; validado con mock, no con LLM real." },
+    { "id": "F03-04", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "El esquema exige 3 ganchos y al menos 3 títulos, con reglas de riesgo; generados solo con mock." },
+    { "id": "F03-05", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Estimación por palabras y voz, marcada como tal; sin audio real para comparar." },
+    { "id": "F03-06", "status": "VERIFIED_LOCAL", "evidence": "Manifest validado con claims y tiempos. asset_hint es texto de la narración, no una sugerencia real." },
+    { "id": "F03-07", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "Edición por sección conserva versiones previas. Sin UI ni autosave por AGENTS.md." },
+    { "id": "F03-08", "status": "VERIFIED_LOCAL", "evidence": "Dos ediciones concurrentes: una gana y la otra recibe 409, con auditoría." },
+    { "id": "F03-09", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Hash intacto en escenas no afectadas, claims acotados e idempotencia; probado con mock." },
+    { "id": "F03-10", "status": "VERIFIED_LOCAL", "evidence": "Aprobación del hash exacto y edición posterior que la invalida; sin reviewer humano real." },
+    { "id": "F03-11", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Informe de 10 historias con guiones construidos: invenciones de cifra y fuente marcadas. Sin modelo real." },
+    { "id": "F03-12", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "API con errores 400/401/403/404/409/503. Flujo editor y reviewer solo contra PostgreSQL; sin UI." }
+  ]
+}

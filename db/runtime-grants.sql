@@ -8,5 +8,8 @@ GRANT INSERT ON audit_events,outbox_events TO :"runtime_role";
 GRANT INSERT,UPDATE ON projects TO :"runtime_role";
 GRANT SELECT,INSERT,UPDATE ON stories,editorial_references,claims,dossier_revisions,jobs TO :"runtime_role";
 GRANT SELECT,INSERT ON sources,claim_evidence,research_plans,approvals TO :"runtime_role";
+-- F03. Las escenas de una versión no cambian; el trigger limita script_versions a su estado.
+GRANT SELECT,INSERT,UPDATE ON scripts,script_versions TO :"runtime_role";
+GRANT SELECT,INSERT ON scenes TO :"runtime_role";
 GRANT SELECT,INSERT,UPDATE,DELETE ON auth_users,auth_sessions,auth_accounts,auth_verifications,auth_two_factors,auth_rate_limits TO :"auth_role";
 GRANT INSERT ON auth_events TO :"auth_role";
