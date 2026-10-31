@@ -1,0 +1,72 @@
+﻿
+> cluster-viral-engine@0.2.0 build
+> npm run build --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 35ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1235ms
+  Running TypeScript ...
+  Finished TypeScript in 4.2s ...
+  Collecting page data using 19 workers ...
+  Generating static pages using 19 workers (0/9) ...
+  Generating static pages using 19 workers (2/9) 
+  Generating static pages using 19 workers (4/9) 
+  Generating static pages using 19 workers (6/9) 
+✓ Generating static pages using 19 workers (9/9) in 432ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/health
+├ ƒ /api/me
+├ ƒ /api/objects
+├ ƒ /api/organizations/[organizationId]/context
+├ ƒ /api/organizations/[organizationId]/discovery
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/assets
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/assets/[assetId]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/assets/[assetId]/decision
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/assets/[assetId]/licenses
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/assets/[assetId]/url
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/claims
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/claims/[claimId]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/claims/[claimId]/verify
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/claims/extract
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/dossiers
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/dossiers/[revision]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/dossiers/[revision]/decision
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/media
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/media/music
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/media/scenes/[sceneKey]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/research-plan
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/generate
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/sections/[sectionKey]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/sections/[sectionKey]/regenerate
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/versions/[revision]
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/versions/[revision]/decision
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/script/versions/[revision]/submit
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/sources
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/voice
+├ ƒ /api/organizations/[organizationId]/projects/[projectId]/voice/estimate
+├ ƒ /api/organizations/[organizationId]/references
+├ ƒ /api/organizations/[organizationId]/stories
+├ ƒ /api/organizations/[organizationId]/stories/[storyId]/select
+├ ƒ /api/organizations/[organizationId]/stories/proposals
+├ ƒ /api/organizations/[organizationId]/usage
+├ ƒ /api/stories
+└ ○ /login
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
