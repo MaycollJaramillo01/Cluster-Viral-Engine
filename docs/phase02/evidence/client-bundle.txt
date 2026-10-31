@@ -1,0 +1,5 @@
+﻿
+> cluster-viral-engine@0.2.0 verify:client
+> node scripts/verify_client_bundle.mjs
+
+{"status":"PASS","client_js_files":14,"configured_secret_values_checked":6,"secret_values_printed":false}
