@@ -15,6 +15,7 @@ const input = (file: string, ...before: string[]) => ['-protocol_whitelist', 'fi
 // Cualquier proporción llena el 9:16 sin recortar el documento: la imagen entera sobre su propio fondo desenfocado.
 const FIT = 'split=2[bg][fg];[bg]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=24:2[back];[fg]scale=1080:1920:force_original_aspect_ratio=decrease[front];[back][front]overlay=(W-w)/2:(H-h)/2,setsar=1';
 const AUDIO_FORMAT = 'aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo';
+// ponytail: loudnorm de una pasada; la QA acepta -14 ±2 LU. Pasar a dos si con voz real se sale del margen o se oye el bombeo.
 const MASTERING = 'loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000';
 
 // Movimiento discreto: docs/09 pide no exagerar. Duplicar el lienzo reduce el temblor de zoompan, que solo admite posiciones enteras.
@@ -39,17 +40,19 @@ export function buildPlan(manifest: RenderManifest, options: { threads: number }
       ...(scene.transition === 'fade' ? [`fade=t=in:st=0:d=${FADE_SECONDS}`] : []),
       ...(index === scenes.length - 1 || scenes[index + 1].transition === 'fade' ? [`fade=t=out:st=${seconds(duration - FADE_SECONDS)}:d=${FADE_SECONDS}`] : []),
     ] : [];
-    const chain = [isVideo ? `fps=${FPS}` : kenBurns(scene.motion, frames), ...fades, 'format=yuv420p'].join(',');
-    return { name: `scene-${index}`, tool: 'ffmpeg', args: [...(isVideo ? input(file, '-stream_loop', '-1', '-t', seconds(duration)) : input(file)),
+    // Un clip más corto que su escena se congela en el último fotograma. Con -stream_loop, un archivo sin fotogramas decodificables giraba hasta el tiempo límite.
+    const chain = [isVideo ? `fps=${FPS},tpad=stop_mode=clone:stop=-1` : kenBurns(scene.motion, frames), ...fades, 'format=yuv420p'].join(',');
+    return { name: `scene-${index}`, tool: 'ffmpeg', args: [...input(file),
       '-filter_complex', `[0:v]${FIT},${chain}[v]`, '-map', '[v]', '-frames:v', String(frames), '-an',
       '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '16', '-threads', threads, '-fs', CHUNK_LIMIT, `scene-${index}.mp4`] };
   });
   const voices = scenes.map((scene, index) => stored(`v${index}`, scene.voice));
   const voiceGraph = scenes.map((_, index) => `[${index}:a]${AUDIO_FORMAT},apad=whole_dur=${seconds(cuts[index].duration)},atrim=duration=${seconds(cuts[index].duration)},asetpts=PTS-STARTPTS[a${index}]`).join(';') +
     `;${scenes.map((_, index) => `[a${index}]`).join('')}concat=n=${scenes.length}:v=0:a=1[voice]`;
-  const music = manifest.music ? stored('music', manifest.music) : null, totalSeconds = manifest.total_ms / 1000;
+  // Repeticiones contadas: un archivo sin audio no hace girar a FFmpeg. Si la duración declarada no es real, la música acaba antes y lo juzga el revisor.
+  const music = manifest.music ? input(stored('music', manifest.music), '-stream_loop', String(Math.ceil(manifest.total_ms / manifest.music.duration_ms))) : [], totalSeconds = manifest.total_ms / 1000;
   // La narración comprime la música mientras suena y el nivel se mide al final, sobre la mezcla completa.
-  const mix = music
+  const mix = manifest.music
     ? `[1:a]asplit=2[voice][key];[2:a]${AUDIO_FORMAT},volume=${MUSIC_GAIN},afade=t=out:st=${seconds(Math.max(totalSeconds - 2, 0))}:d=2[bed];[bed][key]sidechaincompress=threshold=0.02:ratio=8:attack=15:release=350[ducked];[voice][ducked]amix=inputs=2:duration=first:normalize=0,${MASTERING}[a]`
     : `[1:a]${MASTERING}[a]`;
   const posterAt = manifest.title ? 1.5 : scenes[0].audio_ms / 2000;
@@ -61,7 +64,7 @@ export function buildPlan(manifest: RenderManifest, options: { threads: number }
       { name: 'concat', tool: 'ffmpeg', args: ['-f', 'concat', '-safe', '1', ...input('concat.txt'), '-c', 'copy', '-fs', OUTPUT_LIMIT, 'joined.mp4'] },
       // ponytail: una entrada por escena; con el máximo de 120 el comando ronda 24 KB, dentro del límite de Windows (32 KB). Una prueba lo vigila.
       { name: 'narration', tool: 'ffmpeg', args: [...voices.flatMap(file => input(file)), '-filter_complex', voiceGraph, '-map', '[voice]', '-c:a', 'pcm_s16le', '-ar', '48000', '-fs', CHUNK_LIMIT, 'narration.wav'] },
-      { name: 'master', tool: 'ffmpeg', args: [...input('joined.mp4'), ...input('narration.wav'), ...(music ? input(music, '-stream_loop', '-1') : []),
+      { name: 'master', tool: 'ffmpeg', args: [...input('joined.mp4'), ...input('narration.wav'), ...music,
         '-filter_complex', `[0:v]ass=captions.ass,fps=${FPS},format=yuv420p[v];${mix}`, '-map', '[v]', '-map', '[a]', '-t', total,
         '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-profile:v', 'high', '-g', String(FPS * 2), '-threads', threads,
         '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2', '-map_metadata', '-1', '-movflags', '+faststart', '-fs', OUTPUT_LIMIT, artifactNames.master] },

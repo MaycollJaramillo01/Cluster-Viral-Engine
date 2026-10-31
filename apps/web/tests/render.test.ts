@@ -37,6 +37,20 @@ const bandLevel = (file: string, start: number, seconds: number) => {
 const qaFiles = async (directory: string, plan: RenderPlan) => evaluateOutput({
   probe: JSON.parse(await readFile(path.join(directory, artifactNames.probe), 'utf8')), loudness: await readFile(path.join(directory, artifactNames.loudness), 'utf8'), master: await readFile(path.join(directory, artifactNames.master)), expectedMs: plan.expected_ms });
 const failed = (report: ReturnType<typeof evaluateOutput>) => report.checks.filter(c => c.status === 'FAIL').map(c => c.check);
+// La QA tolera ±1 fotograma por archivo; el plan no debe perder ninguno, porque cada clip suma.
+const assertExactFrames = async (directory: string, plan: RenderPlan) => {
+  const { streams } = JSON.parse(await readFile(path.join(directory, artifactNames.probe), 'utf8')) as { streams: { codec_type: string; nb_frames: string }[] };
+  assert.equal(Number(streams.find(s => s.codec_type === 'video')!.nb_frames), Math.round(plan.expected_ms * 30 / 1000));
+};
+// El contenedor se abre, pero ningún fotograma se decodifica: pasa el control por bytes de la subida.
+const undecodable = (clip: Uint8Array) => {
+  const copy = Buffer.from(clip);
+  for (let at = 0, size = 0; at + 8 <= copy.length; at += size) {
+    size = copy.readUInt32BE(at);
+    if (copy.toString('latin1', at + 4, at + 8) === 'mdat') return copy.fill(0xFF, at + 8, at + size);
+  }
+  throw new Error('NO_MDAT');
+};
 
 test('manifest: válido, estricto y atado a organización, tiempos y formato', () => {
   assert.equal(renderManifestSchema.safeParse(valid()).success, true);
@@ -78,7 +92,10 @@ test('plan: fotogramas exactos, solo rutas relativas y ningún texto de usuario 
   const step = (name: string) => plan.steps.find(s => s.name === name)!, graph = (name: string) => step(name).args[step(name).args.indexOf('-filter_complex') + 1];
   assert.match(graph('scene-0'), /zoompan=/);
   assert.doesNotMatch(graph('scene-1'), /zoompan=/);
-  assert.equal(step('scene-1').args[step('scene-1').args.indexOf('-stream_loop') + 1], '-1');
+  // -t en la entrada perdía un fotograma por clip en FFmpeg 5.1, y -stream_loop -1 giraba con un archivo sin nada que decodificar.
+  assert(!step('scene-1').args.includes('-stream_loop') && !step('scene-1').args.includes('-t'));
+  assert.match(graph('scene-1'), /tpad=stop_mode=clone/);
+  assert.equal(step('master').args[step('master').args.indexOf('-stream_loop') + 1], '4', 'repeticiones contadas: 10285 ms con música de 3000 ms');
   assert.match(graph('master'), /sidechaincompress=.*loudnorm=I=-14:TP=-1.5/);
   assert(step('master').args.includes('+faststart'));
   assert(step('preview').args.includes('scale=540:960'));
@@ -148,6 +165,7 @@ test('FFmpeg real: encuadre, imagen, video, música, título, subtítulos, contr
     assert(steps.filter((s: { name: string }) => s.name !== 'probe').every((s: { cpu_ms: number | null; max_rss_kib: number | null }) => s.cpu_ms !== null && s.max_rss_kib! > 0));
     const report = await qaFiles(directory, plan);
     assert.deepEqual(failed(report), [], JSON.stringify(report.checks));
+    await assertExactFrames(directory, plan);
     const inspect = async (name: string) => (JSON.parse(spawnSync('ffprobe', ['-v', 'error', '-show_streams', '-of', 'json', name], { cwd: directory, encoding: 'utf8' }).stdout).streams as { codec_type: string; width?: number; height?: number }[]);
     const preview = (await inspect(artifactNames.preview)).find(s => s.codec_type === 'video')!;
     assert.deepEqual([preview.width, preview.height], [540, 960]);
@@ -156,6 +174,21 @@ test('FFmpeg real: encuadre, imagen, video, música, título, subtítulos, contr
     // La música (1 kHz) debe bajar mientras suena la voz (220 Hz) y volver en la pausa. Se mide sobre el archivo final, no se supone.
     const master = path.join(directory, artifactNames.master), underVoice = bandLevel(master, 1, 1.5), inPause = bandLevel(master, 4, 0.8);
     assert(inPause - underVoice >= 6, `música bajo la voz ${underVoice} dB, en pausa ${inPause} dB`);
+  } finally { await rm(directory, { recursive: true, force: true }); }
+});
+test('FFmpeg real: material sin nada que decodificar termina enseguida en vez de girar hasta el tiempo límite', { skip: !hasFfmpeg }, async () => {
+  const directory = await mkdtemp(path.join(tmpdir(), 'cve-broken-'));
+  const planFor = async (scenes: SyntheticScene[], music?: Uint8Array) => {
+    const { manifest, objects } = syntheticManifest({ organizationId: org, projectId: project, scenes, music }), plan = { ...buildPlan(manifest, { threads: 2 }), step_timeout_ms: 30000 };
+    await materialize(plan, objects, directory);
+    return plan;
+  };
+  try {
+    const broken = await planFor([{ audio_ms: 1000, visual: undecodable(syntheticClip(1)), kind: 'VIDEO' }]);
+    await assert.rejects(runPlan(broken, directory), (error: { code: string; step: string }) => error.code === 'PROCESS_FAILED' && error.step === 'scene-0');
+    const silent = await planFor([{ audio_ms: 1000, visual: decodablePng(1, 900, 1600) }], stereoTone(0, 440));
+    await runPlan(silent, directory);
+    assert.deepEqual(failed(await qaFiles(directory, silent)), []);
   } finally { await rm(directory, { recursive: true, force: true }); }
 });
 test('FFmpeg real: un archivo con defectos no pasa y el ejecutor informa cancelación y tiempo agotado', { skip: !hasFfmpeg }, async () => {
@@ -213,7 +246,14 @@ test('contenedor real: aislado de verdad, renderiza y se cancela', { skip: !hasD
     const done = await wait(id);
     assert.equal(done.state, 'SUCCEEDED', JSON.stringify(done));
     assert.deepEqual(failed(await qaFiles(directory, plan)), []);
+    await assertExactFrames(directory, plan);
     assert((await provider.fetchArtifact(id, artifactNames.poster))!.length > 1000);
+
+    // Con el FFmpeg de producción: el clip sin fotogramas falla en vez de girar hasta el tiempo límite.
+    const brokenId = randomUUID(), broken = syntheticManifest({ organizationId: org, projectId: project, scenes: [{ audio_ms: 1000, visual: undecodable(syntheticClip(1)), kind: 'VIDEO' }] }), brokenPlan = { ...buildPlan(broken.manifest, { threads: 2 }), step_timeout_ms: 30000 };
+    await materialize(brokenPlan, broken.objects, directory);
+    await provider.submit({ id: brokenId, workdir: directory, plan: brokenPlan });
+    assert.equal(await wait(brokenId).then(status => status.state === 'FAILED' && status.error_code), 'PROCESS_FAILED');
 
     const endless = { ...plan, steps: [{ name: 'infinito', tool: 'ffmpeg' as const, args: ['-f', 'lavfi', '-i', 'testsrc=s=64x64:r=10', '-f', 'null', '-'] }] }, other = randomUUID();
     await writeFile(path.join(directory, 'plan.json'), JSON.stringify(endless));
