@@ -1,0 +1,274 @@
+{
+  "note": "Material y voz sintéticos (mock BLOCKED_EXTERNAL); mide la canalización, no la calidad editorial.",
+  "provider": "local-ffmpeg",
+  "duration_ms": 147400,
+  "artifact_sha256": "fbfc97779cac03a2add80218fb64bd7aa050d87865f77dcf9abe6ecad4152dd9",
+  "output_bytes": 57916198,
+  "qa": {
+    "checks": [
+      {
+        "check": "video_codec",
+        "detail": "h264",
+        "status": "PASS"
+      },
+      {
+        "check": "audio_codec",
+        "detail": "aac",
+        "status": "PASS"
+      },
+      {
+        "check": "resolution",
+        "detail": "1080x1920",
+        "status": "PASS"
+      },
+      {
+        "check": "sample_aspect",
+        "detail": "1:1",
+        "status": "PASS"
+      },
+      {
+        "check": "frame_rate",
+        "detail": "30/1",
+        "status": "PASS"
+      },
+      {
+        "check": "pixel_format",
+        "detail": "yuv420p",
+        "status": "PASS"
+      },
+      {
+        "check": "duration",
+        "detail": {
+          "expected_ms": 147400,
+          "measured_ms": 147400
+        },
+        "status": "PASS"
+      },
+      {
+        "check": "frame_count",
+        "detail": {
+          "expected": 4422,
+          "measured": 4422
+        },
+        "status": "PASS"
+      },
+      {
+        "check": "av_sync",
+        "detail": {
+          "audio": "147.400000",
+          "video": "147.400000"
+        },
+        "status": "PASS"
+      },
+      {
+        "check": "audio_layout",
+        "detail": {
+          "channels": 2,
+          "sample_rate": "48000"
+        },
+        "status": "PASS"
+      },
+      {
+        "check": "faststart",
+        "detail": null,
+        "status": "PASS"
+      },
+      {
+        "check": "loudness",
+        "detail": {
+          "target": -14,
+          "integrated_lufs": -13.9
+        },
+        "status": "PASS"
+      },
+      {
+        "check": "no_clipping",
+        "detail": {
+          "max": -0.5,
+          "true_peak_dbfs": -12
+        },
+        "status": "PASS"
+      }
+    ],
+    "passed": true,
+    "needs_human": [
+      "subtitle_legibility",
+      "motion_quality",
+      "visual_variety",
+      "audible_mix"
+    ]
+  },
+  "metrics": {
+    "stale": false,
+    "steps": [
+      {
+        "name": "scene-0",
+        "cpu_ms": 2437,
+        "wall_ms": 960,
+        "max_rss_kib": 205544
+      },
+      {
+        "name": "scene-1",
+        "cpu_ms": 2609,
+        "wall_ms": 926,
+        "max_rss_kib": 205344
+      },
+      {
+        "name": "scene-2",
+        "cpu_ms": 2360,
+        "wall_ms": 968,
+        "max_rss_kib": 205448
+      },
+      {
+        "name": "scene-3",
+        "cpu_ms": 2281,
+        "wall_ms": 931,
+        "max_rss_kib": 205188
+      },
+      {
+        "name": "scene-4",
+        "cpu_ms": 2312,
+        "wall_ms": 947,
+        "max_rss_kib": 205356
+      },
+      {
+        "name": "scene-5",
+        "cpu_ms": 2407,
+        "wall_ms": 923,
+        "max_rss_kib": 205360
+      },
+      {
+        "name": "scene-6",
+        "cpu_ms": 2421,
+        "wall_ms": 945,
+        "max_rss_kib": 205412
+      },
+      {
+        "name": "scene-7",
+        "cpu_ms": 2266,
+        "wall_ms": 899,
+        "max_rss_kib": 205328
+      },
+      {
+        "name": "scene-8",
+        "cpu_ms": 2281,
+        "wall_ms": 932,
+        "max_rss_kib": 205504
+      },
+      {
+        "name": "scene-9",
+        "cpu_ms": 2437,
+        "wall_ms": 932,
+        "max_rss_kib": 205352
+      },
+      {
+        "name": "scene-10",
+        "cpu_ms": 2453,
+        "wall_ms": 999,
+        "max_rss_kib": 205332
+      },
+      {
+        "name": "scene-11",
+        "cpu_ms": 2547,
+        "wall_ms": 919,
+        "max_rss_kib": 205324
+      },
+      {
+        "name": "scene-12",
+        "cpu_ms": 2406,
+        "wall_ms": 963,
+        "max_rss_kib": 205344
+      },
+      {
+        "name": "scene-13",
+        "cpu_ms": 2343,
+        "wall_ms": 913,
+        "max_rss_kib": 205336
+      },
+      {
+        "name": "scene-14",
+        "cpu_ms": 2360,
+        "wall_ms": 963,
+        "max_rss_kib": 205468
+      },
+      {
+        "name": "scene-15",
+        "cpu_ms": 2328,
+        "wall_ms": 929,
+        "max_rss_kib": 205384
+      },
+      {
+        "name": "scene-16",
+        "cpu_ms": 2766,
+        "wall_ms": 1041,
+        "max_rss_kib": 205488
+      },
+      {
+        "name": "scene-17",
+        "cpu_ms": 2500,
+        "wall_ms": 947,
+        "max_rss_kib": 205320
+      },
+      {
+        "name": "scene-18",
+        "cpu_ms": 2469,
+        "wall_ms": 955,
+        "max_rss_kib": 205496
+      },
+      {
+        "name": "scene-19",
+        "cpu_ms": 2312,
+        "wall_ms": 893,
+        "max_rss_kib": 205336
+      },
+      {
+        "name": "concat",
+        "cpu_ms": 953,
+        "wall_ms": 675,
+        "max_rss_kib": 39868
+      },
+      {
+        "name": "narration",
+        "cpu_ms": 78,
+        "wall_ms": 265,
+        "max_rss_kib": 42148
+      },
+      {
+        "name": "master",
+        "cpu_ms": 139375,
+        "wall_ms": 33168,
+        "max_rss_kib": 613240
+      },
+      {
+        "name": "preview",
+        "cpu_ms": 60640,
+        "wall_ms": 8445,
+        "max_rss_kib": 261312
+      },
+      {
+        "name": "poster",
+        "cpu_ms": 375,
+        "wall_ms": 128,
+        "max_rss_kib": 442152
+      },
+      {
+        "name": "probe",
+        "cpu_ms": null,
+        "wall_ms": 67,
+        "max_rss_kib": null
+      },
+      {
+        "name": "loudness",
+        "cpu_ms": 640,
+        "wall_ms": 524,
+        "max_rss_kib": 39576
+      }
+    ],
+    "cpu_ms": 250356,
+    "attempt": 1,
+    "wall_ms": 62480,
+    "max_rss_kib": 613240,
+    "output_bytes": 57916198
+  },
+  "stale": false
+}

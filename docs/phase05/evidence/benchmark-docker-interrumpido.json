@@ -1,0 +1,601 @@
+{
+  "generated_at": "2026-10-31T15:28:34.227Z",
+  "provider": "docker-ffmpeg",
+  "threads": 4,
+  "iterations": 10,
+  "machine": {
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13500",
+    "logical_cores": 20,
+    "memory_gb": 16,
+    "platform": "win32 10.0.26300"
+  },
+  "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "note": "Material sintético: imágenes con grano, 20 % de clips, tono como voz y como música. La voz real en MP3 añade decodificación. Functions de Vercel: BLOCKED_EXTERNAL, no medido. Coste monetario: null, sin worker facturado.",
+  "monetary_cost_usd": null,
+  "scenarios": [
+    {
+      "seconds": 120,
+      "assets": 10,
+      "scenes": 20,
+      "runs_count": 3,
+      "failures": [
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "p50": 78817,
+        "p95": 84550,
+        "max": 84550
+      },
+      "cpu_ms": {
+        "p50": 200324,
+        "p95": 220638,
+        "max": 220638
+      },
+      "max_rss_kib": {
+        "p50": 592008,
+        "p95": 602488,
+        "max": 602488
+      },
+      "output_bytes": {
+        "p50": 91110385,
+        "p95": 91110385,
+        "max": 91110385
+      },
+      "work_bytes": {
+        "p50": 1807463508,
+        "p95": 1807463509,
+        "max": 1807463509
+      },
+      "all_qa_passed": true,
+      "ffprobe": {
+        "streams": [
+          {
+            "index": 0,
+            "codec_name": "h264",
+            "codec_long_name": "H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10",
+            "profile": "High",
+            "codec_type": "video",
+            "codec_tag_string": "avc1",
+            "codec_tag": "0x31637661",
+            "width": 1080,
+            "height": 1920,
+            "coded_width": 1080,
+            "coded_height": 1920,
+            "closed_captions": 0,
+            "film_grain": 0,
+            "has_b_frames": 2,
+            "sample_aspect_ratio": "1:1",
+            "display_aspect_ratio": "9:16",
+            "pix_fmt": "yuv420p",
+            "level": 40,
+            "chroma_location": "left",
+            "field_order": "progressive",
+            "refs": 1,
+            "is_avc": "true",
+            "nal_length_size": "4",
+            "id": "0x1",
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/15360",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 1843200,
+            "duration": "120.000000",
+            "bit_rate": "5873466",
+            "bits_per_raw_sample": "8",
+            "nb_frames": "3600",
+            "extradata_size": 47,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "VideoHandler",
+              "vendor_id": "[0][0][0][0]",
+              "encoder": "Lavc59.37.100 libx264"
+            }
+          },
+          {
+            "index": 1,
+            "codec_name": "aac",
+            "codec_long_name": "AAC (Advanced Audio Coding)",
+            "profile": "LC",
+            "codec_type": "audio",
+            "codec_tag_string": "mp4a",
+            "codec_tag": "0x6134706d",
+            "sample_fmt": "fltp",
+            "sample_rate": "48000",
+            "channels": 2,
+            "channel_layout": "stereo",
+            "bits_per_sample": 0,
+            "id": "0x2",
+            "r_frame_rate": "0/0",
+            "avg_frame_rate": "0/0",
+            "time_base": "1/48000",
+            "start_pts": 0,
+            "start_time": "0.000000",
+            "duration_ts": 5760000,
+            "duration": "120.000000",
+            "bit_rate": "192046",
+            "nb_frames": "5626",
+            "extradata_size": 5,
+            "disposition": {
+              "default": 1,
+              "dub": 0,
+              "original": 0,
+              "comment": 0,
+              "lyrics": 0,
+              "karaoke": 0,
+              "forced": 0,
+              "hearing_impaired": 0,
+              "visual_impaired": 0,
+              "clean_effects": 0,
+              "attached_pic": 0,
+              "timed_thumbnails": 0,
+              "captions": 0,
+              "descriptions": 0,
+              "metadata": 0,
+              "dependent": 0,
+              "still_image": 0
+            },
+            "tags": {
+              "language": "und",
+              "handler_name": "SoundHandler",
+              "vendor_id": "[0][0][0][0]"
+            }
+          }
+        ],
+        "format": {
+          "filename": "master.mp4",
+          "nb_streams": 2,
+          "nb_programs": 0,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "format_long_name": "QuickTime / MOV",
+          "start_time": "0.000000",
+          "duration": "120.000000",
+          "size": "91110385",
+          "bit_rate": "6074025",
+          "probe_score": 100,
+          "tags": {
+            "major_brand": "isom",
+            "minor_version": "512",
+            "compatible_brands": "isomiso2avc1mp41",
+            "encoder": "Lavf59.27.100"
+          }
+        }
+      },
+      "runs": [
+        {
+          "iteration": 1,
+          "wall_ms": 77187,
+          "cpu_ms": 198152,
+          "max_rss_kib": 592008,
+          "output_bytes": 91110385,
+          "work_bytes": 1807463508,
+          "qa_failed": [],
+          "phases_ms": {
+            "scenes": 32268,
+            "concat": 5274,
+            "narration": 380,
+            "master": 28196,
+            "preview": 9471,
+            "poster": 246,
+            "probe": 53,
+            "loudness": 590
+          }
+        },
+        {
+          "iteration": 2,
+          "wall_ms": 78817,
+          "cpu_ms": 200324,
+          "max_rss_kib": 590880,
+          "output_bytes": 91110385,
+          "work_bytes": 1807463508,
+          "qa_failed": [],
+          "phases_ms": {
+            "scenes": 33217,
+            "concat": 5774,
+            "narration": 413,
+            "master": 28125,
+            "preview": 9589,
+            "poster": 261,
+            "probe": 62,
+            "loudness": 659
+          }
+        },
+        {
+          "iteration": 3,
+          "wall_ms": 84550,
+          "cpu_ms": 220638,
+          "max_rss_kib": 602488,
+          "output_bytes": 91110385,
+          "work_bytes": 1807463509,
+          "qa_failed": [],
+          "phases_ms": {
+            "scenes": 33557,
+            "concat": 5939,
+            "narration": 495,
+            "master": 32407,
+            "preview": 10504,
+            "poster": 219,
+            "probe": 57,
+            "loudness": 665
+          }
+        }
+      ]
+    },
+    {
+      "seconds": 120,
+      "assets": 30,
+      "scenes": 30,
+      "runs_count": 0,
+      "failures": [
+        {
+          "iteration": 1,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 2,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 3,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "max": null
+      },
+      "cpu_ms": {
+        "max": null
+      },
+      "max_rss_kib": {
+        "max": null
+      },
+      "output_bytes": {
+        "max": null
+      },
+      "work_bytes": {
+        "max": null
+      },
+      "all_qa_passed": true,
+      "ffprobe": null,
+      "runs": []
+    },
+    {
+      "seconds": 120,
+      "assets": 60,
+      "scenes": 60,
+      "runs_count": 0,
+      "failures": [
+        {
+          "iteration": 1,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 2,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 3,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "max": null
+      },
+      "cpu_ms": {
+        "max": null
+      },
+      "max_rss_kib": {
+        "max": null
+      },
+      "output_bytes": {
+        "max": null
+      },
+      "work_bytes": {
+        "max": null
+      },
+      "all_qa_passed": true,
+      "ffprobe": null,
+      "runs": []
+    },
+    {
+      "seconds": 240,
+      "assets": 10,
+      "scenes": 40,
+      "runs_count": 0,
+      "failures": [
+        {
+          "iteration": 1,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 2,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 3,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "max": null
+      },
+      "cpu_ms": {
+        "max": null
+      },
+      "max_rss_kib": {
+        "max": null
+      },
+      "output_bytes": {
+        "max": null
+      },
+      "work_bytes": {
+        "max": null
+      },
+      "all_qa_passed": true,
+      "ffprobe": null,
+      "runs": []
+    },
+    {
+      "seconds": 240,
+      "assets": 30,
+      "scenes": 40,
+      "runs_count": 0,
+      "failures": [
+        {
+          "iteration": 1,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 2,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 3,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "max": null
+      },
+      "cpu_ms": {
+        "max": null
+      },
+      "max_rss_kib": {
+        "max": null
+      },
+      "output_bytes": {
+        "max": null
+      },
+      "work_bytes": {
+        "max": null
+      },
+      "all_qa_passed": true,
+      "ffprobe": null,
+      "runs": []
+    },
+    {
+      "seconds": 240,
+      "assets": 60,
+      "scenes": 60,
+      "runs_count": 0,
+      "failures": [
+        {
+          "iteration": 1,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 2,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 3,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 4,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 5,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 6,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 7,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 8,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 9,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        },
+        {
+          "iteration": 10,
+          "error": "RENDER_FAILED:{\"state\":\"FAILED\",\"error_code\":\"CONTAINER_FAILED\"}"
+        }
+      ],
+      "wall_ms": {
+        "max": null
+      },
+      "cpu_ms": {
+        "max": null
+      },
+      "max_rss_kib": {
+        "max": null
+      },
+      "output_bytes": {
+        "max": null
+      },
+      "work_bytes": {
+        "max": null
+      },
+      "all_qa_passed": true,
+      "ffprobe": null,
+      "runs": []
+    }
+  ]
+}

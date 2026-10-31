@@ -1,0 +1,29 @@
+Diagnóstico del defecto de fotogramas, 31-10-2026. Material sintético. Contenedor: FFmpeg 5.1.9 (Debian). Host: build gyan 2025-12-10.
+La primera medición oficial en contenedor dio 3596 fotogramas en vez de 3600 en las 10 iteraciones, con 4 escenas de clip: benchmark-docker-defecto-frames.json.
+
+1. Fotogramas por trozo. Seis clips y dos imágenes, con el plan de entonces (-stream_loop -1 -t <duración>) y sin -t:
+{"where":"docker","name":"actual","esperado":[60,120,180,225,60,180,180,60],"obtenido":[59,119,179,224,59,179,180,60]}
+{"where":"host","name":"actual","esperado":[60,120,180,225,60,180,180,60],"obtenido":[60,120,180,225,60,180,180,60]}
+{"where":"docker","name":"sin_t","esperado":[60,120,180,225,60,180,180,60],"obtenido":[60,120,180,225,60,180,180,60]}
+{"where":"host","name":"sin_t","esperado":[60,120,180,225,60,180,180,60],"obtenido":[60,120,180,225,60,180,180,60]}
+Conclusión: -t en la entrada pierde un fotograma por clip en FFmpeg 5.1. Las imágenes no se ven afectadas.
+
+2. Clip sin fotogramas decodificables (mdat sobrescrito), con -stream_loop -1 y tiempo límite de 45 s por paso:
+{"clip":"corrupto","where":"docker","name":"sin_t","obtenido":["STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT"],"wall_ms":[45505,45573,45572,45552]}
+{"clip":"corrupto","where":"host","name":"sin_t","obtenido":["STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT"],"wall_ms":[45018,45014,45016,45010]}
+{"clip":"corrupto","where":"docker","name":"t_mas_1s","obtenido":["STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT"],"wall_ms":[45592,45577,45580,45599]}
+{"clip":"corrupto","where":"host","name":"t_mas_1s","obtenido":["STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT","STEP_TIMEOUT"],"wall_ms":[45017,45018,45020,45017]}
+Conclusión: quitar -t, o darle margen, arregla el conteo, pero el bucle sigue girando hasta el tiempo límite (20 min por intento en producción).
+
+3. Con la corrección (clip leído una vez + tpad; música con repeticiones contadas), plan completo:
+{"caso":"clips_sanos_y_cortos_con_musica","where":"docker","esperado":495,"fotogramas":"495","failure":null,"qa_falla":[],"wall_ms":12409}
+{"caso":"clips_sanos_y_cortos_con_musica","where":"host","esperado":495,"fotogramas":"495","failure":null,"qa_falla":[],"wall_ms":9593}
+{"caso":"clip_corrupto","where":"docker","esperado":120,"fotogramas":null,"failure":{"code":"PROCESS_FAILED","step":"scene-0"},"qa_falla":null,"wall_ms":678}
+{"caso":"clip_corrupto","where":"host","esperado":120,"fotogramas":null,"failure":{"code":"PROCESS_FAILED","step":"scene-0"},"qa_falla":null,"wall_ms":74}
+{"caso":"musica_wav_vacia","where":"docker","esperado":60,"fotogramas":"60","failure":null,"qa_falla":[],"wall_ms":3448}
+{"caso":"musica_wav_vacia","where":"host","esperado":60,"fotogramas":"60","failure":null,"qa_falla":[],"wall_ms":2110}
+{"caso":"imagen_corrupta","where":"docker","esperado":120,"fotogramas":null,"failure":{"code":"PROCESS_FAILED","step":"scene-0"},"qa_falla":null,"wall_ms":691}
+{"caso":"imagen_corrupta","where":"host","esperado":120,"fotogramas":null,"failure":{"code":"PROCESS_FAILED","step":"scene-0"},"qa_falla":null,"wall_ms":107}
+Antes de contar las repeticiones de la música, un WAV vacío colgó el paso master en el host hasta el tiempo límite de 45 s; en el contenedor no se colgaba:
+{"caso":"musica_wav_vacia","where":"host","esperado":60,"fotogramas":null,"failure":{"code":"STEP_TIMEOUT","step":"master"},"qa_falla":null,"wall_ms":45621}
+Los casos clip_corrupto salen de la medición anterior a contar las repeticiones de la música: ese cambio no toca los pasos de escena.

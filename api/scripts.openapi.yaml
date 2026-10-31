@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine scripts API
+  version: 0.3.0
+  description: Implementado y probado en local. Todas las rutas exigen sesión; las escrituras exigen el mismo origen. Errores comunes 400, 401, 403, 404, 409 y 503.
+servers:
+  - url: /api/organizations/{organizationId}/projects/{projectId}
+    variables:
+      organizationId: { default: '00000000-0000-0000-0000-000000000000' }
+      projectId: { default: '00000000-0000-0000-0000-000000000000' }
+paths:
+  /script:
+    get: { summary: Leer versión vigente con gate, escenas e historial, responses: { '200': { description: Guion }, '404': { description: Sin guion } } }
+    post: { summary: Guardar versión nueva declarando base_version (project:write), responses: { '201': { description: Versión, hash y gate }, '409': { description: CONFLICT por dossier sin aprobar o versión obsoleta } } }
+  /script/generate:
+    post: { summary: Generar guion con modelo; idempotente y sin aprobar, responses: { '201': { description: Versión marcada o rechazos }, '409': { description: CONFLICT si otra persona guardó antes }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
+  /script/sections/{sectionKey}:
+    put: { summary: Editar una sección; crea versión nueva, responses: { '200': { description: Versión }, '409': { description: CONFLICT por versión obsoleta } } }
+  /script/sections/{sectionKey}/regenerate:
+    post: { summary: Regenerar una sección dentro de sus mismos claims; idempotente, responses: { '201': { description: Versión marcada o rechazos }, '409': { description: CONFLICT por versión obsoleta }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
+  /script/versions/{revision}:
+    get: { summary: Leer una versión anterior, responses: { '200': { description: Guion }, '404': { description: Sin esa versión } } }
+  /script/versions/{revision}/submit:
+    post: { summary: Enviar a revisión la versión vigente, responses: { '200': { description: En revisión }, '409': { description: CONFLICT por estado o versión } } }
+  /script/versions/{revision}/decision:
+    post: { summary: Aprobar o rechazar el hash exacto (editorial:review), responses: { '200': { description: Decisión }, '409': { description: CONFLICT por hash obsoleto o BLOCKED_BY_POLICY } } }

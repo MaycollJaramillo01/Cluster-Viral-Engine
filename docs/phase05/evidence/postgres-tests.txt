@@ -1,0 +1,397 @@
+﻿
+> cluster-viral-engine@0.2.0 test:db
+> npm run test:db --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 test:db
+> tsx --test tests/*.integration.ts
+
+TAP version 13
+# Subtest: foundation: real PostgreSQL, migrations, authentication, MFA and tenant isolation
+    # Subtest: parallel migration runners serialize, rerun is no-op and every migration is recorded
+    ok 1 - parallel migration runners serialize, rerun is no-op and every migration is recorded
+      ---
+      duration_ms: 435.8844
+      type: 'test'
+      ...
+    # Subtest: checksum drift is rejected; a broken migration rolls back its DDL and version
+    ok 2 - checksum drift is rejected; a broken migration rolls back its DDL and version
+      ---
+      duration_ms: 57.6184
+      type: 'test'
+      ...
+    # Subtest: membership derives from verified subject; cross-org, forged subject, owner without MFA and DB owner denied
+    ok 3 - membership derives from verified subject; cross-org, forged subject, owner without MFA and DB owner denied
+      ---
+      duration_ms: 58.9391
+      type: 'test'
+      ...
+    # Subtest: RLS protects users and projects, contexts do not leak after commit/rollback; auth and app roles separate
+    ok 4 - RLS protects users and projects, contexts do not leak after commit/rollback; auth and app roles separate
+      ---
+      duration_ms: 42.0963
+      type: 'test'
+      ...
+    # Subtest: expired identity and statement timeout roll back without releasing data or dirty pooled state
+    ok 5 - expired identity and statement timeout roll back without releasing data or dirty pooled state
+      ---
+      duration_ms: 1055.7942
+      type: 'test'
+      ...
+    # Subtest: cross-organization writes fail and a swallowed SQL error cannot masquerade as a successful commit
+    ok 6 - cross-organization writes fail and a swallowed SQL error cannot masquerade as a successful commit
+      ---
+      duration_ms: 6.1485
+      type: 'test'
+      ...
+    # Subtest: versioned identity DDL matches installed library including MFA/rate limiting
+    ok 7 - versioned identity DDL matches installed library including MFA/rate limiting
+      ---
+      duration_ms: 84.1465
+      type: 'test'
+      ...
+    # Subtest: wrong password, public signup and cross-origin sign-in rejected; HttpOnly session works
+    ok 8 - wrong password, public signup and cross-origin sign-in rejected; HttpOnly session works
+      ---
+      duration_ms: 1738.4965
+      type: 'test'
+      ...
+    # Subtest: MFA enrollment confirms TOTP, encrypts secret, then requires challenge on next login
+    ok 9 - MFA enrollment confirms TOTP, encrypts secret, then requires challenge on next login
+      ---
+      duration_ms: 565.372
+      type: 'test'
+      ...
+    # Subtest: logout revokes access; expired server-side session is rejected even with an old cookie
+    ok 10 - logout revokes access; expired server-side session is rejected even with an old cookie
+      ---
+      duration_ms: 209.7234
+      type: 'test'
+      ...
+# {"timestamp":"2026-10-31T15:11:25.495Z","event":"identity.failure-test","request_id":"f5c55047-ba54-4745-8ff1-02afdf9de082","status":503,"duration_ms":147,"error_code":"SERVICE_UNAVAILABLE"}
+    # Subtest: auth session/audit atomicity and append-only history enforced by PostgreSQL
+    ok 11 - auth session/audit atomicity and append-only history enforced by PostgreSQL
+      ---
+      duration_ms: 158.3407
+      type: 'test'
+      ...
+    # Subtest: rollback down to 004 retains identity audit; transaction rollback restores complete schema
+    ok 12 - rollback down to 004 retains identity audit; transaction rollback restores complete schema
+      ---
+      duration_ms: 85.8101
+      type: 'test'
+      ...
+    1..12
+ok 1 - foundation: real PostgreSQL, migrations, authentication, MFA and tenant isolation
+  ---
+  duration_ms: 5576.087
+  type: 'test'
+  ...
+# Subtest: F04 PostgreSQL real: biblioteca, licencias, voz por escena, coste y resiliencia
+    # Subtest: carga validada e idempotente; otra organización no ve nada y el rol de runtime no reescribe bytes
+    ok 1 - carga validada e idempotente; otra organización no ve nada y el rol de runtime no reescribe bytes
+      ---
+      duration_ms: 232.618
+      type: 'test'
+      ...
+    # Subtest: derechos: sin licencia no se aprueba; hash exacto; solo reviewer; licencia nueva o vencida anula la aprobación
+    ok 2 - derechos: sin licencia no se aprueba; hash exacto; solo reviewer; licencia nueva o vencida anula la aprobación
+      ---
+      duration_ms: 199.3054
+      type: 'test'
+      ...
+    # Subtest: voz exige guion aprobado; caché por huella: reemplazar imagen no invoca TTS y corregir una escena regenera solo esa
+    ok 3 - voz exige guion aprobado; caché por huella: reemplazar imagen no invoca TTS y corregir una escena regenera solo esa
+      ---
+      duration_ms: 1449.5013
+      type: 'test'
+      ...
+    # Subtest: resiliencia: duplicado concurrente, 429, fallo parcial y respuesta perdida no duplican coste
+    ok 4 - resiliencia: duplicado concurrente, 429, fallo parcial y respuesta perdida no duplican coste
+      ---
+      duration_ms: 580.3625
+      type: 'test'
+      ...
+    # Subtest: presupuesto: preflight, tope por video, tope mensual, alerta al 80 % y ledger inmutable
+    ok 5 - presupuesto: preflight, tope por video, tope mensual, alerta al 80 % y ledger inmutable
+      ---
+      duration_ms: 444.9348
+      type: 'test'
+      ...
+    # Subtest: gate de medios: música y material sin licencia bloquean; recreación IA rotulada y con gasto; cambio de material invalida revisión
+    ok 6 - gate de medios: música y material sin licencia bloquean; recreación IA rotulada y con gasto; cambio de material invalida revisión
+      ---
+      duration_ms: 1244.4944
+      type: 'test'
+      ...
+    # Subtest: rollback de 009 no toca auditoría ni aprobaciones, y runtime no elude RLS
+    ok 7 - rollback de 009 no toca auditoría ni aprobaciones, y runtime no elude RLS
+      ---
+      duration_ms: 18.3471
+      type: 'test'
+      ...
+    1..7
+ok 2 - F04 PostgreSQL real: biblioteca, licencias, voz por escena, coste y resiliencia
+  ---
+  duration_ms: 7719.2295
+  type: 'test'
+  ...
+# Subtest: PostgreSQL real aislado: migraciones, tenant/RBAC, idempotencia, auditoría y rollback
+    # Subtest: 10 solicitudes concurrentes producen una reserva, una auditoría y un outbox
+    ok 1 - 10 solicitudes concurrentes producen una reserva, una auditoría y un outbox
+      ---
+      duration_ms: 116.4641
+      type: 'test'
+      ...
+    # Subtest: RBAC, organización, proyecto y clave reutilizada con otro input son rechazados
+    ok 2 - RBAC, organización, proyecto y clave reutilizada con otro input son rechazados
+      ---
+      duration_ms: 13.9105
+      type: 'test'
+      ...
+    # Subtest: RLS niega lectura/escritura cruzada y FK compuesta niega proyecto externo
+    ok 3 - RLS niega lectura/escritura cruzada y FK compuesta niega proyecto externo
+      ---
+      duration_ms: 12.4633
+      type: 'test'
+      ...
+    # Subtest: fallo de auditoría revierte reserva y outbox atómicamente
+    ok 4 - fallo de auditoría revierte reserva y outbox atómicamente
+      ---
+      duration_ms: 8.7653
+      type: 'test'
+      ...
+    # Subtest: cierre exige tenant; estado terminal y auditoría son inmutables
+    ok 5 - cierre exige tenant; estado terminal y auditoría son inmutables
+      ---
+      duration_ms: 190.6361
+      type: 'test'
+      ...
+    # Subtest: rollback 003 conserva auditoría y permite reaplicar migración
+    ok 6 - rollback 003 conserva auditoría y permite reaplicar migración
+      ---
+      duration_ms: 112.6067
+      type: 'test'
+      ...
+    1..6
+ok 3 - PostgreSQL real aislado: migraciones, tenant/RBAC, idempotencia, auditoría y rollback
+  ---
+  duration_ms: 740.5921
+  type: 'test'
+  ...
+# Subtest: F05 PostgreSQL real: cola durable, leases, cancelación, aislamiento y rollback
+    # Subtest: pedidos concurrentes crean un render y un job; el manifest queda fijo y el resultado llega a revisión
+    ok 1 - pedidos concurrentes crean un render y un job; el manifest queda fijo y el resultado llega a revisión
+      ---
+      duration_ms: 1061.4156
+      type: 'test'
+      ...
+    # Subtest: bloqueos: guion, material, derechos y presupuesto; aprobar no se puede pedir por aquí
+    ok 2 - bloqueos: guion, material, derechos y presupuesto; aprobar no se puede pedir por aquí
+      ---
+      duration_ms: 1160.8369
+      type: 'test'
+      ...
+    # Subtest: aislamiento: otra organización y lecturas sin organización no ven nada; solo escribe quien puede
+    ok 3 - aislamiento: otra organización y lecturas sin organización no ven nada; solo escribe quien puede
+      ---
+      duration_ms: 670.6518
+      type: 'test'
+      ...
+    # Subtest: dos workers a la vez se reparten la cola sin repetir
+    ok 4 - dos workers a la vez se reparten la cola sin repetir
+      ---
+      duration_ms: 1308.7148
+      type: 'test'
+      ...
+    # Subtest: una caída no pierde el trabajo: el lease vencido lo recupera otro worker y el latido lo mantiene
+    ok 5 - una caída no pierde el trabajo: el lease vencido lo recupera otro worker y el latido lo mantiene
+      ---
+      duration_ms: 3591.1406
+      type: 'test'
+      ...
+    # Subtest: agotados los intentos por caídas va a DEAD, el proyecto vuelve a medios y se puede pedir de nuevo
+    ok 6 - agotados los intentos por caídas va a DEAD, el proyecto vuelve a medios y se puede pedir de nuevo
+      ---
+      duration_ms: 701.8093
+      type: 'test'
+      ...
+    # Subtest: los fallos transitorios esperan con retroceso y al tercero muere; lo que no cambia al repetir muere a la primera
+    ok 7 - los fallos transitorios esperan con retroceso y al tercero muere; lo que no cambia al repetir muere a la primera
+      ---
+      duration_ms: 3174.6787
+      type: 'test'
+      ...
+    # Subtest: un worker que perdió el lease no pisa al que lo relevó ni deja objetos
+    ok 8 - un worker que perdió el lease no pisa al que lo relevó ni deja objetos
+      ---
+      duration_ms: 1619.7736
+      type: 'test'
+      ...
+    # Subtest: sin huérfanos: un fallo al subir no deja nada y una caída a mitad la limpia el siguiente intento
+    ok 9 - sin huérfanos: un fallo al subir no deja nada y una caída a mitad la limpia el siguiente intento
+      ---
+      duration_ms: 1632.8658
+      type: 'test'
+      ...
+    # Subtest: cancelar: en cola al momento; en ejecución detiene el proceso y limpia; también en el último instante
+    ok 10 - cancelar: en cola al momento; en ejecución detiene el proceso y limpia; también en el último instante
+      ---
+      duration_ms: 1747.8736
+      type: 'test'
+      ...
+    # Subtest: material cambiado durante el render: el resultado no entra en revisión; lo pedido después reemplaza a lo anterior
+    ok 11 - material cambiado durante el render: el resultado no entra en revisión; lo pedido después reemplaza a lo anterior
+      ---
+      duration_ms: 1510.6702
+      type: 'test'
+      ...
+    # Subtest: el rol de runtime no reescribe manifest ni borra; un éxito incompleto no se puede guardar
+    ok 12 - el rol de runtime no reescribe manifest ni borra; un éxito incompleto no se puede guardar
+      ---
+      duration_ms: 356.1467
+      type: 'test'
+      ...
+    # Subtest: el reclamo funciona con un dueño sin BYPASSRLS: sin su política la cola queda ciega
+    ok 13 - el reclamo funciona con un dueño sin BYPASSRLS: sin su política la cola queda ciega
+      ---
+      duration_ms: 410.3994
+      type: 'test'
+      ...
+    # Subtest: FFmpeg real de principio a fin: del guion aprobado a revisión de video, con hash y control de calidad
+    ok 14 - FFmpeg real de principio a fin: del guion aprobado a revisión de video, con hash y control de calidad
+      ---
+      duration_ms: 63266.929
+      type: 'test'
+      ...
+    # Subtest: rollback de 010: quita lo de render, conserva auditoría y se puede volver a aplicar
+    ok 15 - rollback de 010: quita lo de render, conserva auditoría y se puede volver a aplicar
+      ---
+      duration_ms: 53.4629
+      type: 'test'
+      ...
+    1..15
+ok 4 - F05 PostgreSQL real: cola durable, leases, cancelación, aislamiento y rollback
+  ---
+  duration_ms: 83778.0155
+  type: 'test'
+  ...
+# Subtest: F02 PostgreSQL real: radar, investigación, gate y revisión de dossier
+    # Subtest: historias: score guardado, filtros, alto riesgo fuera por defecto, tenant y rol
+    ok 1 - historias: score guardado, filtros, alto riesgo fuera por defecto, tenant y rol
+      ---
+      duration_ms: 90.8748
+      type: 'test'
+      ...
+    # Subtest: referencias: 10 envíos concurrentes de la misma URL crean una fila y una auditoría, y guardan versión
+    ok 2 - referencias: 10 envíos concurrentes de la misma URL crean una fila y una auditoría, y guardan versión
+      ---
+      duration_ms: 127.245
+      type: 'test'
+      ...
+    # Subtest: seleccionar una historia concurrentemente crea un solo proyecto; otro tenant no la encuentra
+    ok 3 - seleccionar una historia concurrentemente crea un solo proyecto; otro tenant no la encuentra
+      ---
+      duration_ms: 35.3621
+      type: 'test'
+      ...
+    # Subtest: plan versionado; fuentes y claims rechazan proyecto ajeno, URL repetida y fuente de otro proyecto
+    ok 4 - plan versionado; fuentes y claims rechazan proyecto ajeno, URL repetida y fuente de otro proyecto
+      ---
+      duration_ms: 66.8295
+      type: 'test'
+      ...
+    # Subtest: dossier: congela hash, bloquea alto riesgo, exige verificación y revisor, e invalida por edición
+    ok 5 - dossier: congela hash, bloquea alto riesgo, exige verificación y revisor, e invalida por edición
+      ---
+      duration_ms: 138.4736
+      type: 'test'
+      ...
+    # Subtest: rechazar devuelve el proyecto a investigación y no crea un dossier aprobado
+    ok 6 - rechazar devuelve el proyecto a investigación y no crea un dossier aprobado
+      ---
+      duration_ms: 64.7284
+      type: 'test'
+      ...
+    # Subtest: propuestas: reintento y concurrencia llaman al modelo una vez; fallo no se reintenta a ciegas
+    ok 7 - propuestas: reintento y concurrencia llaman al modelo una vez; fallo no se reintenta a ciegas
+      ---
+      duration_ms: 54.9472
+      type: 'test'
+      ...
+    # Subtest: extracción: guarda sin verificar, descarta cita inventada y el gate bloquea hasta revisión humana
+    ok 8 - extracción: guarda sin verificar, descarta cita inventada y el gate bloquea hasta revisión humana
+      ---
+      duration_ms: 49.5563
+      type: 'test'
+      ...
+    # Subtest: rollback de 007 elimina tablas nuevas sin cascada y sin tocar auditoría
+    ok 9 - rollback de 007 elimina tablas nuevas sin cascada y sin tocar auditoría
+      ---
+      duration_ms: 13.9564
+      type: 'test'
+      ...
+    1..9
+ok 5 - F02 PostgreSQL real: radar, investigación, gate y revisión de dossier
+  ---
+  duration_ms: 7733.1513
+  type: 'test'
+  ...
+# Subtest: F03 PostgreSQL real: versiones, conflicto optimista, regeneración y aprobación exacta
+    # Subtest: sin dossier aprobado no hay guion, ni siquiera con el proyecto en investigación
+    ok 1 - sin dossier aprobado no hay guion, ni siquiera con el proyecto en investigación
+      ---
+      duration_ms: 106.2947
+      type: 'test'
+      ...
+    # Subtest: dos editores sobre la misma versión: uno gana con 409 para el otro y conserva el historial
+    ok 2 - dos editores sobre la misma versión: uno gana con 409 para el otro y conserva el historial
+      ---
+      duration_ms: 156.6073
+      type: 'test'
+      ...
+    # Subtest: regenerar un párrafo conserva el hash de las otras escenas; reintento no repite la llamada
+    ok 3 - regenerar un párrafo conserva el hash de las otras escenas; reintento no repite la llamada
+      ---
+      duration_ms: 168.3875
+      type: 'test'
+      ...
+    # Subtest: generar por modelo: guarda marcado, no aprueba solo; claim inventado no crea versión
+    ok 4 - generar por modelo: guarda marcado, no aprueba solo; claim inventado no crea versión
+      ---
+      duration_ms: 94.642
+      type: 'test'
+      ...
+    # Subtest: editor y reviewer completo: aprueba la versión exacta y una edición posterior invalida la aprobación
+    ok 5 - editor y reviewer completo: aprueba la versión exacta y una edición posterior invalida la aprobación
+      ---
+      duration_ms: 96.0564
+      type: 'test'
+      ...
+    # Subtest: guion con bloqueos no se aprueba; rechazar vuelve a guion y exige otra versión
+    ok 6 - guion con bloqueos no se aprueba; rechazar vuelve a guion y exige otra versión
+      ---
+      duration_ms: 65.9863
+      type: 'test'
+      ...
+    # Subtest: rollback de 008 no toca auditoría ni aprobaciones
+    ok 7 - rollback de 008 no toca auditoría ni aprobaciones
+      ---
+      duration_ms: 8.7937
+      type: 'test'
+      ...
+    1..7
+ok 6 - F03 PostgreSQL real: versiones, conflicto optimista, regeneración y aprobación exacta
+  ---
+  duration_ms: 7587.2038
+  type: 'test'
+  ...
+1..6
+# tests 62
+# suites 0
+# pass 62
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84581.923

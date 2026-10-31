@@ -1,0 +1,309 @@
+{
+  "scope": "Validadores contra salidas hostiles simuladas. No mide un modelo real: BLOCKED_EXTERNAL.",
+  "stories": 10,
+  "hostile_outputs": 60,
+  "invented_evidence_unmarked": 0,
+  "model_confirmed_downgraded_to_unverified": 20,
+  "rejections": [
+    {
+      "story": "S01",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S01",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S01",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S01",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S01",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S01",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S02",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S02",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S02",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S02",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S02",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S02",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S03",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S03",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S03",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S03",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S03",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S03",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S04",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S04",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S04",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S04",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S04",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S04",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S05",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S05",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S05",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S05",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S05",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S05",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S06",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S06",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S06",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S06",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S06",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S06",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S07",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S07",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S07",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S07",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S07",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S07",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S08",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S08",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S08",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S08",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S08",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S08",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S09",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S09",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S09",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S09",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S09",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S09",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    },
+    {
+      "story": "S10",
+      "attack": "invented_source",
+      "reason": "UNKNOWN_SOURCE"
+    },
+    {
+      "story": "S10",
+      "attack": "invented_quote",
+      "reason": "EVIDENCE_NOT_IN_SOURCE"
+    },
+    {
+      "story": "S10",
+      "attack": "invented_url",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S10",
+      "attack": "no_evidence",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S10",
+      "attack": "bad_classification",
+      "reason": "SCHEMA_INVALID"
+    },
+    {
+      "story": "S10",
+      "attack": "not_json",
+      "reason": "INVALID_OUTPUT"
+    }
+  ]
+}

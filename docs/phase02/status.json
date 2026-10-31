@@ -1,0 +1,21 @@
+{
+  "phase": "02",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F02-01", "status": "VERIFIED_LOCAL", "evidence": "Stories, filtros y tenant scope en PostgreSQL y HTTP." },
+    { "id": "F02-02", "status": "VERIFIED_LOCAL", "evidence": "Referencia manual con versión y fecha; 10 envíos concurrentes crean una fila." },
+    { "id": "F02-03", "status": "BLOCKED_EXTERNAL", "evidence": "Sin adaptador real ni permisos; la API declara limitación y fallback manual. Sin UI por AGENTS.md." },
+    { "id": "F02-04", "status": "BLOCKED_EXTERNAL", "evidence": "Validación, idempotencia y 3 propuestas probadas solo con mock marcado; sin LLM real." },
+    { "id": "F02-05", "status": "VERIFIED_LOCAL", "evidence": "Pesos suman 100, score 0-100, explicación y versión." },
+    { "id": "F02-06", "status": "VERIFIED_LOCAL", "evidence": "Plan versionado y validado con contexto, riesgos y contraste." },
+    { "id": "F02-07", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Registro manual con atribución y aviso de menos de 2 fuentes; sin recuperación automática." },
+    { "id": "F02-08", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Claims ligados a evidencia y clasificados; extracción probada con mock, no con LLM real." },
+    { "id": "F02-09", "status": "VERIFIED_LOCAL", "evidence": "Cronología y conflictos de fuente, estado judicial y fecha quedan marcados." },
+    { "id": "F02-10", "status": "VERIFIED_LOCAL", "evidence": "Gate bloquea alto riesgo sin corroborar o verificar; heurística con techo documentado." },
+    { "id": "F02-11", "status": "VERIFIED_LOCAL", "evidence": "Decisión sobre hash exacto, concurrente y auditada; sin reviewer humano real." },
+    { "id": "F02-12", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Validadores contra 10 historias ficticias: 0 evidencias inventadas sin marcar. Sin modelo real ni prueba editorial humana." }
+  ]
+}

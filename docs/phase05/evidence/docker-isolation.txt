@@ -1,0 +1,11 @@
+$ docker run --rm --name cve-render-probe-9ba6fc83-fb7b-474a-88c6-fcf5dac18223 --network none --cap-drop ALL --security-opt no-new-privileges --read-only --tmpfs /tmp:rw,noexec,nosuid,size=256m --cpus 4 --memory 3g --memory-swap 3g --pids-limit 256 --user 10001:10001 -v <workdir>:/work -w /work cve-render:local
+uid=10001
+app=denegado
+usr=denegado
+work=escribe
+memory=3221225472
+pids=256
+CapEff:	0000000000000000
+lo 
+ENETUNREACH
+0

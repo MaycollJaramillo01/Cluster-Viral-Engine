@@ -12,6 +12,7 @@ stateDiagram-v2
  RENDERING --> VIDEO_REVIEW
  VIDEO_REVIEW --> ASSETING: revise
  VIDEO_REVIEW --> APPROVED: exact render approval
+ APPROVED --> ASSETING: approval withdrawn or used asset withdrawn
  APPROVED --> PUBLISHING: official Meta API + budget ok
  PUBLISHING --> PUBLISHED: remote ID confirmed
  PUBLISHING --> APPROVED: failure requiring intervention

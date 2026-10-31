@@ -24,7 +24,7 @@ function database({ role = {}, schema = {}, history = [], failure, rollbackFails
 
 test('real migration files have unique checksums; missing, extra, duplicate and altered history is rejected', async () => {
   const expected = await migrationChecksums(fileURLToPath(new URL('../../db/migrations/', import.meta.url)));
-  assert.equal(expected.length, 6);
+  assert.equal(new Set(expected.map(row => row.checksum_sha256)).size, expected.length);
   assert.equal(migrationsMatch(expected, expected), true);
   for (const history of [[], expected.slice(1), [...expected, expected[0]],
     expected.map((row, i) => i ? row : { ...row, checksum_sha256: 'different' })]) {
