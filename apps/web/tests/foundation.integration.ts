@@ -105,8 +105,16 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
         return 'must not commit';
       }),e=>e instanceof AppError&&e.code==='INTERNAL_ERROR');
     });
-    const config=parseConfig({APP_ENV:'local',DATABASE_URL:runtimeUrl.toString(),AUTH_DATABASE_URL:identityUrl.toString(),
-      BETTER_AUTH_URL:'http://127.0.0.1:3000',BETTER_AUTH_SECRET:randomBytes(48).toString('hex')});
+    const cloudTest = new URL(url).hostname.endsWith('.neon.tech');
+    const configRuntime = new URL(runtimeUrl), configIdentity = new URL(identityUrl);
+    if (cloudTest) {
+      for (const target of [configRuntime, configIdentity]) {
+        target.hostname = target.hostname.replace(/-pooler\./, '.').replace('.c-', '-pooler.c-');
+        target.searchParams.set('sslmode', 'verify-full');
+      }
+    }
+    const config=parseConfig({APP_ENV:cloudTest?'preview':'local',DATABASE_URL:configRuntime.toString(),AUTH_DATABASE_URL:configIdentity.toString(),
+      BETTER_AUTH_URL:cloudTest?'https://preview.example.test':'http://127.0.0.1:3000',BETTER_AUTH_SECRET:randomBytes(48).toString('hex')});
     const service=createIdentityService(authPool,config);
     await t.test('versioned identity DDL matches installed library including MFA/rate limiting',async()=>{
       const check=await getMigrations(service.options);
@@ -184,20 +192,21 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     });
     await t.test('password change requires the current password and revokes other browser sessions', async () => {
       const email = 'password-change@example.test', nextPassword = randomBytes(24).toString('base64url');
+      const passwordRequest = (endpoint: string, body?: unknown) => request(endpoint, body, { 'x-cve-client-ip': '127.0.0.2' });
       await seedDevelopmentIdentity(admin!, { email, password, organizationId: orgA, role: 'editor' });
       cookie = '';
-      assert.equal((await request('sign-in/email', { email, password })).status, 200);
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 200);
       const otherBrowser = cookie;
-      assert.equal((await request('sign-in/email', { email, password })).status, 200);
-      assert((await request('change-password', { currentPassword: 'incorrect-password', newPassword: nextPassword, revokeOtherSessions: true })).status >= 400);
-      assert((await request('change-password', { currentPassword: password, newPassword: 'short', revokeOtherSessions: true })).status >= 400);
-      const changed = await request('change-password', { currentPassword: password, newPassword: nextPassword, revokeOtherSessions: true });
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 200);
+      assert((await passwordRequest('change-password', { currentPassword: 'incorrect-password', newPassword: nextPassword, revokeOtherSessions: true })).status >= 400);
+      assert((await passwordRequest('change-password', { currentPassword: password, newPassword: 'short', revokeOtherSessions: true })).status >= 400);
+      const changed = await passwordRequest('change-password', { currentPassword: password, newPassword: nextPassword, revokeOtherSessions: true });
       assert.equal(changed.status, 200, await changed.clone().text());
       cookie = otherBrowser;
-      assert.equal(await (await request('get-session')).json(), null);
+      assert.equal(await (await passwordRequest('get-session')).json(), null);
       cookie = '';
-      assert.equal((await request('sign-in/email', { email, password })).status, 401);
-      assert.equal((await request('sign-in/email', { email, password: nextPassword })).status, 200);
+      assert.equal((await passwordRequest('sign-in/email', { email, password })).status, 401);
+      assert.equal((await passwordRequest('sign-in/email', { email, password: nextPassword })).status, 200);
     });
     await t.test('rollback of 006/005/004 retains identity audit; transaction rollback restores complete schema',async()=>{
       const c=await admin!.connect();

@@ -52,6 +52,15 @@ configuración de producción, contraseña actual incorrecta, longitud insuficie
 cambio correcto, rechazo de contraseña anterior y revocación de otra sesión.
 El resto de las suites de identidad, RLS y migraciones se mantiene.
 
+La suite de fundaciones se ejecutó contra una base desechable creada dentro de
+la rama de Preview en Neon 18.6: 15 pruebas pasaron, cero fallaron. La suite F00
+se omitió en esa ejecución porque no recibió una base vacía propia; se mantiene
+en CI. La suite ahora usa HTTPS y configuración Preview al recibir un host Neon,
+manteniendo HTTP local en CI. El caso de cambio de contraseña usa otra IP
+sintética para no agotar el límite de login de los casos previos; no se desactiva
+el rate limiting. El correo de la primera cuenta permanece sin verificar hasta
+que su destinatario abra el enlace de invitación entregado privadamente.
+
 Rollback de código: revertir esta PR. Dejar de usar el Preview y retirar sus
 variables específicas desde Vercel si se abandona el entorno. No eliminar ramas
 ni usuarios ni restaurar datos de forma automática; conservar auditoría. No hay
