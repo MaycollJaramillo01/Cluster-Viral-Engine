@@ -1,0 +1,39 @@
+﻿
+> cluster-viral-engine@0.2.0 build
+> npm run build --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 build
+> next build
+
+▲ Next.js 16.4.3 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 51ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1310ms
+  Running TypeScript ...
+  Finished TypeScript in 2.9s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/8) ...
+  Generating static pages using 11 workers (2/8) 
+  Generating static pages using 11 workers (4/8) 
+  Generating static pages using 11 workers (6/8) 
+✓ Generating static pages using 11 workers (8/8) in 1403ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /account
+├ ƒ /api/auth/[...all]
+├ ƒ /api/health
+├ ƒ /api/me
+├ ƒ /api/organizations/[organizationId]/context
+├ ƒ /api/stories
+└ ○ /login
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

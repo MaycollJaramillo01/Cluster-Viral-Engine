@@ -1,0 +1,15 @@
+{
+  "provider": "neon",
+  "status": "BLOCKED_EXTERNAL",
+  "observed_errors": [
+    "neon.list_projects: Unknown tool",
+    "neon.list_organizations: Unknown tool",
+    "neon.describe_project: Unknown tool",
+    "neon.search: Unknown tool"
+  ],
+  "project_id": null,
+  "branches_created": [],
+  "sql_executed": false,
+  "credentials_saved": false,
+  "local_postgres_is_not_neon_verification": true
+}

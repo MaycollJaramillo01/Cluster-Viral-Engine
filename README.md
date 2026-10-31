@@ -26,6 +26,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 ## Qué se puede ejecutar realmente
 
+La preparación de **Fase 01** añade arranque local, login/sesiones/MFA con PostgreSQL, scopes/RLS y migraciones con checksum. Consultar [docs/phase01/README.md](docs/phase01/README.md) para bootstrap, acceso local, Preview y bloqueos externos. No se considera fase aceptada ni habilita publicación.
+
 La implementación local de **Fase 00** está descrita en [docs/phase00/README.md](docs/phase00/README.md): contrato validado, dataset de ocho ilustraciones, render de 120/240 s, benchmark medido, mocks explícitos, pruebas PostgreSQL y gate **NO_GO**. Meta, TTS LATAM, Neon/Vercel reales, derechos y firmas siguen pendientes. No hay endpoint de publicación nuevo.
 
 ```bash
@@ -36,9 +38,11 @@ bash workers/render/check_output.sh workers/render/out/poc.mp4 12
 # Validación de documentación / contratos / backlog (stdlib Python).
 python3 scripts/validate_package.py
 
-# Starter Next.js (esqueleto con endpoints no destructivos, SIN autenticación lista)
-cd apps/web
-npm install
+# Monorepo Next.js: instalación desde la raíz y servidor local.
+npm ci
+# PostgreSQL local listo en 127.0.0.1:55432:
+npm run local:bootstrap
+npm run db:migrate
 npm run dev
 ```
 

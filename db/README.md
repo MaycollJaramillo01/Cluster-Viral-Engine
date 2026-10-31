@@ -1,5 +1,7 @@
 # Migraciones y rol de aplicación
 
+Fase 01: usar `npm run db:migrate` desde la raíz. El runner aplica 001–006 bajo lock, verifica SHA256 y deja una segunda ejecución sin cambios. `scripts/migrate.sh` delega en ese runner. Hay roles separados de migración, autenticación y runtime; permisos en `runtime-grants.sql`. Un esquema antiguo sin checksums no se adopta automáticamente. Ver `docs/phase01/README.md` y su estado externo antes de usar Neon o producción.
+
 La Fase 00 añade `003_phase00.sql` y rollback reversible de esa migración. Se verificaron las tres migraciones en PostgreSQL 17 local aislado, con rol restringido, RLS, concurrencia y auditoría append-only. Esto **no valida Neon ni el pooler real**. Ver `docs/phase00/README.md` para permisos mínimos y pruebas; el esquema de fases futuras sigue siendo diseño.
 
 1. Provisionar **Neon branch de desarrollo vacía**, ejecutar SQL `001_init.sql`, luego `002_rls.sql` con rol de migración privilegiado.

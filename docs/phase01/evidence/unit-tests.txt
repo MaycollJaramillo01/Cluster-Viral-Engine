@@ -1,0 +1,103 @@
+﻿
+> cluster-viral-engine@0.2.0 test
+> npm test --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 test
+> tsx --test tests/*.test.ts
+
+TAP version 13
+# {"timestamp":"2026-10-31T06:18:30.071Z","event":"unit.error","request_id":"c52ac9d3-69fc-47dc-af17-37b169484f71","status":503,"duration_ms":1,"error_code":"SERVICE_UNAVAILABLE"}
+# Subtest: config fails closed, separates roles and environments, requires TLS and Neon pooler outside local
+ok 1 - config fails closed, separates roles and environments, requires TLS and Neon pooler outside local
+  ---
+  duration_ms: 3.8119
+  type: 'test'
+  ...
+# Subtest: roles deny by default; editor cannot manage organization or approve; worker is not human
+ok 2 - roles deny by default; editor cannot manage organization or approve; worker is not human
+  ---
+  duration_ms: 0.1825
+  type: 'test'
+  ...
+# Subtest: state-changing requests require exact server-configured origin
+ok 3 - state-changing requests require exact server-configured origin
+  ---
+  duration_ms: 13.0863
+  type: 'test'
+  ...
+# Subtest: logs allow only structured metadata; request failures never leak messages, credentials or headers
+ok 4 - logs allow only structured metadata; request failures never leak messages, credentials or headers
+  ---
+  duration_ms: 4.2271
+  type: 'test'
+  ...
+# Subtest: auth payload limit applies even when Content-Length is absent or forged small
+ok 5 - auth payload limit applies even when Content-Length is absent or forged small
+  ---
+  duration_ms: 3.8114
+  type: 'test'
+  ...
+# Subtest: manifest válido, JSON Schema independiente y esquema versionado sin deriva
+ok 6 - manifest válido, JSON Schema independiente y esquema versionado sin deriva
+  ---
+  duration_ms: 69.1736
+  type: 'test'
+  ...
+# Subtest: tenant, referencias, timing, derechos, duplicados y campos extra rechazados
+ok 7 - tenant, referencias, timing, derechos, duplicados y campos extra rechazados
+  ---
+  duration_ms: 4.1265
+  type: 'test'
+  ...
+# Subtest: hash canónico y clave TTS incluyen organización, voz y ajustes
+ok 8 - hash canónico y clave TTS incluyen organización, voz y ajustes
+  ---
+  duration_ms: 7.6076
+  type: 'test'
+  ...
+# Subtest: mocks permanecen bloqueados; dry-run distingue REEL y PAGE_VIDEO y rechaza hash antiguo
+ok 9 - mocks permanecen bloqueados; dry-run distingue REEL y PAGE_VIDEO y rechaza hash antiguo
+  ---
+  duration_ms: 3.6519
+  type: 'test'
+  ...
+# Subtest: subtítulos usan offsets absolutos, zona segura y alineación inválida se rechaza
+ok 10 - subtítulos usan offsets absolutos, zona segura y alineación inválida se rechaza
+  ---
+  duration_ms: 1.8311
+  type: 'test'
+  ...
+# Subtest: rutas fuera del directorio y errores de proceso no se presentan como éxito
+ok 11 - rutas fuera del directorio y errores de proceso no se presentan como éxito
+  ---
+  duration_ms: 111.9552
+  type: 'test'
+  ...
+# Subtest: p50/p95 medidos y n insuficiente; Vercel ausente no tiene latencia inventada
+ok 12 - p50/p95 medidos y n insuficiente; Vercel ausente no tiene latencia inventada
+  ---
+  duration_ms: 1.5843
+  type: 'test'
+  ...
+# Subtest: costes desconocidos propagan null; proyecciones reales incluyen fijos
+ok 13 - costes desconocidos propagan null; proyecciones reales incluyen fijos
+  ---
+  duration_ms: 1.3694
+  type: 'test'
+  ...
+# Subtest: gate exige doce tickets, evidencias y aceptación; publicación siempre deshabilitada
+ok 14 - gate exige doce tickets, evidencias y aceptación; publicación siempre deshabilitada
+  ---
+  duration_ms: 1.9204
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 740.4749

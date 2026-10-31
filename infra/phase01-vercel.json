@@ -1,0 +1,14 @@
+{
+  "project_name": "cluster-viral-engine",
+  "project_id": "prj_ZVuIIM1Yh2qGSQ3q4xV1FyPgX22L",
+  "team_id": "team_4ScmxIZLQJB3v6rwPiT0KHZx",
+  "root_directory": "apps/web",
+  "node_version": "22.x",
+  "install_command": "npm ci --prefix ../..",
+  "build_command": "npm run build",
+  "source_files_outside_root_directory": true,
+  "deployment_target": "preview",
+  "production_promoted": true,
+  "production_promoted_note": "Accidental, pending removal; see docs/phase01/evidence/vercel-preview.json",
+  "secrets_in_file": false
+}

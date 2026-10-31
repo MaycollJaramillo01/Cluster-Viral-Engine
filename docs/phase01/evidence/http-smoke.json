@@ -1,0 +1,71 @@
+{
+  "target": "LOCAL_POSTGRES",
+  "checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/health",
+      "status": 200,
+      "request_id": "9afdbb06-ac3c-4f5c-a662-ff3f9677e271"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "5cf25ad9-37ce-4f49-a2b4-4f0f64acbb8c"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    },
+    {
+      "route": "/api/auth/sign-in/email",
+      "status": 200,
+      "request_id": "2d59d697-2600-4054-830f-6f0fe8852ef9"
+    },
+    {
+      "route": "/api/me",
+      "status": 200,
+      "request_id": "fbb8fcc7-8aa8-4449-bda5-57ec67d0e626"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/context",
+      "status": 200,
+      "request_id": "d58f49ba-0c9c-461a-844f-5dcc1a27fad7"
+    },
+    {
+      "route": "/api/organizations/74e18592-3a25-476f-95f3-6a1de6c5a7bc/context",
+      "status": 403,
+      "request_id": "359eaee5-ea21-4603-a704-9d1e4b63fd0b"
+    },
+    {
+      "route": "/account",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/auth/sign-out",
+      "status": 200,
+      "request_id": "1458815b-3fbd-4745-9a7f-9c7b093c21c8"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "dbcd0e04-2249-45a3-9db6-d6445842c9f3"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    }
+  ],
+  "credentials_logged": false
+}

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-31",
+  "source_commit": "f028712536dd99e5b4c8ebb11185a29e908a5ba0",
+  "source": "git archive of the commit; no local env, database or private files uploaded",
+  "preview": {
+    "deployment_id": "dpl_2QHdJzYpfiPS7CRYJibPEDWvgkPE",
+    "url": "https://cluster-viral-engine-l1e4hamls-maycolljaramillo01s-projects.vercel.app",
+    "target": "preview",
+    "status": "READY",
+    "probes_without_vercel_session": { "/": 302, "/api/health": 302 },
+    "note": "302 goes to Vercel SSO (deployment protection). Application routes were not reached on this URL."
+  },
+  "incident_unintended_production": {
+    "status": "OPEN_NEEDS_USER_ACTION",
+    "deployment_id": "dpl_8WfycHiqMbhpEbh87ejqRcGTPc31",
+    "url": "https://cluster-viral-engine.vercel.app",
+    "target": "production",
+    "cause": "First deploy of the project with `vercel deploy --target preview` was created as Production. Cause not established.",
+    "public_probes": { "/": 200, "/login": 200, "/api/health": 200, "/api/me": 401, "/api/stories": 401 },
+    "exposure": "Static UI and health only. No environment variables or database configured; publication_enabled=false.",
+    "removal_attempt": "`vercel remove` was denied by the agent permission policy. Not retried by other means.",
+    "user_action": "vercel remove dpl_8WfycHiqMbhpEbh87ejqRcGTPc31 --scope team_4ScmxIZLQJB3v6rwPiT0KHZx"
+  },
+  "same_commit_https_evidence": "HTTPS UI, health and 401 behaviour were observed on the production alias, built from the same commit as the Preview.",
+  "secrets_recorded": false
+}

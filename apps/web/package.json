@@ -2,16 +2,22 @@
   "name": "cluster-viral-engine-web-starter",
   "private": true,
   "version": "0.1.0",
+  "engines": { "node": "22.x" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
     "test": "tsx --test tests/*.test.ts",
     "test:db": "tsx --test tests/*.integration.ts",
-    "poc": "tsx src/phase00/cli.ts"
+    "poc": "tsx src/phase00/cli.ts",
+    "db:migrate": "tsx src/server/migrate-cli.ts",
+    "local:bootstrap": "tsx src/server/local-bootstrap.ts"
   },
   "dependencies": {
+    "@cluster/contracts": "*",
+    "better-auth": "1.7.14",
     "next": "16.4.3",
     "pg": "8.23.1",
     "zod": "4.6.7",
@@ -19,6 +25,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-config-next": "16.4.3",
     "typescript": "^5.9.0",
     "tsx": "4.23.15",
     "ajv": "8.20.0",

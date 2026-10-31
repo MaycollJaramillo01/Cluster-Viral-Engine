@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine - implemented foundation API
+  version: 0.2.0
+  description: Local implementation; cloud identity/Neon not yet verified. No publishing endpoint.
+servers:
+  - url: http://127.0.0.1:3000
+paths:
+  /api/health:
+    get:
+      security: []
+      responses:
+        '200':
+          description: Liveness only; does not certify database or phase acceptance.
+  /api/me:
+    get:
+      security: [{ sessionCookie: [] }]
+      responses:
+        '200':
+          description: Actor and memberships derived from authenticated subject.
+        '401': { description: Session missing, invalid, revoked or expired. }
+        '403': { description: Identity not provisioned in the editorial application. }
+        '503': { description: Dependency unavailable or unsafe runtime role. }
+  /api/organizations/{organizationId}/context:
+    get:
+      security: [{ sessionCookie: [] }]
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200': { description: Verified organization, actor and role; publishing remains disabled. }
+        '400': { description: Invalid organization identifier. }
+        '401': { description: No valid session. }
+        '403': { description: Membership denied or owner/admin MFA required. }
+        '503': { description: Runtime dependency unavailable. }
+  /api/stories:
+    get:
+      security: [{ sessionCookie: [] }]
+      responses:
+        '401': { description: No valid session. }
+        '501': { description: Authenticated but CRUD is outside foundation phase. }
+    post:
+      security: [{ sessionCookie: [] }]
+      responses:
+        '401': { description: No valid session. }
+        '403': { description: Missing or foreign Origin. }
+        '501': { description: CRUD not implemented. }
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: cve.session_token
+      description: Provider-managed HttpOnly/SameSite cookie; secure prefix in HTTPS environments. Auth API under /api/auth is owned by Better Auth.

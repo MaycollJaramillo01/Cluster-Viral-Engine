@@ -3,9 +3,12 @@
 !**/.env.example
 **/node_modules/
 **/.next/
+**/.next-dev/
+**/next-env.d.ts
 **/__pycache__/
 workers/render/out/*
 !workers/render/out/.gitkeep
 **/tsconfig.tsbuildinfo
 .phase00-postgres/
 .codebase-memory/
+.local/
