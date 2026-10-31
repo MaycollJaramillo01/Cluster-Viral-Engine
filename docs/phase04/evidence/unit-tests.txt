@@ -1,0 +1,259 @@
+﻿
+> cluster-viral-engine@0.2.0 test
+> npm test --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 test
+> tsx --test tests/*.test.ts
+
+TAP version 13
+# {"timestamp":"2026-10-31T13:33:38.937Z","event":"unit.error","request_id":"ecc15213-6115-49fa-8a3d-c5e6f08016e3","status":503,"duration_ms":1,"error_code":"SERVICE_UNAVAILABLE"}
+# Subtest: config fails closed, separates roles and environments, requires TLS and Neon pooler outside local
+ok 1 - config fails closed, separates roles and environments, requires TLS and Neon pooler outside local
+  ---
+  duration_ms: 3.3312
+  type: 'test'
+  ...
+# Subtest: roles deny by default; editor cannot manage organization or approve; worker is not human
+ok 2 - roles deny by default; editor cannot manage organization or approve; worker is not human
+  ---
+  duration_ms: 0.1865
+  type: 'test'
+  ...
+# Subtest: state-changing requests require exact server-configured origin
+ok 3 - state-changing requests require exact server-configured origin
+  ---
+  duration_ms: 15.0676
+  type: 'test'
+  ...
+# Subtest: logs allow only structured metadata; request failures never leak messages, credentials or headers
+ok 4 - logs allow only structured metadata; request failures never leak messages, credentials or headers
+  ---
+  duration_ms: 4.0208
+  type: 'test'
+  ...
+# Subtest: auth payload limit applies even when Content-Length is absent or forged small
+ok 5 - auth payload limit applies even when Content-Length is absent or forged small
+  ---
+  duration_ms: 3.4667
+  type: 'test'
+  ...
+# Subtest: biblioteca: decide por los bytes, lee dimensiones y rechaza lo que no es lo que dice
+ok 6 - biblioteca: decide por los bytes, lee dimensiones y rechaza lo que no es lo que dice
+  ---
+  duration_ms: 1.9983
+  type: 'test'
+  ...
+# Subtest: almacenamiento y URL firmada: sin salir de la raíz, firma ligada a la clave y caducidad
+ok 7 - almacenamiento y URL firmada: sin salir de la raíz, firma ligada a la clave y caducidad
+  ---
+  duration_ms: 16.9528
+  type: 'test'
+  ...
+# Subtest: contrato: IA exige rótulo y prompt, música exige duración, sin campos de aprobación
+ok 8 - contrato: IA exige rótulo y prompt, música exige duración, sin campos de aprobación
+  ---
+  duration_ms: 4.8586
+  type: 'test'
+  ...
+# Subtest: derechos: sin licencia, vencida, sin uso comercial o sin atribución no se aprueba
+ok 9 - derechos: sin licencia, vencida, sin uso comercial o sin atribución no se aprueba
+  ---
+  duration_ms: 0.4459
+  type: 'test'
+  ...
+# Subtest: mock TTS: audio WAV válido, tiempos marcados SYNTHETIC y determinista
+ok 10 - mock TTS: audio WAV válido, tiempos marcados SYNTHETIC y determinista
+  ---
+  duration_ms: 4.5321
+  type: 'test'
+  ...
+# Subtest: adaptador ElevenLabs contra servidor falso: petición, coste y errores. Fuera de local queda bloqueado
+ok 11 - adaptador ElevenLabs contra servidor falso: petición, coste y errores. Fuera de local queda bloqueado
+  ---
+  duration_ms: 16.4055
+  type: 'test'
+  ...
+# Subtest: estado de medios: bloquea lo que falta, detecta voz obsoleta, ensambla tiempos reales y subtítulos sin deriva
+ok 12 - estado de medios: bloquea lo que falta, detecta voz obsoleta, ensambla tiempos reales y subtítulos sin deriva
+  ---
+  duration_ms: 25.6518
+  type: 'test'
+  ...
+# Subtest: manifest válido, JSON Schema independiente y esquema versionado sin deriva
+ok 13 - manifest válido, JSON Schema independiente y esquema versionado sin deriva
+  ---
+  duration_ms: 66.1762
+  type: 'test'
+  ...
+# Subtest: tenant, referencias, timing, derechos, duplicados y campos extra rechazados
+ok 14 - tenant, referencias, timing, derechos, duplicados y campos extra rechazados
+  ---
+  duration_ms: 3.94
+  type: 'test'
+  ...
+# Subtest: hash canónico y clave TTS incluyen organización, voz y ajustes
+ok 15 - hash canónico y clave TTS incluyen organización, voz y ajustes
+  ---
+  duration_ms: 7.7117
+  type: 'test'
+  ...
+# Subtest: mocks permanecen bloqueados; dry-run distingue REEL y PAGE_VIDEO y rechaza hash antiguo
+ok 16 - mocks permanecen bloqueados; dry-run distingue REEL y PAGE_VIDEO y rechaza hash antiguo
+  ---
+  duration_ms: 3.4284
+  type: 'test'
+  ...
+# Subtest: subtítulos usan offsets absolutos, zona segura y alineación inválida se rechaza
+ok 17 - subtítulos usan offsets absolutos, zona segura y alineación inválida se rechaza
+  ---
+  duration_ms: 1.7566
+  type: 'test'
+  ...
+# Subtest: rutas fuera del directorio y errores de proceso no se presentan como éxito
+ok 18 - rutas fuera del directorio y errores de proceso no se presentan como éxito
+  ---
+  duration_ms: 101.1235
+  type: 'test'
+  ...
+# Subtest: p50/p95 medidos y n insuficiente; Vercel ausente no tiene latencia inventada
+ok 19 - p50/p95 medidos y n insuficiente; Vercel ausente no tiene latencia inventada
+  ---
+  duration_ms: 1.5209
+  type: 'test'
+  ...
+# Subtest: costes desconocidos propagan null; proyecciones reales incluyen fijos
+ok 20 - costes desconocidos propagan null; proyecciones reales incluyen fijos
+  ---
+  duration_ms: 1.2711
+  type: 'test'
+  ...
+# Subtest: gate exige doce tickets, evidencias y aceptación; publicación siempre deshabilitada
+ok 21 - gate exige doce tickets, evidencias y aceptación; publicación siempre deshabilitada
+  ---
+  duration_ms: 1.8296
+  type: 'test'
+  ...
+# Subtest: score v1: pesos suman 100, rango 0-100, explicación por factor y ponderación correcta
+ok 22 - score v1: pesos suman 100, rango 0-100, explicación por factor y ponderación correcta
+  ---
+  duration_ms: 0.8695
+  type: 'test'
+  ...
+# Subtest: referencias: detecta plataforma, limpia tracking y rechaza esquemas y credenciales
+ok 23 - referencias: detecta plataforma, limpia tracking y rechaza esquemas y credenciales
+  ---
+  duration_ms: 1.3453
+  type: 'test'
+  ...
+# Subtest: descubrimiento: sin permisos declara la limitación y el fallback manual
+ok 24 - descubrimiento: sin permisos declara la limitación y el fallback manual
+  ---
+  duration_ms: 0.1415
+  type: 'test'
+  ...
+# Subtest: plan de investigación: válido, con fuentes primarias, secundarias y contraste
+ok 25 - plan de investigación: válido, con fuentes primarias, secundarias y contraste
+  ---
+  duration_ms: 2.6683
+  type: 'test'
+  ...
+# Subtest: riesgo: las palabras sensibles elevan el claim y nadie puede bajarlo declarando otra cosa
+ok 26 - riesgo: las palabras sensibles elevan el claim y nadie puede bajarlo declarando otra cosa
+  ---
+  duration_ms: 0.9326
+  type: 'test'
+  ...
+# Subtest: gate: bloquea sin evidencia, sin corroborar, sin verificar, sin estado judicial y con conflicto
+ok 27 - gate: bloquea sin evidencia, sin corroborar, sin verificar, sin estado judicial y con conflicto
+  ---
+  duration_ms: 1.0131
+  type: 'test'
+  ...
+# Subtest: dossier: marca contradicción judicial y de fecha, y ordena la cronología
+ok 28 - dossier: marca contradicción judicial y de fecha, y ordena la cronología
+  ---
+  duration_ms: 9.0729
+  type: 'test'
+  ...
+# Subtest: prompts: el texto recuperado queda como dato JSON, nunca en las instrucciones
+ok 29 - prompts: el texto recuperado queda como dato JSON, nunca en las instrucciones
+  ---
+  duration_ms: 0.2163
+  type: 'test'
+  ...
+# Subtest: propuestas: el mock produce 3 reproducibles y marcadas; solo funciona en local con opt-in
+ok 30 - propuestas: el mock produce 3 reproducibles y marcadas; solo funciona en local con opt-in
+  ---
+  duration_ms: 1.5539
+  type: 'test'
+  ...
+# Subtest: propuestas: una referencia inventada se rechaza y queda registrada
+ok 31 - propuestas: una referencia inventada se rechaza y queda registrada
+  ---
+  duration_ms: 0.7436
+  type: 'test'
+  ...
+# Subtest: adversarial: 10 historias con inyección, 0 evidencias inventadas sin marcar
+ok 32 - adversarial: 10 historias con inyección, 0 evidencias inventadas sin marcar
+  ---
+  duration_ms: 11.3555
+  type: 'test'
+  ...
+# Subtest: contrato: exige 3 ganchos y al menos 3 títulos, y rechaza duración, locale y campos extra
+ok 33 - contrato: exige 3 ganchos y al menos 3 títulos, y rechaza duración, locale y campos extra
+  ---
+  duration_ms: 4.3403
+  type: 'test'
+  ...
+# Subtest: duración: estimación marcada y fuera de 120-240 s bloquea
+ok 34 - duración: estimación marcada y fuera de 120-240 s bloquea
+  ---
+  duration_ms: 1.8335
+  type: 'test'
+  ...
+# Subtest: fidelidad: bloquea claim inventado, sección sin fuente, cifra sin soporte y atribución desconocida
+ok 35 - fidelidad: bloquea claim inventado, sección sin fuente, cifra sin soporte y atribución desconocida
+  ---
+  duration_ms: 3.1445
+  type: 'test'
+  ...
+# Subtest: lenguaje judicial: acusado no es culpable y alegación sin matiz bloquea, también en títulos
+ok 36 - lenguaje judicial: acusado no es culpable y alegación sin matiz bloquea, también en títulos
+  ---
+  duration_ms: 2.0448
+  type: 'test'
+  ...
+# Subtest: escenas: manifest válido y completo; editar una sección conserva el hash de las demás
+ok 37 - escenas: manifest válido y completo; editar una sección conserva el hash de las demás
+  ---
+  duration_ms: 12.09
+  type: 'test'
+  ...
+# Subtest: prompts y modelo: datos aislados, claim inventado invalida y regenerar no sale de su alcance
+ok 38 - prompts y modelo: datos aislados, claim inventado invalida y regenerar no sale de su alcance
+  ---
+  duration_ms: 2.1804
+  type: 'test'
+  ...
+# Subtest: rúbrica: aprobar exige 4/5 en precisión y ética, sin errores críticos
+ok 39 - rúbrica: aprobar exige 4/5 en precisión y ética, sin errores críticos
+  ---
+  duration_ms: 0.2933
+  type: 'test'
+  ...
+# Subtest: fidelidad en 10 historias: informe por claim y 0 invenciones sin marcar
+ok 40 - fidelidad en 10 historias: informe por claim y 0 invenciones sin marcar
+  ---
+  duration_ms: 5.9465
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1082.9559

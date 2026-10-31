@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine media API
+  version: 0.4.0
+  description: Implementado y probado en local. Almacenamiento real y ElevenLabs real siguen BLOCKED_EXTERNAL. Todas las rutas exigen sesión salvo /api/objects, autorizada por firma; las escrituras exigen el mismo origen. Errores comunes 400, 401, 403, 404, 409 y 503.
+servers:
+  - url: /api/organizations/{organizationId}
+    variables:
+      organizationId: { default: '00000000-0000-0000-0000-000000000000' }
+paths:
+  /projects/{projectId}/assets:
+    get: { summary: 'Listar material con su licencia y escena asignada; filtros purpose, approval_status y limit', responses: { '200': { description: Lista } } }
+    post: { summary: 'Subir archivo y metadata en multipart (project:write). El tipo se decide por los bytes; repetir el mismo contenido devuelve el existente', responses: { '201': { description: Creado }, '200': { description: Ya existía }, '411': { description: Sin content-length }, '413': { description: Demasiado grande }, '415': { description: Tipo no admitido o incompatible con el propósito }, '503': { description: BLOCKED_EXTERNAL sin almacenamiento } } }
+  /projects/{projectId}/assets/{assetId}:
+    get: { summary: Leer material con licencias y problemas de derechos vigentes, responses: { '200': { description: Material }, '404': { description: No existe en este proyecto } } }
+  /projects/{projectId}/assets/{assetId}/url:
+    get: { summary: Emitir URL firmada de 5 minutos, responses: { '200': { description: URL y caducidad } } }
+  /projects/{projectId}/assets/{assetId}/licenses:
+    post: { summary: 'Registrar licencia (project:write). Exige URL o prueba y anula la aprobación anterior', responses: { '201': { description: Licencia } } }
+  /projects/{projectId}/assets/{assetId}/decision:
+    post: { summary: 'Aprobar o rechazar el hash exacto (editorial:review). Reevalúa derechos en la transacción', responses: { '200': { description: Decisión }, '409': { description: CONFLICT por hash o estado, o BLOCKED_BY_POLICY por derechos } } }
+  /projects/{projectId}/media:
+    get: { summary: 'Estado de medios: bloqueos, avisos, QA, línea de tiempo, SRT y ASS', responses: { '200': { description: Estado }, '409': { description: CONFLICT sin guion aprobado } } }
+  /projects/{projectId}/media/scenes/{sceneKey}:
+    put: { summary: Asignar material visual a una escena sin tocar su voz, responses: { '200': { description: Escena }, '409': { description: CONFLICT sin guion aprobado o fuera de etapa } } }
+  /projects/{projectId}/media/music:
+    put: { summary: Asignar o quitar la pista de música, responses: { '200': { description: Música }, '409': { description: CONFLICT fuera de etapa } } }
+  /projects/{projectId}/voice:
+    post: { summary: 'Generar voz por escena con caché por huella. Cada escena se confirma aparte; repetir tras una respuesta perdida exige confirm_retry', responses: { '201': { description: Resultado por escena }, '409': { description: CONFLICT sin guion aprobado }, '503': { description: BLOCKED_EXTERNAL sin proveedor o almacenamiento } } }
+  /projects/{projectId}/voice/estimate:
+    post: { summary: Calcular lo que falta generar y su coste estimado sin llamar al proveedor, responses: { '200': { description: Estimación marcada como tal }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
+  /usage:
+    get: { summary: Gasto del mes frente al tope y últimas 100 filas del ledger, responses: { '200': { description: Uso } } }
+  /api/objects:
+    servers: [{ url: / }]
+    get: { summary: 'Descargar objeto con firma vigente como attachment; query key, expires y signature', responses: { '200': { description: Bytes }, '403': { description: Firma inválida o caducada }, '404': { description: No existe } } }

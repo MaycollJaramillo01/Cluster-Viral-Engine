@@ -12,8 +12,8 @@ const base = 'http://127.0.0.1:3000', checks = [];
 let cookie = '';
 async function request(route, expected, body, extra = {}, method = body === undefined ? 'GET' : 'POST') {
   const response = await fetch(base + route, { method,
-    headers: { origin: base, ...(body !== undefined ? { 'content-type': 'application/json' } : {}), ...(cookie ? { cookie } : {}), ...extra },
-    body: body === undefined ? undefined : JSON.stringify(body), redirect: 'manual' });
+    headers: { origin: base, ...(body !== undefined && !(body instanceof FormData) ? { 'content-type': 'application/json' } : {}), ...(cookie ? { cookie } : {}), ...extra },
+    body: body === undefined || body instanceof FormData ? body : JSON.stringify(body), redirect: 'manual' });
   const jar = new Map(cookie.split('; ').filter(Boolean).map(item => { const i = item.indexOf('='); return [item.slice(0, i), item.slice(i + 1)]; }));
   for (const set of response.headers.getSetCookie()) {
     const pair = set.split(';')[0], i = pair.indexOf('=');
@@ -21,7 +21,7 @@ async function request(route, expected, body, extra = {}, method = body === unde
   }
   cookie = [...jar].map(([key, value]) => `${key}=${value}`).join('; ');
   if (response.status !== expected) throw new Error(`${route}: expected ${expected}, got ${response.status}`);
-  checks.push({ route, status: response.status, request_id: response.headers.get('x-request-id') });
+  checks.push({ route: route.replace(/signature=[^&]+/, 'signature=REDACTED'), status: response.status, request_id: response.headers.get('x-request-id') });
   return response;
 }
 await request('/', 200); await request('/login', 200); await request('/api/health', 200); await request('/api/me', 401);
@@ -63,7 +63,39 @@ await request(`${scriptPath}/sections/${sectionKey}/regenerate`, 503, { idempote
 await request(`${scriptPath}/versions/1`, 404);
 await request(`${scriptPath}/versions/1/submit`, 409, {});
 await request(`${scriptPath}/versions/1/decision`, 403, { decision: 'APPROVED', target_sha256: 'a'.repeat(64) });
+// Biblioteca y coste. Sin TTS_PROVIDER la voz queda bloqueada y sin guion aprobado no hay estado de medios; el camino aprobado se prueba contra PostgreSQL.
+const assetsPath = `${projectPath}/assets`, png = Buffer.alloc(40);
+png.set([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]); png.writeUInt32BE(13, 8); png.write('IHDR', 12); png.writeUInt32BE(1080, 16); png.writeUInt32BE(1920, 20);
+const photo = { name: '[SMOKE] foto', purpose: 'VISUAL', source_name: 'Archivo sintético', alt_text: 'Imagen sintética' };
+const form = (bytes, metadata) => { const data = new FormData(); data.set('file', new Blob([bytes])); if (metadata) data.set('metadata', JSON.stringify(metadata)); return data; };
+const asset = await (await request(assetsPath, 201, form(png, photo))).json();
+await request(assetsPath, 200, form(png, photo));
+await request(assetsPath, 415, form(Buffer.from('<html><script>alert(1)</script></html>'), photo));
+await request(assetsPath, 400, form(png));
+await request(assetsPath, 400, form(png, { ...photo, approval_status: 'APPROVED' }));
+await request(assetsPath, 403, form(png, photo), { origin: 'https://evil.example' });
+await request(`/api/organizations/${randomUUID()}/projects/${project}/assets`, 403, form(png, photo));
+await request(`${assetsPath}?limit=5`, 200);
+await request(`${assetsPath}/${asset.id}`, 200);
+await request(`${assetsPath}/${randomUUID()}`, 404);
+const { url } = await (await request(`${assetsPath}/${asset.id}/url`, 200)).json();
+const stored = await request(url, 200);
+if (!png.equals(Buffer.from(await stored.arrayBuffer())) || stored.headers.get('content-disposition') !== 'attachment' || stored.headers.get('x-content-type-options') !== 'nosniff') throw new Error('OBJECT_MISMATCH');
+await request(url.replace(/signature=[0-9a-f]{4}/, 'signature=0000'), 403);
+const license = { author: 'Autora sintética', license_name: 'CC BY 4.0', license_url: 'https://a.example/licencia', allowed_use: 'Prueba local', commercial_use_allowed: true, attribution_required: false };
+await request(`${assetsPath}/${asset.id}/licenses`, 400, { ...license, license_url: null });
+await request(`${assetsPath}/${asset.id}/licenses`, 201, license);
+await request(`${assetsPath}/${asset.id}/decision`, 403, { decision: 'APPROVED', target_sha256: asset.content_sha256 });
+const voice = { voice_id: 'voz_smoke', model_id: 'modelo_smoke' };
+await request(`${projectPath}/media`, 409);
+await request(`${projectPath}/media/music`, 409, { asset_id: null }, {}, 'PUT');
+await request(`${projectPath}/voice`, 503, voice);
+await request(`${projectPath}/voice/estimate`, 503, voice);
+await request(`${org}/usage`, 200);
+await request(`/api/organizations/${randomUUID()}/usage`, 403);
 await request('/api/auth/sign-out', 200, {}); await request('/api/me', 401);
+await request(url, 200);
+await request(assetsPath, 401, form(png, photo));
 await request(`${org}/stories`, 401);
 await request('/account', 307);
 await fs.mkdir(path.join(root, 'docs/phase01/evidence'), { recursive: true });

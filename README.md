@@ -28,6 +28,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
 
+La preparación de **Fase 04** añade la biblioteca privada, las licencias, la voz por escena con ElevenLabs sin probar contra el servicio real y el control de gasto, sin interfaz. Consultar [docs/phase04/README.md](docs/phase04/README.md).
+
 La preparación de **Fase 02** añade la API de radar, fuentes, claims y revisión de dossier, sin interfaz ni LLM real. Consultar [docs/phase02/README.md](docs/phase02/README.md).
 
 La preparación de **Fase 01** añade arranque local, login/sesiones/MFA con PostgreSQL, scopes/RLS y migraciones con checksum. Consultar [docs/phase01/README.md](docs/phase01/README.md) para bootstrap, acceso local, Preview y bloqueos externos. No se considera fase aceptada ni habilita publicación.
