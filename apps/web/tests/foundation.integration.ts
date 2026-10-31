@@ -13,6 +13,7 @@ import { createIdentityService } from '../src/server/auth';
 import { parseConfig } from '../src/server/config';
 import { getMigrations } from 'better-auth/db/migration';
 import { requestHandler } from '../src/server/observability';
+import { inspectDatabase, inspectMigrations, migrationChecksums } from '../../../scripts/lib/environment-readiness.mjs';
 
 const serverUrl = process.env.PHASE01_TEST_ADMIN_URL;
 test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant isolation', { skip: !serverUrl }, async t => {
@@ -49,6 +50,17 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     identityUrl.username=authRole; identityUrl.password=rolePassword;
     runtime=new Pool({connectionString:runtimeUrl.toString(),max:4,options:'-c statement_timeout=1000'});
     authPool=new Pool({connectionString:identityUrl.toString(),max:4});
+    await t.test('environment preflight checks real roles, migration checksums and missing grants without writes', async () => {
+      const expected = await migrationChecksums(migrationDir);
+      assert.equal((await inspectDatabase(runtime!, 'runtime')).status, 'READY');
+      assert.equal((await inspectDatabase(authPool!, 'identity')).status, 'READY');
+      assert.equal((await inspectDatabase(admin!, 'runtime')).status, 'BLOCKED');
+      assert.equal((await inspectMigrations(admin!, expected)).status, 'READY');
+      await admin!.query(`REVOKE SELECT ON auth_users FROM "${authRole}"`);
+      try { assert.equal((await inspectDatabase(authPool!, 'identity')).status, 'BLOCKED'); }
+      finally { await admin!.query(`GRANT SELECT ON auth_users TO "${authRole}"`); }
+      assert.equal((await runtime!.query('SELECT * FROM app_users')).rowCount, 0);
+    });
     const orgA=randomUUID(), orgB=randomUUID();
     await admin.query("INSERT INTO organizations(id,slug,name) VALUES($1,'org-alpha','A'),($2,'org-beta','B')",[orgA,orgB]);
     const a=await seedDevelopmentIdentity(admin,{email:'a@example.test',password,organizationId:orgA,role:'editor'});

@@ -28,6 +28,11 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 La preparación de **Fase 01** añade arranque local, login/sesiones/MFA con PostgreSQL, scopes/RLS y migraciones con checksum. Consultar [docs/phase01/README.md](docs/phase01/README.md) para bootstrap, acceso local, Preview y bloqueos externos. No se considera fase aceptada ni habilita publicación.
 
+Arranque en Linux/macOS: `npm run local:start`. Diagnóstico de roles y migraciones
+sin modificar datos: `npm run check:environment`. El bloqueo actual de creación
+de Neon desde una organización administrada por Vercel y los pasos para resolverlo
+están en [DESBLOQUEO-NEON.md](docs/phase01/DESBLOQUEO-NEON.md).
+
 La implementación local de **Fase 00** está descrita en [docs/phase00/README.md](docs/phase00/README.md): contrato validado, dataset de ocho ilustraciones, render de 120/240 s, benchmark medido, mocks explícitos, pruebas PostgreSQL y gate **NO_GO**. Meta, TTS LATAM, Neon/Vercel reales, derechos y firmas siguen pendientes. No hay endpoint de publicación nuevo.
 
 ```bash

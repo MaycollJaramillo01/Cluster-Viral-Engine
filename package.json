@@ -11,10 +11,12 @@
     "start": "npm run start --workspace=apps/web",
     "typecheck": "npm run typecheck --workspace=apps/web",
     "lint": "npm run lint --workspace=apps/web",
-    "test": "npm test --workspace=apps/web",
+    "test": "npm test --workspace=apps/web && node --test scripts/tests/*.test.mjs",
     "test:db": "npm run test:db --workspace=apps/web",
     "db:migrate": "npm run db:migrate --workspace=apps/web --",
     "local:bootstrap": "npm run local:bootstrap --workspace=apps/web",
+    "local:start": "bash scripts/start-local.sh",
+    "check:environment": "tsx scripts/check-environment.ts",
     "scan:secrets": "python scripts/scan_secrets.py",
     "verify:client": "node scripts/verify_client_bundle.mjs",
     "test:http": "node scripts/smoke_local.mjs"
