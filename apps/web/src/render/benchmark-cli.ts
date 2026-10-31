@@ -70,7 +70,7 @@ async function main() {
         console.log(JSON.stringify({ ...scenario, iteration, failed: true }));
       } finally { await rm(workdir, { recursive: true, force: true, maxRetries: 5 }); }
     }
-    report.scenarios.push({ ...scenario, runs_count: runs.length, failures, wall_ms: summary(runs.map(r => r.wall_ms)), cpu_ms: summary(runs.map(r => r.cpu_ms)), max_rss_kib: summary(runs.map(r => r.max_rss_kib)), output_bytes: summary(runs.map(r => r.output_bytes)), work_bytes: summary(runs.map(r => r.work_bytes)), all_qa_passed: runs.every(r => !r.qa_failed.length), ffprobe, runs });
+    report.scenarios.push({ ...scenario, runs_count: runs.length, failures, wall_ms: summary(runs.map(r => r.wall_ms)), cpu_ms: summary(runs.map(r => r.cpu_ms)), max_rss_kib: summary(runs.map(r => r.max_rss_kib)), output_bytes: summary(runs.map(r => r.output_bytes)), work_bytes: summary(runs.map(r => r.work_bytes)), all_qa_passed: runs.length ? runs.every(r => !r.qa_failed.length) : null, ffprobe, runs });
     await writeFile(out, `${JSON.stringify(report, null, 2)}\n`);
   }
 }
