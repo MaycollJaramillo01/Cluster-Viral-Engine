@@ -13,7 +13,7 @@ export type Permission = keyof typeof permissions;
 export const can = (role: string, permission: Permission): boolean =>
   (permissions[permission] as readonly string[]).includes(role);
 
-export const errorCodes = ['UNAUTHENTICATED', 'FORBIDDEN', 'MFA_REQUIRED', 'INVALID_INPUT',
+export const errorCodes = ['UNAUTHENTICATED', 'FORBIDDEN', 'MFA_REQUIRED', 'INVALID_INPUT', 'NOT_FOUND', 'CONFLICT', 'BLOCKED_BY_POLICY',
   'BLOCKED_EXTERNAL', 'SERVICE_UNAVAILABLE', 'NOT_IMPLEMENTED', 'INTERNAL_ERROR'] as const;
 export type ErrorCode = typeof errorCodes[number];
 export class AppError extends Error {

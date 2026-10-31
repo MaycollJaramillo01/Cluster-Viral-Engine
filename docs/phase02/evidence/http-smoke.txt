@@ -1,0 +1,5 @@
+﻿
+> cluster-viral-engine@0.2.0 test:http
+> node scripts/smoke_local.mjs
+
+{"checks":29,"all_passed":true,"credentials_logged":false}

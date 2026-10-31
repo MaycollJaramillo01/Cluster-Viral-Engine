@@ -1,5 +1,7 @@
 // Trusted local/test provisioning only. Never imported by routes or client components.
 import { randomUUID } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { hashPassword } from 'better-auth/crypto';
 import type { Pool } from 'pg';
 import type { Role } from '@cluster/contracts';
@@ -15,13 +17,12 @@ export async function provisionRoles(admin: Pool, runtimeRole: string, authRole:
     const ddl = await admin.query("SELECT format('CREATE ROLE %I LOGIN NOSUPERUSER NOBYPASSRLS NOCREATEDB NOCREATEROLE NOINHERIT PASSWORD %L',$1::text,$2::text) AS sql", [name, password]);
     await admin.query(ddl.rows[0].sql);
   }
-  const runtime = identifier(runtimeRole), auth = identifier(authRole);
-  await admin.query(`GRANT USAGE ON SCHEMA public TO ${runtime},${auth}`);
-  await admin.query(`GRANT SELECT ON app_users,memberships,organizations,projects,phase00_runs TO ${runtime}`);
-  await admin.query(`GRANT INSERT,UPDATE ON phase00_runs TO ${runtime}`);
-  await admin.query(`GRANT INSERT ON audit_events,outbox_events TO ${runtime}`);
-  await admin.query(`GRANT SELECT,INSERT,UPDATE,DELETE ON auth_users,auth_sessions,auth_accounts,auth_verifications,auth_two_factors,auth_rate_limits TO ${auth}`);
-  await admin.query(`GRANT INSERT ON auth_events TO ${auth}`);
+  await applyGrants(admin, runtimeRole, authRole);
+}
+// db/runtime-grants.sql es la única lista de permisos; GRANT es idempotente y se reaplica tras migrar en local.
+export async function applyGrants(admin: Pool, runtimeRole: string, authRole: string) {
+  const sql = await readFile(path.resolve(process.cwd(), '../../db/runtime-grants.sql'), 'utf8');
+  await admin.query(sql.replaceAll(':"runtime_role"', identifier(runtimeRole)).replaceAll(':"auth_role"', identifier(authRole)));
 }
 export async function seedDevelopmentIdentity(admin: Pool, data: { email: string; password: string; organizationId: string; role: Role; actorId?: string }) {
   const subject = randomUUID(), actorId = data.actorId ?? randomUUID(), now = new Date();

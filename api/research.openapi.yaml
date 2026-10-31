@@ -1,0 +1,40 @@
+openapi: 3.1.0
+info:
+  title: Cluster Viral Engine research API
+  version: 0.2.0
+  description: Implementado y probado en local. Todas las rutas exigen sesión; las escrituras exigen el mismo origen. Errores comunes 400, 401, 403, 404, 409 y 503.
+servers:
+  - url: /api/organizations/{organizationId}
+    variables:
+      organizationId: { default: '00000000-0000-0000-0000-000000000000' }
+paths:
+  /stories:
+    get: { summary: Listar historias con filtros status, category, min_score, include_high_risk y limit, responses: { '200': { description: OK } } }
+    post: { summary: Crear historia (project:write), responses: { '201': { description: Creada } } }
+  /stories/proposals:
+    post: { summary: Generar propuestas por modelo; idempotente, responses: { '201': { description: Resultado }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
+  /stories/{storyId}/select:
+    post: { summary: Seleccionar historia y crear su proyecto; idempotente, responses: { '201': { description: Proyecto } } }
+  /references:
+    get: { summary: Listar referencias editoriales, responses: { '200': { description: OK } } }
+    post: { summary: Registrar referencia manual; el servidor no descarga la URL, responses: { '201': { description: Registrada o existente } } }
+  /discovery:
+    get: { summary: Capacidades y limitaciones por plataforma, responses: { '200': { description: OK } } }
+  /projects/{projectId}/research-plan:
+    post: { summary: Crear revisión del plan de investigación, responses: { '201': { description: Plan } } }
+  /projects/{projectId}/sources:
+    post: { summary: Registrar fuente con atribución, responses: { '201': { description: Fuente } } }
+  /projects/{projectId}/claims:
+    post: { summary: Registrar claim con evidencia obligatoria, responses: { '201': { description: Claim } } }
+  /projects/{projectId}/claims/extract:
+    post: { summary: Extraer claims con modelo; salida sin verificar, responses: { '201': { description: Aceptados y rechazados }, '503': { description: BLOCKED_EXTERNAL sin proveedor } } }
+  /projects/{projectId}/claims/{claimId}:
+    put: { summary: Editar claim; borra su verificación, responses: { '200': { description: Claim } } }
+  /projects/{projectId}/claims/{claimId}/verify:
+    post: { summary: Verificación humana (editorial:review), responses: { '200': { description: Verificado } } }
+  /projects/{projectId}/dossiers:
+    post: { summary: Congelar revisión del dossier, responses: { '201': { description: Revisión, hash y gate } } }
+  /projects/{projectId}/dossiers/{revision}:
+    get: { summary: Leer revisión con gate calculado sobre el estado vivo, responses: { '200': { description: Dossier } } }
+  /projects/{projectId}/dossiers/{revision}/decision:
+    post: { summary: Aprobar o rechazar el hash exacto (editorial:review), responses: { '200': { description: Decisión }, '409': { description: CONFLICT por hash obsoleto o BLOCKED_BY_POLICY } } }

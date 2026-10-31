@@ -26,6 +26,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 ## Qué se puede ejecutar realmente
 
+La preparación de **Fase 02** añade la API de radar, fuentes, claims y revisión de dossier, sin interfaz ni LLM real. Consultar [docs/phase02/README.md](docs/phase02/README.md).
+
 La preparación de **Fase 01** añade arranque local, login/sesiones/MFA con PostgreSQL, scopes/RLS y migraciones con checksum. Consultar [docs/phase01/README.md](docs/phase01/README.md) para bootstrap, acceso local, Preview y bloqueos externos. No se considera fase aceptada ni habilita publicación.
 
 La implementación local de **Fase 00** está descrita en [docs/phase00/README.md](docs/phase00/README.md): contrato validado, dataset de ocho ilustraciones, render de 120/240 s, benchmark medido, mocks explícitos, pruebas PostgreSQL y gate **NO_GO**. Meta, TTS LATAM, Neon/Vercel reales, derechos y firmas siguen pendientes. No hay endpoint de publicación nuevo.
