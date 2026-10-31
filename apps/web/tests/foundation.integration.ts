@@ -182,6 +182,23 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
       assert.equal((await admin!.query('SELECT count(*)::int AS n FROM auth_sessions')).rows[0].n,before);
       await assert.rejects(admin!.query("UPDATE auth_events SET action='SESSION_REVOKED'"),/append-only/);
     });
+    await t.test('password change requires the current password and revokes other browser sessions', async () => {
+      const email = 'password-change@example.test', nextPassword = randomBytes(24).toString('base64url');
+      await seedDevelopmentIdentity(admin!, { email, password, organizationId: orgA, role: 'editor' });
+      cookie = '';
+      assert.equal((await request('sign-in/email', { email, password })).status, 200);
+      const otherBrowser = cookie;
+      assert.equal((await request('sign-in/email', { email, password })).status, 200);
+      assert((await request('change-password', { currentPassword: 'incorrect-password', newPassword: nextPassword, revokeOtherSessions: true })).status >= 400);
+      assert((await request('change-password', { currentPassword: password, newPassword: 'short', revokeOtherSessions: true })).status >= 400);
+      const changed = await request('change-password', { currentPassword: password, newPassword: nextPassword, revokeOtherSessions: true });
+      assert.equal(changed.status, 200, await changed.clone().text());
+      cookie = otherBrowser;
+      assert.equal(await (await request('get-session')).json(), null);
+      cookie = '';
+      assert.equal((await request('sign-in/email', { email, password })).status, 401);
+      assert.equal((await request('sign-in/email', { email, password: nextPassword })).status, 200);
+    });
     await t.test('rollback of 006/005/004 retains identity audit; transaction rollback restores complete schema',async()=>{
       const c=await admin!.connect();
       try {
