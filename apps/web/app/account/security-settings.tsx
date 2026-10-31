@@ -1,0 +1,36 @@
+'use client';
+import { useState, type FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { authClient } from '../../src/auth-client';
+
+export function SecuritySettings({ enabled }: { enabled: boolean }) {
+  const router = useRouter(), [setup, setSetup] = useState<{ totpURI: string; backupCodes: string[] } | null>(null);
+  const [message, setMessage] = useState(''), [busy, setBusy] = useState(false);
+  async function enable(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setBusy(true); setMessage('');
+    const password = String(new FormData(event.currentTarget).get('password'));
+    try {
+      const result = await authClient.twoFactor.enable({ password });
+      if (result.error || !result.data || !('totpURI' in result.data)) { setMessage('No se pudo preparar el segundo factor.'); return; }
+      setSetup({ totpURI: result.data.totpURI, backupCodes: result.data.backupCodes });
+    } catch { setMessage('El servicio no está disponible.'); } finally { setBusy(false); }
+  }
+  async function verify(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setBusy(true); setMessage('');
+    try {
+      const result = await authClient.twoFactor.verifyTotp({ code: String(new FormData(event.currentTarget).get('code')), trustDevice: false });
+      if (result.error) { setMessage('Código inválido o vencido.'); return; }
+      setSetup(null); router.refresh();
+    } catch { setMessage('El servicio no está disponible.'); } finally { setBusy(false); }
+  }
+  return <section className="security-settings"><h2>Verificación en dos pasos</h2>
+    <p>{enabled ? 'Segundo factor activo.' : 'Protege tu cuenta con una app de autenticación. Es obligatorio para owner y admin.'}</p>
+    {!enabled && !setup && <form className="identity-form" onSubmit={enable}><label>Confirma tu contraseña<input name="password" type="password" autoComplete="current-password" required /></label><button disabled={busy}>Preparar autenticador</button></form>}
+    {setup && <><p>Añade esta clave a tu autenticador. Guarda los códigos de respaldo en un lugar privado.</p>
+      <code className="private-code">{new URL(setup.totpURI).searchParams.get('secret')}</code>
+      <details><summary>Códigos de respaldo</summary><pre className="private-code">{setup.backupCodes.join('\n')}</pre></details>
+      <form className="identity-form" onSubmit={verify}><label>Código del autenticador<input name="code" inputMode="numeric" pattern="[0-9]{6}" autoComplete="one-time-code" required /></label><button disabled={busy}>Confirmar segundo factor</button></form></>}
+    {message && <p role="alert">{message}</p>}
+    <button type="button" className="secondary-button" onClick={async () => { await authClient.signOut(); router.replace('/login'); router.refresh(); }}>Cerrar sesión</button>
+  </section>;
+}

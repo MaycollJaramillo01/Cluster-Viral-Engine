@@ -9,30 +9,38 @@ jobs:
   validate-blueprint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.13'
       - name: Validate package and backlog
         run: python3 scripts/validate_package.py
+      - name: Scan source without logging secrets
+        run: python3 scripts/scan_secrets.py
   web-build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
       - name: Install locked dependencies
         run: npm ci --no-fund
       - name: Unit and contract tests
         run: npm test
+      - name: Lint
+        run: npm run lint
       - name: Typecheck
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Verify server credentials stay out of browser bundles
+        run: npm run verify:client
+      # eslint's minimatch 3 advisory (moderate, dev-only) has no non-breaking fix upstream; see docs/phase01/EVIDENCIA.md.
+      - name: Dependency audit (runtime moderate+)
+        run: npm audit --omit=dev --audit-level=moderate
+      - name: Dependency audit (all high+)
+        run: npm audit --audit-level=high
   phase00-postgres:
     runs-on: ubuntu-latest
     services:
@@ -48,17 +56,15 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
       - run: npm ci --no-fund
       - name: Real PostgreSQL isolation, concurrency and rollback tests
         env:
           PHASE00_TEST_ADMIN_URL: postgresql://postgres:postgres@localhost:5432/phase00_ci
+          PHASE01_TEST_ADMIN_URL: postgresql://postgres:postgres@localhost:5432/postgres
         run: npm run test:db
-# Production hardening still pending: pin Actions and container images by digest.
+# Production promotion is manual; no database migration or deployment runs with PR credentials.

@@ -1,3 +1,3 @@
-import { NextResponse } from 'next/server';
+import { requestHandler } from '../../../src/server/observability';
 export const runtime = 'nodejs';
-export async function GET(){ return NextResponse.json({status:'ok'}, {headers:{'Cache-Control':'no-store'}}) }
+export const GET = (request: Request) => requestHandler(request, 'health.live', async () => Response.json({ status: 'ok', publication_enabled: false }));

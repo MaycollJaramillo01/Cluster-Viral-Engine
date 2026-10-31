@@ -1,0 +1,22 @@
+{
+  "name": "cluster-viral-engine",
+  "version": "0.2.0",
+  "private": true,
+  "workspaces": ["apps/web", "packages/contracts"],
+  "engines": { "node": ">=22.12.0 <25" },
+  "devDependencies": { "next": "16.4.3" },
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web -- --hostname 127.0.0.1 --port 3000",
+    "build": "npm run build --workspace=apps/web",
+    "start": "npm run start --workspace=apps/web",
+    "typecheck": "npm run typecheck --workspace=apps/web",
+    "lint": "npm run lint --workspace=apps/web",
+    "test": "npm test --workspace=apps/web",
+    "test:db": "npm run test:db --workspace=apps/web",
+    "db:migrate": "npm run db:migrate --workspace=apps/web --",
+    "local:bootstrap": "npm run local:bootstrap --workspace=apps/web",
+    "scan:secrets": "python scripts/scan_secrets.py",
+    "verify:client": "node scripts/verify_client_bundle.mjs",
+    "test:http": "node scripts/smoke_local.mjs"
+  }
+}

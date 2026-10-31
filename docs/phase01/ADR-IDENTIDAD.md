@@ -1,0 +1,19 @@
+# F01-05: identidad con Better Auth y PostgreSQL
+
+Fecha: 30-10-2026. Decisión técnica propuesta y probada localmente; pendiente de revisión. No hay firma del cliente ni cuenta de producción habilitada.
+
+Se compararon las opciones de la fase: [Auth.js](https://authjs.dev/getting-started) documenta v5 beta; [Clerk](https://clerk.com/docs/guides/configure/auth-strategies/sign-up-sign-in-options) documenta MFA de producción en plan pagado; [Neon Auth](https://neon.com/docs/auth/overview) es Better Auth administrado y requiere su configuración de branch/plugins. Se elige [Better Auth](https://better-auth.com/docs/installation) 1.7.14 en el servidor Next.js con PostgreSQL, conservando Neon como destino de datos. Esta cuarta variante se documenta como diferencia respecto de las tres candidatas del plan. No se reemplaza Neon por otro backend.
+
+Motivos: funciona con PostgreSQL local, tiene [integración oficial Next.js](https://better-auth.com/docs/integrations/next) y [TOTP/códigos de respaldo](https://better-auth.com/docs/plugins/2fa), y permite separar credenciales del dominio editorial. La ausencia de servicios de email no se simula: registro público, cambio de email y borrado de usuario permanecen deshabilitados. Invitaciones, recuperación y verificación de correo productivas requieren un canal real antes de alta de usuarios.
+
+El esquema se generó con `getMigrations` de la versión instalada y se versionó en 004. El test compara sus tablas/columnas/índices con la biblioteca, incluyendo MFA y rate limiting. Auth opera con rol dedicado sobre tablas `auth_*`; el rol de aplicación no puede leer contraseñas, tokens ni secretos MFA. Cada sesión se valida en la base, sin cache de identidad en cookies.
+
+Sesiones: duración de ocho horas, renovación configurada cada quince minutos, freshness de diez minutos. La cookie es HttpOnly y SameSite=Lax, con Secure fuera de `APP_ENV=local`. Reautenticación crea un identificador nuevo; logout y expiración invalidan acceso. La migración 006 revoca todas las sesiones existentes al cambiar MFA para evitar acceso desde un navegador que inició sesión antes del enrolamiento. El proveedor emite la sesión de reemplazo después del desafío. Las pruebas verifican ese cambio y el desafío en el siguiente login. No se afirma rotación periódica automática del identificador ni entrega de email verificada.
+
+Owner/admin requieren MFA al resolver permisos de organización. Los otros roles no pueden convertirse en owner ni modificar su rol por payload, cookie o cabecera. `worker` nunca representa aprobación humana. La biblioteca gestiona el login y el reto; el servicio deriva el actor de `app_users.auth_subject`, leído bajo RLS. No se escribieron algoritmos de autenticación propios.
+
+CSRF: origen exacto configurado en servidor para POST, protecciones de origen del proveedor activas, sin confiar en Host/X-Forwarded-Host enviados por el cliente. En Vercel se usa el encabezado de IP de plataforma para límites; en local la aplicación fija loopback. Límite compartido de login de diez intentos/minuto; no hay almacenamiento de rate limit solo en memoria de una función.
+
+Secretos: clave de alta entropía en entorno, URLs diferentes para migración, auth y runtime; ningún secreto en browser/git. No cambiar a ciegas la clave que cifra MFA: una rotación productiva debe seguir el mecanismo de claves versionadas documentado por la biblioteca y probar compatibilidad en una branch con backup. El bootstrap conserva claves existentes y solo genera una cuenta sintética local, marcada explícitamente como prueba.
+
+Rollback: detener acceso; conservar/exportar evidencia; revertir 006,005,004 en ese orden o restaurar snapshot. El rollback 004 conserva `auth_events` y requiere snapshot/restauración antes de reaplicar, para no borrar historia. No ejecutar un rollback de identidad en una aplicación activa.

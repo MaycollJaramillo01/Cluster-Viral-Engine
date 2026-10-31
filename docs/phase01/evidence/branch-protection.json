@@ -1,0 +1,1 @@
+{"admin_enforcement":true,"checks":["validate-blueprint","web-build","phase00-postgres"],"force_pushes":false,"pull_request_required":true,"strict":true}

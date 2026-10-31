@@ -1,0 +1,69 @@
+{
+  "phase": "01",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    {
+      "id": "F01-01",
+      "status": "PROTECTED_REVIEW_PENDING",
+      "evidence": "Workspace y main protegido: PR obligatoria, tres checks y force-push deshabilitado; evidencia branch-protection.json."
+    },
+    {
+      "id": "F01-02",
+      "status": "PREVIEW_PENDING",
+      "evidence": "Proyecto Vercel creado; deployment/HTTPS se verifica después de build READY."
+    },
+    {
+      "id": "F01-03",
+      "status": "BLOCKED_EXTERNAL",
+      "evidence": "Neon integration returns Unknown tool; DEV/PREVIEW/PROD no provisionados."
+    },
+    {
+      "id": "F01-04",
+      "status": "VERIFIED_LOCAL",
+      "evidence": "Seis migraciones, checksum, lock, no-op, DDL rollback; Neon pendiente."
+    },
+    {
+      "id": "F01-05",
+      "status": "PENDING_REVIEW",
+      "evidence": "Better Auth seleccionado y MFA local probado; ADR sin firma."
+    },
+    {
+      "id": "F01-06",
+      "status": "VERIFIED_LOCAL",
+      "evidence": "Login, cookies, CSRF, expiry, TOTP y revocación local; email/cloud pendientes."
+    },
+    {
+      "id": "F01-07",
+      "status": "VERIFIED_LOCAL",
+      "evidence": "Subject derivado, memberships y RBAC sin confiar en cabeceras cliente."
+    },
+    {
+      "id": "F01-08",
+      "status": "BLOCKED_EXTERNAL",
+      "evidence": "RLS y cruces probados en PostgreSQL; Neon/pooler sin validar."
+    },
+    {
+      "id": "F01-09",
+      "status": "VERIFIED_LOCAL",
+      "evidence": "Queries parametrizadas, roles separados, timeout/rollback y bundle sin credenciales."
+    },
+    {
+      "id": "F01-10",
+      "status": "CI_PENDING",
+      "evidence": "Lint, tests, audit y secret scan preparados; CI remota se registra después."
+    },
+    {
+      "id": "F01-11",
+      "status": "VERIFIED_LOCAL",
+      "evidence": "Structured logs, request IDs y HTTP real; panel de plataforma según acceso."
+    },
+    {
+      "id": "F01-12",
+      "status": "PENDING_REVIEW",
+      "evidence": "Bootstrap y rollback reproducibles localmente; recreación cloud depende de Neon."
+    }
+  ]
+}
