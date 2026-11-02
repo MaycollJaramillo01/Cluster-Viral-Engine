@@ -6,6 +6,17 @@ import { migrate } from './migrations';
 import { provisionRoles, seedDevelopmentIdentity } from './development';
 import { parseConfig } from './config';
 
+// La cuenta editor crea y la revisora aprueba: con una sola cuenta el flujo se queda en la primera revisión.
+async function ensureReviewer(root: string, migrationUrl: string, organizationId: string) {
+  const file = path.join(root, '.local/dev-access-revisor.txt');
+  try { await readFile(file); return file; } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+  if (!['127.0.0.1', 'localhost'].includes(new URL(migrationUrl).hostname)) throw new Error('LOCAL_POSTGRES_ONLY');
+  const admin = new Pool({ connectionString: migrationUrl, max: 1 }), email = 'revisor@cluster.local.test', password = randomBytes(18).toString('base64url');
+  try { await seedDevelopmentIdentity(admin, { email, password, organizationId, role: 'reviewer' }); } finally { await admin.end(); }
+  await writeFile(file, `Acceso de prueba local, no válido en producción\nURL: http://127.0.0.1:3000/login\nCorreo: ${email}\nContraseña: ${password}\nOrganización: ${organizationId}\nRol: reviewer\n`, { mode: 0o600, flag: 'wx' });
+  return file;
+}
+
 async function main() {
   const root = path.resolve(process.cwd(), '../..'), envFile = path.join(root, 'apps/web/.env.local');
   try {
@@ -13,7 +24,10 @@ async function main() {
     const values = Object.fromEntries(content.split(/\r?\n/).filter(line => /^[A-Z_]+=/.test(line)).map(line => { const pos = line.indexOf('='); return [line.slice(0,pos), line.slice(pos+1)]; }));
     const config = parseConfig(values);
     if (config.APP_ENV !== 'local') throw new Error('REFUSE_NON_LOCAL_CONFIGURATION');
-    console.log(JSON.stringify({ status: 'LOCAL_CONFIGURATION_EXISTS', credentials_file: path.join(root, '.local/dev-access.txt') }));
+    const organizationId = (await readFile(path.join(root, '.local/dev-access.txt'), 'utf8')).match(/^Organización: (.+)$/m)?.[1]?.trim();
+    if (!organizationId || !values.DATABASE_URL_UNPOOLED) throw new Error('LOCAL_CONFIGURATION_INCOMPLETE');
+    const reviewer = await ensureReviewer(root, values.DATABASE_URL_UNPOOLED, organizationId);
+    console.log(JSON.stringify({ status: 'LOCAL_CONFIGURATION_EXISTS', credentials_file: path.join(root, '.local/dev-access.txt'), reviewer_credentials_file: reviewer }));
     return;
   } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
   const serverUrl = process.env.LOCAL_POSTGRES_ADMIN_URL ?? 'postgresql://postgres@127.0.0.1:55432/postgres';
@@ -40,10 +54,12 @@ async function main() {
     const authUrl = new URL(migrationUrl); authUrl.username = authRole; authUrl.password = authPassword;
     const base = 'http://127.0.0.1:3000';
     await mkdir(path.join(root, '.local'), { recursive: true });
-    await writeFile(envFile, `APP_ENV=local\nDATABASE_URL=${runtimeUrl}\nAUTH_DATABASE_URL=${authUrl}\nDATABASE_URL_UNPOOLED=${migrationUrl}\nBETTER_AUTH_URL=${base}\nBETTER_AUTH_SECRET=${secret}\n`, { mode: 0o600, flag: 'wx' });
+    // TTS_PROVIDER=mock solo vale con APP_ENV=local: un tono sintético marcado para recorrer el flujo sin ElevenLabs.
+    await writeFile(envFile, `APP_ENV=local\nDATABASE_URL=${runtimeUrl}\nAUTH_DATABASE_URL=${authUrl}\nDATABASE_URL_UNPOOLED=${migrationUrl}\nBETTER_AUTH_URL=${base}\nBETTER_AUTH_SECRET=${secret}\nTTS_PROVIDER=mock\n`, { mode: 0o600, flag: 'wx' });
     const credentials = path.join(root, '.local/dev-access.txt');
     await writeFile(credentials, `Acceso de prueba local, no válido en producción\nURL: ${base}/login\nCorreo: ${email}\nContraseña: ${password}\nOrganización: ${organizationId}\nRol: editor\n`, { mode: 0o600, flag: 'wx' });
-    console.log(JSON.stringify({ status: 'LOCAL_POSTGRES_READY', organization_id: organizationId, credentials_file: credentials, migrations, neon_verified: false }));
+    const reviewer = await ensureReviewer(root, migrationUrl, organizationId);
+    console.log(JSON.stringify({ status: 'LOCAL_POSTGRES_READY', organization_id: organizationId, credentials_file: credentials, reviewer_credentials_file: reviewer, migrations, neon_verified: false }));
   } finally { await admin.end(); }
 }
 main().catch(() => { console.error('LOCAL_BOOTSTRAP_FAILED: verify local PostgreSQL, isolated database and configuration; no credentials logged'); process.exitCode = 1; });

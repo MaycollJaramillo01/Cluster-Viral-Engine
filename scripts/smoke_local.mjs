@@ -99,8 +99,9 @@ await request(`${assetsPath}/${asset.id}/decision`, 403, { decision: 'APPROVED',
 const voice = { voice_id: 'voz_smoke', model_id: 'modelo_smoke' };
 await request(`${projectPath}/media`, 409);
 await request(`${projectPath}/media/music`, 409, { asset_id: null }, {}, 'PUT');
-await request(`${projectPath}/voice`, 503, voice);
-await request(`${projectPath}/voice/estimate`, 503, voice);
+// Sin proveedor de voz: 503. Con TTS_PROVIDER=mock (bootstrap local): 409, el proyecto aún no está en la etapa de voz.
+await request(`${projectPath}/voice`, [503, 409], voice);
+await request(`${projectPath}/voice/estimate`, [503, 409], voice);
 await request(`${org}/usage`, 200);
 await request(`/api/organizations/${randomUUID()}/usage`, 403);
 await request(`${org}/operations?days=7`, 200);

@@ -23,6 +23,7 @@ export const listReferences = readRoute('references.list', 'organization:read', 
 export const createReference = writeRoute('references.create', 'project:write', referenceInput, ({ client, context, requestId }, body) => research.createReference(client, context, body, { requestId }));
 export const discovery = readRoute('discovery.capabilities', 'organization:read', async () => ({ platforms: discoveryCapabilities() }));
 
+export const readProject = readRoute('project.read', 'organization:read', ({ client, params }) => research.readProject(client, uuidParam(params, 'projectId')));
 export const createPlan = writeRoute('research.plan', 'project:write', empty, ({ client, context, params, requestId }) => research.createResearchPlan(client, context, uuidParam(params, 'projectId'), { requestId }));
 export const addSource = writeRoute('research.source', 'project:write', sourceInput, ({ client, context, params, requestId }, body) => research.addSource(client, context, uuidParam(params, 'projectId'), body, { requestId }));
 export const addClaim = writeRoute('research.claim', 'project:write', claimInput, ({ client, context, params, requestId }, body) => research.addClaim(client, context, uuidParam(params, 'projectId'), body, { requestId }));

@@ -18,7 +18,7 @@ export function LoginForm() {
         if (result.error) { setMessage('No se pudo iniciar sesión. Comprueba tus datos o la disponibilidad del servicio.'); return; }
         if (result.data && 'twoFactorRedirect' in result.data && result.data.twoFactorRedirect) { setSecondFactor(true); return; }
       }
-      router.replace('/account'); router.refresh();
+      router.replace('/panel'); router.refresh();
     } catch { setMessage('El servicio de acceso no está disponible.'); }
     finally { setBusy(false); }
   }

@@ -20,6 +20,8 @@ paths:
     post: { summary: Registrar referencia manual; el servidor no descarga la URL, responses: { '201': { description: Registrada o existente } } }
   /discovery:
     get: { summary: Capacidades y limitaciones por plataforma, responses: { '200': { description: OK } } }
+  /projects/{projectId}:
+    get: { summary: Estado del proyecto con plan, fuentes, claims vivos, gate y revisiones del dossier, responses: { '200': { description: Proyecto } } }
   /projects/{projectId}/research-plan:
     post: { summary: Crear revisión del plan de investigación, responses: { '201': { description: Plan } } }
   /projects/{projectId}/sources:
