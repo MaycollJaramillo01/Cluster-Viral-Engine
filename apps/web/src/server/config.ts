@@ -15,7 +15,12 @@ const schema = z.object({
 export type RuntimeConfig = z.infer<typeof schema>;
 
 export function parseConfig(env: Record<string, string | undefined>): RuntimeConfig {
-  const parsed = schema.safeParse(env);
+  // Vercel supplies the stable branch alias server-side. Never derive auth origin
+  // from request headers or use the production URL for an isolated Preview.
+  const branchHost = env.VERCEL_BRANCH_URL;
+  const previewOrigin = env.APP_ENV === 'preview' && env.VERCEL === '1' && env.VERCEL_ENV === 'preview'
+    && branchHost && /^[a-z0-9-]+\.vercel\.app$/.test(branchHost) ? `https://${branchHost}` : undefined;
+  const parsed = schema.safeParse({ ...env, BETTER_AUTH_URL: env.BETTER_AUTH_URL ?? previewOrigin });
   if (!parsed.success) throw new AppError('BLOCKED_EXTERNAL', 503);
   const config = parsed.data;
   const base = new URL(config.BETTER_AUTH_URL);

@@ -6,6 +6,21 @@ import { authClient } from '../../src/auth-client';
 export function SecuritySettings({ enabled }: { enabled: boolean }) {
   const router = useRouter(), [setup, setSetup] = useState<{ totpURI: string; backupCodes: string[] } | null>(null);
   const [message, setMessage] = useState(''), [busy, setBusy] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState('');
+  async function changePassword(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); setBusy(true); setPasswordMessage('');
+    const form = event.currentTarget, values = new FormData(form);
+    const newPassword = String(values.get('newPassword'));
+    if (newPassword !== String(values.get('confirmPassword'))) {
+      setPasswordMessage('Las contraseñas nuevas no coinciden.'); setBusy(false); return;
+    }
+    try {
+      const result = await authClient.changePassword({ currentPassword: String(values.get('currentPassword')), newPassword, revokeOtherSessions: true });
+      if (result.error) { setPasswordMessage('No se pudo cambiar la contraseña. Comprueba tu contraseña actual.'); return; }
+      form.reset(); setPasswordMessage('Contraseña actualizada. Se cerraron las demás sesiones.');
+    } catch { setPasswordMessage('El servicio no está disponible.'); }
+    finally { setBusy(false); }
+  }
   async function enable(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setBusy(true); setMessage('');
     const password = String(new FormData(event.currentTarget).get('password'));
@@ -31,6 +46,14 @@ export function SecuritySettings({ enabled }: { enabled: boolean }) {
       <details><summary>Códigos de respaldo</summary><pre className="private-code">{setup.backupCodes.join('\n')}</pre></details>
       <form className="identity-form" onSubmit={verify}><label>Código del autenticador<input name="code" inputMode="numeric" pattern="[0-9]{6}" autoComplete="one-time-code" required /></label><button disabled={busy}>Confirmar segundo factor</button></form></>}
     {message && <p role="alert">{message}</p>}
+    <h2>Cambiar contraseña</h2>
+    <form className="identity-form" onSubmit={changePassword}>
+      <label>Contraseña actual<input name="currentPassword" type="password" autoComplete="current-password" required maxLength={128} /></label>
+      <label>Nueva contraseña<input name="newPassword" type="password" autoComplete="new-password" required minLength={12} maxLength={128} /></label>
+      <label>Repite la nueva contraseña<input name="confirmPassword" type="password" autoComplete="new-password" required minLength={12} maxLength={128} /></label>
+      <button type="submit" disabled={busy}>{busy ? 'Comprobando…' : 'Cambiar contraseña'}</button>
+    </form>
+    {passwordMessage && <p role="status">{passwordMessage}</p>}
     <button type="button" className="secondary-button" onClick={async () => { await authClient.signOut(); router.replace('/login'); router.refresh(); }}>Cerrar sesión</button>
   </section>;
 }
