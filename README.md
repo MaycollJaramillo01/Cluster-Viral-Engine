@@ -28,6 +28,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 **Panel interno** (`/panel`, tras `/login`): interfaz para usar la API de las fases 02 a 07 sin `curl`. La publicación sigue deshabilitada. Se aparta de la regla 2 de `AGENTS.md` por decisión del propietario: ver ADR-011 en [docs/03-ADRS.md](docs/03-ADRS.md).
 
+**IA editorial con NVIDIA** (propuestas, extracción de claims y guiones): en `apps/web/.env.local`, `EDITORIAL_MODEL=nvidia`, `NVIDIA_API_KEY=...` y opcionalmente `EDITORIAL_MODEL_ID` (por defecto `nvidia/nemotron-3.5-lightning-30b-a3b`). Probado en local; los guiones generados salen más cortos que el objetivo y hay que ampliarlos a mano. El gasto del modelo no pasa todavía por el presupuesto.
+
 La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
 
 La preparación de **Fase 08** solo endurece lo existente: barrido de acceso de todas las rutas de organización, CSP, auditoría de dependencias, runbook del worker y un plan de pilotos en borrador. Sin pilotos, costes reales, restore ni firmas, el gate final es **NO_GO**. Consultar [docs/phase08/README.md](docs/phase08/README.md).

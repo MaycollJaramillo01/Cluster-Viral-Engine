@@ -95,7 +95,8 @@ test('propuestas: el mock produce 3 reproducibles y marcadas; solo funciona en l
   assert.equal(accepted.length, 3); assert.deepEqual(rejected, []);
   assert(accepted.every(p => p.proposed_title.startsWith('[MOCK')));
   assert.equal(modelFromEnv({ APP_ENV: 'local', EDITORIAL_MODEL: 'mock' }), mockModel);
-  for (const env of [{ APP_ENV: 'production', EDITORIAL_MODEL: 'mock' }, { APP_ENV: 'local' }, {}])
+  assert.equal(modelFromEnv({ EDITORIAL_MODEL: 'nvidia', NVIDIA_API_KEY: 'k' }).origin, 'MODEL');
+  for (const env of [{ APP_ENV: 'production', EDITORIAL_MODEL: 'mock' }, { APP_ENV: 'local' }, { EDITORIAL_MODEL: 'nvidia' }, {}])
     assert.throws(() => modelFromEnv(env), e => e instanceof AppError && e.code === 'BLOCKED_EXTERNAL');
 });
 test('propuestas: una referencia inventada se rechaza y queda registrada', () => {
