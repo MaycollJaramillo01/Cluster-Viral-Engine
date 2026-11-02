@@ -1,0 +1,8 @@
+﻿Simulacro local del 2026-10-31T12:48:43. PostgreSQL 17.7 en esta máquina: no es Neon ni mide su RPO o RTO.
+Copia: pg_dump -Fc, 1.39 s, 0.19 MB.
+Restauración: pg_restore, 9.85 s, código de salida 0.
+counts iguales: True (37 filas comparadas)
+migrations iguales: True (11 filas comparadas)
+rls iguales: True (37 filas comparadas)
+grants iguales: True (343 filas comparadas)
+Tablas: 37. Filas: 316. Migraciones: 11.

@@ -1,0 +1,21 @@
+{
+  "phase": "07",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F07-01", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "metrics_snapshots con RLS y métrica nullable desde el esquema inicial, y ontología en docs/16. Definiciones sin contrastar con la Graph API." },
+    { "id": "F07-02", "status": "BLOCKED_EXTERNAL", "evidence": "Sin credenciales de Meta ni publicaciones. No se construyó un proveedor simulado porque no hay nada que medir." },
+    { "id": "F07-03", "status": "BLOCKED_BY_POLICY", "evidence": "Sin publicaciones no hay snapshots: AGENTS.md regla 2." },
+    { "id": "F07-04", "status": "BLOCKED_BY_POLICY", "evidence": "Sin dashboard: AGENTS.md regla 2." },
+    { "id": "F07-05", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "GET /usage da coste estimado y final por video, probado en tests/operations.integration.ts. Registra caracteres, imágenes y CPU; sin tokens ni almacenamiento." },
+    { "id": "F07-06", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Topes por video y mes y alerta al 80 %, probados en F04 y F05 sobre TTS, imágenes y renders. Sin adaptador LLM al que aplicarlos." },
+    { "id": "F07-07", "status": "BLOCKED_BY_POLICY", "evidence": "Exige métricas de videos publicados." },
+    { "id": "F07-08", "status": "BLOCKED_BY_POLICY", "evidence": "Exige métricas de videos publicados." },
+    { "id": "F07-09", "status": "BLOCKED_EXTERNAL", "evidence": "Sin datos reales. Ajustar el score ahora sería inventar." },
+    { "id": "F07-10", "status": "BLOCKED_EXTERNAL", "evidence": "Sin proveedor de métricas. La regla de null frente a 0 sí está probada en GET /operations." },
+    { "id": "F07-11", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "GET /operations da plazos, reproceso, coste de fallo y causas, probado contra PostgreSQL. Sin panel; el tiempo humano es null porque no se registra." },
+    { "id": "F07-12", "status": "BLOCKED_EXTERNAL", "evidence": "Exige los 10 pilotos y facturas reales de proveedores." }
+  ]
+}

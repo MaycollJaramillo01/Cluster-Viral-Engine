@@ -13,8 +13,10 @@ export type Permission = keyof typeof permissions;
 export const can = (role: string, permission: Permission): boolean =>
   (permissions[permission] as readonly string[]).includes(role);
 
-export const errorCodes = ['UNAUTHENTICATED', 'FORBIDDEN', 'MFA_REQUIRED', 'INVALID_INPUT',
-  'BLOCKED_EXTERNAL', 'SERVICE_UNAVAILABLE', 'NOT_IMPLEMENTED', 'INTERNAL_ERROR'] as const;
+export const errorCodes = ['UNAUTHENTICATED', 'FORBIDDEN', 'MFA_REQUIRED', 'INVALID_INPUT', 'NOT_FOUND', 'CONFLICT', 'BLOCKED_BY_POLICY',
+  'BLOCKED_EXTERNAL', 'SERVICE_UNAVAILABLE', 'NOT_IMPLEMENTED', 'INTERNAL_ERROR', 'RATE_LIMITED'] as const;
+// Peticiones a la API por cuenta y ventana fija. Al pasarse: 429 con Retry-After igual a la ventana.
+export const apiRateLimit = { windowSeconds: 60, max: 300 } as const;
 export type ErrorCode = typeof errorCodes[number];
 export class AppError extends Error {
   constructor(public code: ErrorCode, public status: number) { super(code); }

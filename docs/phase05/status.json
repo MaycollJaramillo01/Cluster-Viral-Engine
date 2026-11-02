@@ -1,0 +1,21 @@
+{
+  "phase": "05",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F05-01", "status": "VERIFIED_LOCAL", "evidence": "Esquema estricto publicado con prueba de no deriva. Errores de tipo, tiempos, formato y objetos ajenos se rechazan." },
+    { "id": "F05-02", "status": "VERIFIED_LOCAL", "evidence": "30 fps, encuadre sin recorte, H.264, AAC y faststart. ffprobe lo valida en host y contenedor, con número exacto de fotogramas." },
+    { "id": "F05-03", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "Ken Burns, clips, fundidos, título y rótulos. Mapas solo como material subido. La variedad documental la debe aprobar una persona." },
+    { "id": "F05-04", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "Subtítulos ASS y SRT, nivel, picos y ducking medidos con tonos. Falta voz real y que una persona juzgue la legibilidad." },
+    { "id": "F05-05", "status": "VERIFIED_LOCAL", "evidence": "Contrato submit, status, cancel y fetchArtifact con doble de pruebas, FFmpeg local y Docker real." },
+    { "id": "F05-06", "status": "VERIFIED_LOCAL", "evidence": "evidence/docker-isolation.txt: uid 10001, sin red ni capacidades, raíz de solo lectura y límites de memoria y procesos medidos desde dentro. Disco: -fs por archivo, sin cuota sobre el volumen." },
+    { "id": "F05-07", "status": "VERIFIED_LOCAL", "evidence": "Leases, latido, reintentos, DEAD e idempotencia por hash del manifest, probados contra PostgreSQL con caída de worker." },
+    { "id": "F05-08", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Claves por organización y proyecto con hash, y descarga por URL firmada. Solo disco local: sin token de Blob ni lifecycle." },
+    { "id": "F05-09", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "Preview y póster generados y comprobados. Sin UI por AGENTS.md regla 2." },
+    { "id": "F05-10", "status": "VERIFIED_LOCAL", "evidence": "13 comprobaciones sobre el archivo final. Un defecto impide entrar en revisión; detectó de verdad la pérdida de fotogramas en el contenedor." },
+    { "id": "F05-11", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Medición en contenedor interrumpida en la iteración 4 al caer Docker: solo 3 renders de 120 s con 10 assets, p50 78,8 s. Repetir. Functions de Vercel sin medir y coste null." },
+    { "id": "F05-12", "status": "VERIFIED_LOCAL", "evidence": "Cancelar, tiempo agotado, reintento y limpieza de directorio y objetos, probados en host y contenedor. Un clip o música sin datos ya no gira hasta el tiempo límite." }
+  ]
+}

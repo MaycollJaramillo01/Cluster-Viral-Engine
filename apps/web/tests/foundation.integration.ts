@@ -1,15 +1,15 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { randomBytes, randomUUID, createHmac } from 'node:crypto';
-import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { Pool } from 'pg';
-import { AppError, type VerifiedIdentity } from '@cluster/contracts';
+import { AppError, apiRateLimit, type VerifiedIdentity } from '@cluster/contracts';
 import { migrate } from '../src/server/migrations';
 import { provisionRoles, seedDevelopmentIdentity } from '../src/server/development';
 import { TenantDatabase } from '../src/server/database';
-import { createIdentityService } from '../src/server/auth';
+import { consumeApiQuota, createIdentityService } from '../src/server/auth';
 import { parseConfig } from '../src/server/config';
 import { getMigrations } from 'better-auth/db/migration';
 import { requestHandler } from '../src/server/observability';
@@ -26,17 +26,18 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     await server.query(`CREATE DATABASE "${database}"`);
     const url = new URL(serverUrl!); url.pathname = `/${database}`;
     admin = new Pool({ connectionString: url.toString(), max: 4 });
-    await t.test('parallel migration runners serialize, rerun is no-op and six migrations are recorded', async () => {
+    const migrationCount = (await readdir(migrationDir)).filter(name => name.endsWith('.sql')).length;
+    await t.test('parallel migration runners serialize, rerun is no-op and every migration is recorded', async () => {
       const runs = await Promise.all([migrate(admin!, migrationDir), migrate(admin!, migrationDir)]);
-      assert.equal(runs.reduce((n,r) => n+r.applied.length,0),6);
-      assert.equal((await migrate(admin!, migrationDir)).skipped.length,6);
-      assert.equal((await admin!.query('SELECT count(*)::int AS n FROM schema_migrations WHERE checksum_sha256 IS NOT NULL')).rows[0].n,6);
+      assert.equal(runs.reduce((n,r) => n+r.applied.length,0),migrationCount);
+      assert.equal((await migrate(admin!, migrationDir)).skipped.length,migrationCount);
+      assert.equal((await admin!.query('SELECT count(*)::int AS n FROM schema_migrations WHERE checksum_sha256 IS NOT NULL')).rows[0].n,migrationCount);
     });
     await t.test('checksum drift is rejected; a broken migration rolls back its DDL and version', async () => {
       const temp = await mkdtemp(path.join(os.tmpdir(),'cve-migrations-'));
       try {
         await cp(migrationDir,temp,{recursive:true});
-        await writeFile(path.join(temp,'007_bad.sql'),'CREATE TABLE should_not_survive(id int); SELECT no_such_function();');
+        await writeFile(path.join(temp,'999_bad.sql'),'CREATE TABLE should_not_survive(id int); SELECT no_such_function();');
         await assert.rejects(migrate(admin!,temp));
         assert.equal((await admin!.query("SELECT to_regclass('should_not_survive') AS name")).rows[0].name,null);
         const first = path.join(temp,'001_init.sql'); await writeFile(first,(await readFile(first,'utf8'))+'\n-- drift\n');
@@ -112,6 +113,15 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
       const check=await getMigrations(service.options);
       assert.equal(check.toBeCreated.length,0); assert.equal(check.toBeAdded.length,0); assert.equal(check.toBeAddedIndexes.length,0);
     });
+    await t.test('API quota with the identity role: exactly one of max+1 concurrent requests is refused; window and account apart',async()=>{
+      const now=Date.now();
+      const results=await Promise.allSettled(Array.from({length:apiRateLimit.max+1},()=>consumeApiQuota(authPool!,a.subject,now)));
+      const refused=results.filter(r=>r.status==='rejected');
+      assert.equal(refused.length,1);
+      assert(refused[0].reason instanceof AppError&&refused[0].reason.code==='RATE_LIMITED'&&refused[0].reason.status===429);
+      await consumeApiQuota(authPool!,b.subject,now);
+      await consumeApiQuota(authPool!,a.subject,now+apiRateLimit.windowSeconds*1000);
+    });
     let cookie='';
     const request=async(endpoint:string,body?:unknown,extra:Record<string,string>={})=>{
       const headers=new Headers({'origin':config.BETTER_AUTH_URL,'x-cve-client-ip':'127.0.0.1',...extra});
@@ -182,16 +192,17 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
       assert.equal((await admin!.query('SELECT count(*)::int AS n FROM auth_sessions')).rows[0].n,before);
       await assert.rejects(admin!.query("UPDATE auth_events SET action='SESSION_REVOKED'"),/append-only/);
     });
-    await t.test('rollback of 006/005/004 retains identity audit; transaction rollback restores complete schema',async()=>{
+    await t.test('rollback down to 004 retains identity audit; transaction rollback restores complete schema',async()=>{
       const c=await admin!.connect();
       try {
         const before=(await c.query('SELECT count(*)::int AS n FROM auth_events')).rows[0].n;
         await c.query('BEGIN');
-        for(const name of ['006_mfa_session_revocation','005_identity_rls','004_identity'])await c.query(await readFile(`../../db/rollback/${name}.sql`,'utf8'));
+        const rollbacks=(await readdir('../../db/rollback')).filter(name=>name>'004').sort().reverse();
+        for(const name of rollbacks)await c.query(await readFile(`../../db/rollback/${name}`,'utf8'));
         assert.equal((await c.query("SELECT to_regclass('auth_users') AS name")).rows[0].name,null);
         assert.equal((await c.query('SELECT count(*)::int AS n FROM auth_events')).rows[0].n,before);
         await c.query('ROLLBACK');
-        assert.equal((await c.query('SELECT count(*)::int AS n FROM schema_migrations')).rows[0].n,6);
+        assert.equal((await c.query('SELECT count(*)::int AS n FROM schema_migrations')).rows[0].n,migrationCount);
       } finally {await c.query('ROLLBACK');c.release();}
     });
   } finally {

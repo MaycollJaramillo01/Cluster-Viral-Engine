@@ -1,0 +1,21 @@
+{
+  "phase": "06",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F06-01", "status": "BLOCKED_BY_POLICY", "evidence": "Sin dashboard: AGENTS.md regla 2, hasta verificar Meta y el PoC multimedia." },
+    { "id": "F06-02", "status": "BLOCKED_BY_POLICY", "evidence": "Sin editor ni player por la misma regla. Lo de que un cambio invalida lo aprobado sí está probado por API en tests/approval.integration.ts." },
+    { "id": "F06-03", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "GET .../review reúne video, fuentes, claims, licencias, coste y bloqueos, y aprobar se bloquea si falta evidencia. Sin bandeja ni asignación." },
+    { "id": "F06-04", "status": "VERIFIED_LOCAL", "evidence": "Aprobación ligada a hash de bytes, actor y hora, con FK y trigger en la base. Una decisión con approved=true devuelve 400." },
+    { "id": "F06-05", "status": "BLOCKED_EXTERNAL", "evidence": "Sin credenciales de Meta ni Page de prueba. No se implementó OAuth." },
+    { "id": "F06-06", "status": "BLOCKED_BY_POLICY", "evidence": "Sin adaptador de publicación: AGENTS.md regla 2." },
+    { "id": "F06-07", "status": "BLOCKED_BY_POLICY", "evidence": "Sin publicación no hay idempotencia que probar." },
+    { "id": "F06-08", "status": "BLOCKED_EXTERNAL", "evidence": "Sin App Review ni Page de prueba. Sigue sin saberse si un video de 2-4 min se acepta." },
+    { "id": "F06-09", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "RENDER_APPROVED y RENDER_REJECTED quedan en el outbox por organización. Sin canal de entrega." },
+    { "id": "F06-10", "status": "BLOCKED_BY_POLICY", "evidence": "Sin publicaciones no hay historial." },
+    { "id": "F06-11", "status": "PARTIAL_BLOCKED_BY_POLICY", "evidence": "Otra organización, papel sin permiso, render cancelado, sin licencia y QA fallida probados en la aprobación. Sin publicación que probar." },
+    { "id": "F06-12", "status": "PENDING_REVIEW", "evidence": "Falta el piloto con un reviewer real y su acta firmada." }
+  ]
+}

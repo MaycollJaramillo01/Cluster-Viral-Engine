@@ -26,6 +26,20 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 ## Qué se puede ejecutar realmente
 
+La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
+
+La preparación de **Fase 08** solo endurece lo existente: barrido de acceso de todas las rutas de organización, CSP, auditoría de dependencias, runbook del worker y un plan de pilotos en borrador. Sin pilotos, costes reales, restore ni firmas, el gate final es **NO_GO**. Consultar [docs/phase08/README.md](docs/phase08/README.md).
+
+La preparación de **Fase 07** añade solo indicadores de operación y coste por video, por API y sin métricas de Meta. Lo que no se mide se devuelve como `null`, nunca como 0. Consultar [docs/phase07/README.md](docs/phase07/README.md).
+
+La preparación de **Fase 06** añade solo la revisión y la aprobación de un render por el hash de sus bytes, por API. No hay dashboard, publicación ni conexión con Meta, porque `AGENTS.md` lo prohíbe hasta verificar Meta. Consultar [docs/phase06/README.md](docs/phase06/README.md).
+
+La preparación de **Fase 05** añade el motor de render con FFmpeg, el worker aislado en Docker y la cola durable, con audio y material sintéticos, sin interfaz y sin aprobación ni publicación. Consultar [docs/phase05/README.md](docs/phase05/README.md).
+
+La preparación de **Fase 04** añade la biblioteca privada, las licencias, la voz por escena con ElevenLabs sin probar contra el servicio real y el control de gasto, sin interfaz. Consultar [docs/phase04/README.md](docs/phase04/README.md).
+
+La preparación de **Fase 02** añade la API de radar, fuentes, claims y revisión de dossier, sin interfaz ni LLM real. Consultar [docs/phase02/README.md](docs/phase02/README.md).
+
 La preparación de **Fase 01** añade arranque local, login/sesiones/MFA con PostgreSQL, scopes/RLS y migraciones con checksum. Consultar [docs/phase01/README.md](docs/phase01/README.md) para bootstrap, acceso local, Preview y bloqueos externos. No se considera fase aceptada ni habilita publicación.
 
 Arranque en Linux/macOS: `npm run local:start`. Diagnóstico de roles y migraciones

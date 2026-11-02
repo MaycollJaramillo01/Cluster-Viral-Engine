@@ -4,7 +4,7 @@
 
 ## Seguridad común
 
-Session cookie HttpOnly Secure SameSite=Lax o proveedor OAuth/OIDC elegido con rotación; CSRF en mutaciones si aplica; `Origin` allowlist; rate-limit por usuario/org; validación Zod; autorización de org en servidor; errores JSON sin detalles internos. Webhooks externos con verificación de firma en cuerpo crudo y ventana anti-replay.
+Session cookie HttpOnly Secure SameSite=Lax o proveedor OAuth/OIDC elegido con rotación; CSRF en mutaciones si aplica; `Origin` allowlist; rate-limit por usuario/org (hoy por cuenta: 300 peticiones por minuto, y luego 429 `RATE_LIMITED` con `Retry-After`); validación Zod; autorización de org en servidor; errores JSON sin detalles internos. Webhooks externos con verificación de firma en cuerpo crudo y ventana anti-replay.
 
 ## APIs internas
 

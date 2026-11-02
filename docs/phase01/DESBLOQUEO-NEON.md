@@ -35,7 +35,7 @@ Después de crear la base:
 El diagnóstico abre transacciones de solo lectura, verifica que los roles no
 heredan propiedad ni pueden saltarse RLS, exige cinco tablas con RLS forzado,
 comprueba separación entre identidad y aplicación y rechaza auditorías modificables.
-Contrasta las seis migraciones y sus checksums mediante la conexión directa.
+Contrasta todas las migraciones de `db/migrations` y sus checksums mediante la conexión directa.
 Devuelve códigos sin mensajes del driver ni URLs, y sale con código 1 si falla.
 No amplía los permisos de runtime para leer el historial de migraciones.
 

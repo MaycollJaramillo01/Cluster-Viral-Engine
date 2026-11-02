@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { AppError } from '@cluster/contracts';
+import { AppError, apiRateLimit } from '@cluster/contracts';
 
 type Event = { event: string; requestId: string; organizationId?: string; jobId?: string; status: number; durationMs: number; errorCode?: string };
 export function logEvent(event: Event, write: (line: string) => void = console.info) {
@@ -20,6 +20,7 @@ export async function requestHandler(request: Request, name: string, handler: (r
     const known = error instanceof AppError;
     code = known ? error.code : 'SERVICE_UNAVAILABLE';
     response = Response.json({ error: code, request_id: requestId }, { status: known ? error.status : 503 });
+    if (code === 'RATE_LIMITED') response.headers.set('Retry-After', String(apiRateLimit.windowSeconds));
   }
   response.headers.set('Cache-Control', 'no-store');
   response.headers.set('X-Request-Id', requestId);

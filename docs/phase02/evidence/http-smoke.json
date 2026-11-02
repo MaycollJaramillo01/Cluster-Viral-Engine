@@ -1,0 +1,151 @@
+{
+  "target": "LOCAL_POSTGRES",
+  "checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/health",
+      "status": 200,
+      "request_id": "708def7c-e125-4a35-b85d-4508041921bb"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "697da7bb-88ba-4ff8-98d7-97c770beb04a"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    },
+    {
+      "route": "/api/auth/sign-in/email",
+      "status": 200,
+      "request_id": "afba9591-25c6-4096-998a-2fe23c9ff2d0"
+    },
+    {
+      "route": "/api/me",
+      "status": 200,
+      "request_id": "18227bea-7852-4f49-bd8b-e4557851ca0e"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/context",
+      "status": 200,
+      "request_id": "bc3a8c1b-dfad-4ea3-8a1b-43241d1f1f4e"
+    },
+    {
+      "route": "/api/organizations/33be898d-081e-4f28-b9a5-2cdbb2c2d4e8/context",
+      "status": 403,
+      "request_id": "d7cb1329-41bd-4683-9baf-756ea2ab0f1b"
+    },
+    {
+      "route": "/account",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/discovery",
+      "status": 200,
+      "request_id": "7d19f745-2bde-4232-93ff-4690e73a2d55"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 403,
+      "request_id": "2bbe5350-2ba3-4333-b0d9-8acc0b8819ad"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 400,
+      "request_id": "6ec4c683-1218-425c-9e16-7491842854e3"
+    },
+    {
+      "route": "/api/organizations/bcbc5efe-cfdf-498b-9d13-2b51e622df8b/stories",
+      "status": 403,
+      "request_id": "3af12a1f-b3f0-4f61-ba17-a4efc53c8b51"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories/proposals",
+      "status": 503,
+      "request_id": "f98aef5c-44c8-423d-be80-ceb08ea3b367"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 201,
+      "request_id": "d9e912ef-a995-402a-a239-d7f04aa21ad3"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories?limit=5",
+      "status": 200,
+      "request_id": "b6222577-eaf5-4830-a8d0-385cc5759343"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories/08b4e212-813b-4635-a149-b8bbfc97e6cb/select",
+      "status": 201,
+      "request_id": "a1f2ee35-8d24-4496-8835-a4c764993a1c"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/references",
+      "status": 201,
+      "request_id": "5068b361-5dfb-4624-9925-565728fc9f99"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/research-plan",
+      "status": 201,
+      "request_id": "1b8404a3-0736-42c8-afdf-4eada685753e"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/sources",
+      "status": 201,
+      "request_id": "86f1ecdc-d4aa-4b3f-a7c2-d2991ab3b8b9"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/claims",
+      "status": 201,
+      "request_id": "03ff8c60-eedf-4528-8082-fc93b1d19690"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/dossiers",
+      "status": 201,
+      "request_id": "4f8d03bf-5ab7-42dd-b13b-0dc50a35b1eb"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/dossiers/1",
+      "status": 200,
+      "request_id": "e95df6b3-baaf-4ca4-a9ee-f5b6bcc84fcb"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/aa87ca33-e4d5-4835-86d9-80ce96cc1f06/dossiers/1/decision",
+      "status": 403,
+      "request_id": "307d43d8-eeb2-4944-a9a0-afaebf64650a"
+    },
+    {
+      "route": "/api/auth/sign-out",
+      "status": 200,
+      "request_id": "078e365a-b123-499e-ac95-93dba08f38dd"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "625047c7-6765-4f9d-a30d-14c424c858c0"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 401,
+      "request_id": "84f50a78-4d7d-4092-9e52-d4c21ec48ba5"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    }
+  ],
+  "credentials_logged": false
+}

@@ -53,6 +53,8 @@ test('logs allow only structured metadata; request failures never leak messages,
   assert.equal(response.status, 503); assert(!body.includes('never-log'));
   assert.equal(response.headers.get('cache-control'), 'no-store');
   assert.notEqual(response.headers.get('x-request-id'), 'password=never-log');
+  const limited = await requestHandler(request, 'unit.limited', async () => { throw new AppError('RATE_LIMITED', 429); });
+  assert.equal(limited.status, 429); assert.equal(limited.headers.get('retry-after'), '60');
 });
 test('auth payload limit applies even when Content-Length is absent or forged small', async () => {
   const allowed = await readLimitedBody(new Request('http://127.0.0.1:3000', { method: 'POST', body: 'small' }));

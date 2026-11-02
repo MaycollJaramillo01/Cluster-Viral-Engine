@@ -1,0 +1,8 @@
+
+> cluster-viral-engine@0.2.0 lint
+> npm run lint --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 lint
+> eslint . --max-warnings 0
+

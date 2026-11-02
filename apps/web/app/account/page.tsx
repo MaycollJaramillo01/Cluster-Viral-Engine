@@ -10,6 +10,7 @@ export default async function Account() {
   try { data = await profile(await headers()); }
   catch (error) {
     if (error instanceof AppError && error.code === 'UNAUTHENTICATED') redirect('/login');
+    if (error instanceof AppError && error.code === 'RATE_LIMITED') return <main className="identity-page"><h1>Demasiadas solicitudes</h1><p>Espera un minuto y vuelve a intentarlo.</p></main>;
     return <main className="identity-page"><h1>Acceso no disponible</h1><p>La sesión o la configuración de tu organización requiere revisión.</p><Link href="/login">Volver al acceso</Link></main>;
   }
   return <main className="identity-page"><Link href="/">← Cluster Viral Engine</Link><p className="tag">CUENTA Y SEGURIDAD</p>

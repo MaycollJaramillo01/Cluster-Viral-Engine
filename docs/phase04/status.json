@@ -1,0 +1,21 @@
+{
+  "phase": "04",
+  "gate": "NO_GO",
+  "previous_phase_gate": "NO_GO",
+  "technical_preparation_authorized_by_user": true,
+  "publication_enabled": false,
+  "tickets": [
+    { "id": "F04-01", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Claves por organización, firma, SHA, MIME y tamaño; rechazo por bytes. Solo disco local: sin token de Blob." },
+    { "id": "F04-02", "status": "VERIFIED_LOCAL", "evidence": "Autor, uso, prueba y caducidad. Sin licencia válida no se aprueba, y una vencida bloquea al leer." },
+    { "id": "F04-03", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Catálogo manual con fuente y metadata obligatorias. Sin búsqueda en catálogos externos." },
+    { "id": "F04-04", "status": "BLOCKED_EXTERNAL", "evidence": "Adaptador probado contra un servidor falso. Sin clave de ElevenLabs: no hay audio latam real ni coste real." },
+    { "id": "F04-05", "status": "VERIFIED_LOCAL", "evidence": "Huella por organización, texto, voz, modelo y ajustes. Cambiar imagen no llama al proveedor." },
+    { "id": "F04-06", "status": "VERIFIED_LOCAL", "evidence": "Clip por escena, corrección aislada y línea de tiempo con pausas. El ensamblado de audio real corresponde a F05." },
+    { "id": "F04-07", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "SRT y ASS sobre tiempos marcados SYNTHETIC. Falta comprobar la deriva con alignment real." },
+    { "id": "F04-08", "status": "VERIFIED_LOCAL", "evidence": "Música sin licencia aprobada o sin duración bloquea. Los efectos se catalogan pero no se asignan ni mezclan." },
+    { "id": "F04-09", "status": "PARTIAL_BLOCKED_EXTERNAL", "evidence": "Registro con rótulo, prompt, gasto y revisión; el rótulo pasa a los subtítulos. Sin proveedor de imagen ni prompt seguro evaluado." },
+    { "id": "F04-10", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "Checklist automático en evidence/qa-checklist.json. La revisión visual queda NEEDS_HUMAN y los márgenes sin verificar con Meta." },
+    { "id": "F04-11", "status": "VERIFIED_LOCAL", "evidence": "Preflight, topes por video y mes, ledger inmutable y alerta al 80 %, con tarifas de prueba." },
+    { "id": "F04-12", "status": "VERIFIED_LOCAL", "evidence": "429, sin respuesta, fallo parcial, duplicado concurrente y caché con proveedor simulado: una sola llamada por huella." }
+  ]
+}

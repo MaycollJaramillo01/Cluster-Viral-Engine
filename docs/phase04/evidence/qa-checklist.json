@@ -1,0 +1,65 @@
+{
+  "scope": "Checklist automático con material y voz sintéticos. Falta la revisión visual de una persona y los márgenes no están verificados con Meta.",
+  "total_ms": 135580,
+  "audio_ms": 133380,
+  "cue_count": 63,
+  "timing": "SYNTHETIC",
+  "blockers": [],
+  "qa": [
+    {
+      "check": "alt_text",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "contrast_subtitle_outline",
+      "status": "PASS",
+      "detail": 19
+    },
+    {
+      "check": "safe_area",
+      "status": "PASS",
+      "detail": {
+        "layout": {
+          "margin_top": 200,
+          "margin_bottom": 340,
+          "margin_side": 110
+        },
+        "required": {
+          "top": 192,
+          "bottom": 288,
+          "side": 65
+        }
+      }
+    },
+    {
+      "check": "line_breaks",
+      "status": "PASS",
+      "detail": 0
+    },
+    {
+      "check": "broll_variety",
+      "status": "PASS",
+      "detail": {
+        "distinct": 9,
+        "wanted": 8,
+        "repeated": []
+      }
+    },
+    {
+      "check": "resolution",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "ai_labels",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "human_visual_review",
+      "status": "NEEDS_HUMAN",
+      "detail": "Contraste sobre la imagen real, legibilidad y movimiento: requieren revisión de una persona."
+    }
+  ]
+}

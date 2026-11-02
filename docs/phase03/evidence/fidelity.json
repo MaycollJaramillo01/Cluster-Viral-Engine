@@ -1,0 +1,95 @@
+{
+  "scope": "Trazado automático con guiones construidos. No evalúa un modelo real: BLOCKED_EXTERNAL.",
+  "stories": [
+    {
+      "story": "S01",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S02",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S03",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S04",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S05",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S06",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S07",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S08",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S09",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    },
+    {
+      "story": "S10",
+      "clean_issues": [],
+      "invented_issues": [
+        "UNSUPPORTED_FIGURE:777",
+        "UNKNOWN_ATTRIBUTION:Diario Falso"
+      ],
+      "uncited_claim_ids": 0
+    }
+  ]
+}

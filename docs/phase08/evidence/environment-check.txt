@@ -1,0 +1,27 @@
+﻿
+> cluster-viral-engine@0.2.0 check:environment
+> npm run check:environment --workspace=apps/web
+
+
+> cluster-viral-engine-web-starter@0.1.0 check:environment
+> tsx src/server/environment-check-cli.ts
+
+{
+  "status": "DATABASE_READY",
+  "environment": "local",
+  "runtime": {
+    "status": "READY",
+    "code": "DATABASE_ROLE_VERIFIED"
+  },
+  "identity": {
+    "status": "READY",
+    "code": "DATABASE_ROLE_VERIFIED"
+  },
+  "migrations": {
+    "status": "READY",
+    "code": "MIGRATIONS_VERIFIED",
+    "count": 11
+  },
+  "publication_enabled": false,
+  "editorial_gate": "NOT_EVALUATED"
+}

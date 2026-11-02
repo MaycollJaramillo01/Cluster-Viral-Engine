@@ -15,6 +15,8 @@
     "test:db": "npm run test:db --workspace=apps/web",
     "db:migrate": "npm run db:migrate --workspace=apps/web --",
     "local:bootstrap": "npm run local:bootstrap --workspace=apps/web",
+    "render:worker": "npm run render:worker --workspace=apps/web --",
+    "render:benchmark": "npm run render:benchmark --workspace=apps/web --",
     "local:start": "bash scripts/start-local.sh",
     "check:environment": "npm run check:environment --workspace=apps/web",
     "scan:secrets": "python scripts/scan_secrets.py",

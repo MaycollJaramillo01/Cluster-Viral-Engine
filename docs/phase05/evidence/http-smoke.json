@@ -1,0 +1,376 @@
+{
+  "target": "LOCAL_POSTGRES",
+  "checks": [
+    {
+      "route": "/",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/health",
+      "status": 200,
+      "request_id": "b13932b0-dc31-4714-b5a8-4fb4cb47a560"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "945e1efb-8e86-47ee-9cd1-5698bec99a15"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    },
+    {
+      "route": "/api/auth/sign-in/email",
+      "status": 200,
+      "request_id": "fbac0100-d41b-4de3-86c4-18cb8f6e9fdd"
+    },
+    {
+      "route": "/api/me",
+      "status": 200,
+      "request_id": "5868f42b-e8d7-40da-a7cf-bbdc728e4b84"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/context",
+      "status": 200,
+      "request_id": "9e4b2e5c-5f5a-492a-9ee8-48a57e000412"
+    },
+    {
+      "route": "/api/organizations/d42b65f7-423f-4461-84b3-27433a08c5ff/context",
+      "status": 403,
+      "request_id": "3eba9dc4-56cf-4c01-8606-981ee2d2c981"
+    },
+    {
+      "route": "/account",
+      "status": 200,
+      "request_id": null
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/discovery",
+      "status": 200,
+      "request_id": "4f15048a-abd8-4056-9f15-855850480590"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 403,
+      "request_id": "2971990f-4857-4ace-abfe-56375a331862"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 400,
+      "request_id": "52607d60-e8a7-412b-8491-f78a4c6289df"
+    },
+    {
+      "route": "/api/organizations/d511f154-8496-4fda-b1fc-13a1154076ee/stories",
+      "status": 403,
+      "request_id": "507ba2a9-4461-4f69-8640-39e0eb414f90"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories/proposals",
+      "status": 503,
+      "request_id": "44143b61-80b1-4b16-a164-a30e9e7a6447"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 201,
+      "request_id": "dd861e8d-2055-412f-ac85-4f6a2e65bd68"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories?limit=5",
+      "status": 200,
+      "request_id": "82358bb8-6b60-4cb5-bae4-b36b5588fd60"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories/5c3c04e4-852d-49ed-997a-e7de85451b9b/select",
+      "status": 201,
+      "request_id": "76f2f98e-1001-46ea-ae6f-d806f00ec07c"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/references",
+      "status": 201,
+      "request_id": "29844bc7-be28-4ec1-b225-d45471307471"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/research-plan",
+      "status": 201,
+      "request_id": "563bf267-8551-4abb-a29b-429868200bfd"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/sources",
+      "status": 201,
+      "request_id": "da8cba1f-2c06-4c05-aa7d-00986efa996d"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/claims",
+      "status": 201,
+      "request_id": "b651c059-f7bb-4872-9d0a-e2706b7bd580"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/dossiers",
+      "status": 201,
+      "request_id": "d03a509f-b69a-4266-b17d-b578d14fd2ed"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/dossiers/1",
+      "status": 200,
+      "request_id": "d1c7f7ca-006e-4ce7-9c45-82af49d1b8c3"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/dossiers/1/decision",
+      "status": 403,
+      "request_id": "0fed52d4-8db9-4d14-bfa8-6d6006217717"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script",
+      "status": 404,
+      "request_id": "e91b0b45-a294-4b27-afda-6263c66b7628"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script",
+      "status": 400,
+      "request_id": "63c4a953-2925-474e-8f95-902c7d98b6d8"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script",
+      "status": 409,
+      "request_id": "23ae08d7-f88c-49a7-9b17-262847acd4f5"
+    },
+    {
+      "route": "/api/organizations/5e25e213-37c5-462b-af07-6583a6d3754f/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script",
+      "status": 403,
+      "request_id": "95814e2b-185c-4ae4-9603-d02c60cde845"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/generate",
+      "status": 503,
+      "request_id": "9d5a66f9-6b2e-4ec7-8925-b6fd02ae1c5f"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/sections/c557627b-7c25-4ee0-9481-72364562c7ab",
+      "status": 409,
+      "request_id": "7fda62c8-3e6e-4384-bb36-9d5d14a11a72"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/sections/c557627b-7c25-4ee0-9481-72364562c7ab/regenerate",
+      "status": 503,
+      "request_id": "2faf4f74-7c2a-4a18-8a6c-fb410a1e1f61"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/versions/1",
+      "status": 404,
+      "request_id": "64dff022-b1f9-4c4f-8a81-d82d7c242b81"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/versions/1/submit",
+      "status": 409,
+      "request_id": "ae52c748-06ba-4aa3-89ec-cd450ec67720"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/script/versions/1/decision",
+      "status": 403,
+      "request_id": "b31fc734-2643-4ece-9b07-bfa3ff3feac5"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 201,
+      "request_id": "551c0671-a982-4793-8360-26b7e6533a62"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 200,
+      "request_id": "70f22e28-dbba-4a99-9d1e-0f3ee2bb3520"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 415,
+      "request_id": "2a7a16dd-5c5d-4cf1-b642-149e3b379580"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 400,
+      "request_id": "733af980-de37-4b60-849d-dd9e82fda00c"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 400,
+      "request_id": "7a69628a-5620-400b-968f-ebec9e6f4723"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 403,
+      "request_id": "18cd5b0c-5724-4d9c-bdbc-c44d91e11b7a"
+    },
+    {
+      "route": "/api/organizations/ecbd617e-cbe8-4900-bdea-376766ff12f7/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 403,
+      "request_id": "b0b2e170-df50-4627-8a83-9c0135980096"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets?limit=5",
+      "status": 200,
+      "request_id": "cab6e9a5-4646-45cd-8dd8-b87da0ac19f8"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/6676cfa1-6b93-48fc-bf48-6a1eee38e597",
+      "status": 200,
+      "request_id": "9056face-3284-4889-871e-8882c3d67e08"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/7869325c-2694-42c2-9133-f37159a42ac1",
+      "status": 404,
+      "request_id": "9c729352-a2a3-4397-9d50-de302d875649"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/6676cfa1-6b93-48fc-bf48-6a1eee38e597/url",
+      "status": 200,
+      "request_id": "0c8e2076-c530-4c6e-bfd5-77920871cfc4"
+    },
+    {
+      "route": "/api/objects?key=org%2F39b7d535-445d-4f5b-ae00-f4508c61ea26%2Fproject%2Fc7472b6b-316c-4bb5-a10f-c4c639d26dc7%2Fassets%2F8abf676338e952fb735e9df3dba205d34c905131ab8e7b08dcd1886f9a68affa.png&expires=1793459866459&signature=REDACTED",
+      "status": 200,
+      "request_id": "e6fb8970-3d28-4d15-afc2-0e05d90fd64d"
+    },
+    {
+      "route": "/api/objects?key=org%2F39b7d535-445d-4f5b-ae00-f4508c61ea26%2Fproject%2Fc7472b6b-316c-4bb5-a10f-c4c639d26dc7%2Fassets%2F8abf676338e952fb735e9df3dba205d34c905131ab8e7b08dcd1886f9a68affa.png&expires=1793459866459&signature=REDACTED",
+      "status": 403,
+      "request_id": "dc9354dc-812d-4514-9bbc-d224f251a52a"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/6676cfa1-6b93-48fc-bf48-6a1eee38e597/licenses",
+      "status": 400,
+      "request_id": "b27ce255-4fad-4de2-a8df-3d21b86abccc"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/6676cfa1-6b93-48fc-bf48-6a1eee38e597/licenses",
+      "status": 201,
+      "request_id": "143aecc8-b0ce-4372-925f-e1380b03ff09"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets/6676cfa1-6b93-48fc-bf48-6a1eee38e597/decision",
+      "status": 403,
+      "request_id": "baf50b89-655c-4d94-92f2-4ff8abd7a84e"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/media",
+      "status": 409,
+      "request_id": "a9bd727a-08f6-4ca3-8be8-72939c45a131"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/media/music",
+      "status": 409,
+      "request_id": "85dca250-f762-4588-9421-0faec5055c5b"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/voice",
+      "status": 503,
+      "request_id": "7343ae2d-7aea-4fa5-a4d8-d97d0539aef2"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/voice/estimate",
+      "status": 503,
+      "request_id": "45bdb204-fec3-4cef-a857-deeed62441aa"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/usage",
+      "status": 200,
+      "request_id": "d4f8a9dc-9089-425d-9e5c-5b1766d5cef0"
+    },
+    {
+      "route": "/api/organizations/c4091473-79dc-40df-bf2d-972f3279d899/usage",
+      "status": 403,
+      "request_id": "cf0e105c-305f-4e16-b89c-0df6b4043a5f"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders?limit=5",
+      "status": 200,
+      "request_id": "81651247-5af8-458e-bdd1-fb6d187129d0"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders?limit=0",
+      "status": 400,
+      "request_id": "51c034a4-8858-443c-a699-bf6050ffb46b"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders",
+      "status": 409,
+      "request_id": "93dd53e6-34f8-4d1e-a705-03b31feb7f54"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders",
+      "status": 400,
+      "request_id": "5473bbf2-969a-448a-84a9-eeb8af030a41"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders",
+      "status": 403,
+      "request_id": "f9a1db52-7f66-49d4-a4c4-faf50767c3db"
+    },
+    {
+      "route": "/api/organizations/8e6e4a75-454a-47e5-a2bb-89d0d84cc121/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders",
+      "status": 403,
+      "request_id": "27be15bb-251b-4875-9621-bb18060bf3ec"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders/f9f596a3-15e0-445b-89c1-74a78c611d06",
+      "status": 404,
+      "request_id": "6b629718-b65f-4caa-9294-be516b1f32eb"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders/de9b3be3-b13c-4b5d-874c-2e605bab4c5f/urls",
+      "status": 404,
+      "request_id": "17455eae-e109-4dda-90c3-9f3457a0b673"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders/fb1ed9f1-d803-455f-bda5-8c8cecdd1fc2/cancel",
+      "status": 404,
+      "request_id": "af4fdd05-8a5a-4234-8f4a-bad16857609c"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders/58eef5de-7d40-45cd-ba2b-7575cf396c8a/cancel",
+      "status": 400,
+      "request_id": "5faf7837-ff3e-4009-a445-cd11632a68c4"
+    },
+    {
+      "route": "/api/auth/sign-out",
+      "status": 200,
+      "request_id": "c5cf3e1e-c739-4207-b527-5a6e4fc1f4d9"
+    },
+    {
+      "route": "/api/me",
+      "status": 401,
+      "request_id": "e5dbe29a-01ff-458f-aebf-05603688f008"
+    },
+    {
+      "route": "/api/objects?key=org%2F39b7d535-445d-4f5b-ae00-f4508c61ea26%2Fproject%2Fc7472b6b-316c-4bb5-a10f-c4c639d26dc7%2Fassets%2F8abf676338e952fb735e9df3dba205d34c905131ab8e7b08dcd1886f9a68affa.png&expires=1793459866459&signature=REDACTED",
+      "status": 200,
+      "request_id": "a413ad95-7a0b-4b96-acb8-aee892088527"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/renders",
+      "status": 401,
+      "request_id": "842e54a9-37c0-426e-9399-84dd096c6a69"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/projects/c7472b6b-316c-4bb5-a10f-c4c639d26dc7/assets",
+      "status": 401,
+      "request_id": "afbd287f-594d-448f-af8a-c33d11c64b82"
+    },
+    {
+      "route": "/api/organizations/39b7d535-445d-4f5b-ae00-f4508c61ea26/stories",
+      "status": 401,
+      "request_id": "1c57b938-e229-4eb1-bd72-3759b5c86c2c"
+    },
+    {
+      "route": "/account",
+      "status": 307,
+      "request_id": null
+    }
+  ],
+  "credentials_logged": false
+}
