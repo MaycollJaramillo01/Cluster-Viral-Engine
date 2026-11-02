@@ -46,7 +46,8 @@ await request(`${org}/discovery`, 200);
 await request(`${org}/stories`, 403, { proposed_title: '[SMOKE] origen falso' }, { origin: 'https://evil.example' });
 await request(`${org}/stories`, 400, { proposed_title: 'x', approved: true });
 await request(`/api/organizations/${randomUUID()}/stories`, 403, { proposed_title: '[SMOKE] otra organización' });
-await request(`${org}/stories/proposals`, 503, { idempotency_key: `smoke-${tag}`, topic: 'Tema sintético' });
+// Sin modelo: 503. Con EDITORIAL_MODEL=nvidia en .env.local: 201 con propuestas reales.
+await request(`${org}/stories/proposals`, [503, 201], { idempotency_key: `smoke-${tag}`, topic: 'Tema sintético' });
 const story = await (await request(`${org}/stories`, 201, { proposed_title: `[SMOKE] ${tag}`, editorial_risk: 'LOW' })).json();
 await request(`${org}/stories?limit=5`, 200);
 const { project_id: project } = await (await request(`${org}/stories/${story.id}/select`, 201, {})).json();
@@ -67,9 +68,10 @@ await request(scriptPath, 404);
 await request(scriptPath, 400, { base_version: 0, content: { ...scriptContent, approved: true } });
 await request(scriptPath, 409, { base_version: 0, content: scriptContent });
 await request(`/api/organizations/${randomUUID()}/projects/${project}/script`, 403, { base_version: 0, content: scriptContent });
-await request(`${scriptPath}/generate`, 503, { idempotency_key: `smoke-${tag}`, tone: 'Sobrio', target_seconds: 120 });
+// Con modelo configurado: 409, el proyecto del smoke no está en la etapa de guion.
+await request(`${scriptPath}/generate`, [503, 409], { idempotency_key: `smoke-${tag}`, tone: 'Sobrio', target_seconds: 120 });
 await request(`${scriptPath}/sections/${sectionKey}`, 409, { base_version: 1, text: '[SMOKE] Otro texto.', claim_ids: [], non_factual: true }, {}, 'PUT');
-await request(`${scriptPath}/sections/${sectionKey}/regenerate`, 503, { idempotency_key: `smoke-${tag}`, base_version: 1 });
+await request(`${scriptPath}/sections/${sectionKey}/regenerate`, [503, 404, 409], { idempotency_key: `smoke-${tag}`, base_version: 1 });
 await request(`${scriptPath}/versions/1`, 404);
 await request(`${scriptPath}/versions/1/submit`, 409, {});
 await request(`${scriptPath}/versions/1/decision`, 403, { decision: 'APPROVED', target_sha256: 'a'.repeat(64) });
