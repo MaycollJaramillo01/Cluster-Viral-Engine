@@ -28,6 +28,7 @@ Ninguna fase está aceptada: todos los gates siguen en **NO_GO**, sin firmar. "L
   - Sin sesión: 401 en todos.
   - Una ruta nueva sin autorización falla aquí sin tener que añadir su prueba.
 - **CSP (F08-10):** `Content-Security-Policy` en todas las respuestas, con `frame-ancestors 'none'`, `object-src 'none'` y conexiones solo al propio origen. `test:http` falla si falta. `/login` carga sin violaciones en el navegador.
+- **Límite de peticiones por cuenta (F08-10, 02-11-2026):** 300 por minuto en ventana fija, contadas en `requireIdentity`, por donde pasan todas las rutas con sesión. Al pasarse, 429 `RATE_LIMITED` con `Retry-After: 60`. Cuenta antes de autorizar, así que insistir contra organizaciones ajenas también agota el cupo. Usa la tabla `auth_rate_limits` de la migración 004 con el rol de identidad: sin migración nueva. PostgreSQL prueba que de 301 peticiones simultáneas solo se rechaza una, que la ventana se reinicia y que otra cuenta no se ve afectada. `test:http` insiste hasta recibir el 429, y `/account` muestra "Demasiadas solicitudes" en vez de un error de configuración.
 - **Dependencias y secretos (F08-10):** `npm audit` da 0 vulnerabilidades en runtime y 0 altas o críticas. Quedan 16 moderadas, solo de desarrollo: el `minimatch` de eslint, sin arreglo que no rompa, como en F01. El secret scan da 0 hallazgos.
 - **Runbook del worker (F08-09):** [docs/17](../17-RUNBOOKS.md) lista los códigos de error reales de F05, si se reintentan y qué mirar en cada uno.
 - **Benchmark:** `all_qa_passed` era `true` en escenarios sin ningún render correcto. Ahora es `null`.
@@ -75,11 +76,12 @@ Simplificaciones hechas a propósito, marcadas con `ponytail:` en el código.
 | `render/worker.ts` | Artefactos en memoria | Blob real: pasar a streams |
 | `render/worker.ts` | CPU sin precio | Exista un worker facturado |
 | `operations/store.ts` | `retried` mira solo la última tanda | Haga falta el historial completo |
+| `server/auth.ts` | Límite de peticiones solo por cuenta, no por organización | Una organización tenga varias cuentas activas: contar tras autorizar |
 
 ## Riesgos abiertos
 
 - **Fusionar en `main` despliega en Production.** Vercel desplegó así la PR #7 en `cluster-viral-engine.vercel.app`, una URL pública. La publicación sigue deshabilitada y no hay signup, pero conviene revisar las variables de Production antes de fusionar.
-- **Sin límite de peticiones por organización:** solo limita el login. Una cuenta válida puede insistir contra la API.
+- **Límite solo por cuenta:** muchas cuentas válidas de una misma organización suman su cupo. Hoy no hay signup y las cuentas se crean a mano.
 - **Sin antivirus ni sandbox al subir archivos:** se comprueba el tipo por contenido, no más (`docs/13`, punto 6).
 - **Sin DAST, pentest ni SBOM** (`docs/13`, punto 10). `npm audit` y el secret scan no los sustituyen.
 - **Alertas sin canal:** la alerta de gasto del 80 % llega al outbox, y nada la entrega todavía.
@@ -108,7 +110,7 @@ npm run scan:secrets
 
 ## Evidencia
 
-En [evidence/](evidence/), del 31-10-2026, sobre esta rama ya integrada con `main`: typecheck, lint, 55 unitarias (1 omitida: la del contenedor, con Docker parado), 73/73 en PostgreSQL con la suite de F00, `check:environment` en `READY` con las 11 migraciones, build, bundle de cliente, secret scan, `npm audit`, 174 comprobaciones HTTP contra el build de producción y el simulacro de restauración.
+En [evidence/](evidence/), sobre esta rama ya integrada con `main`. Del 02-11-2026, tras el límite de peticiones: typecheck, lint, 55 unitarias (1 omitida: la del contenedor, con Docker parado), 74/74 en PostgreSQL con la suite de F00, build, bundle de cliente, secret scan y 175 comprobaciones HTTP contra el build de producción. Del 31-10-2026, sin cambios desde entonces: `check:environment` en `READY` con las 11 migraciones, `npm audit` y el simulacro de restauración.
 
 ## Rollback y coste
 

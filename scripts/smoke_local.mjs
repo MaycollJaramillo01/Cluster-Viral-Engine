@@ -124,6 +124,14 @@ await request(`${rendersPath}/${randomUUID()}/decision`, 400, { approved: true }
 await request(`${rendersPath}/${randomUUID()}/decision`, 403, renderDecision, { origin: 'https://evil.example' });
 // Las escrituras validan el cuerpo antes de autorizar: 400 tampoco entrega nada. Lo que no vale es 2xx, 404 ni 409, que delatarían haber pasado la organización.
 await sweep(randomUUID(), { read: 403, write: [400, 403, 415] });
+// Límite por cuenta: insistir acaba en 429 con Retry-After. Deja la cuenta limitada hasta un minuto: no repetir test:http antes.
+let limited;
+for (let i = 0; i < 600 && !limited; i++) {
+  const response = await fetch(`${base}/api/me`, { headers: { cookie } });
+  if (response.status === 429) limited = response; else if (response.status !== 200) throw new Error(`GET /api/me: expected 200 or 429, got ${response.status}`);
+}
+if (!limited?.headers.get('retry-after')) throw new Error('RATE_LIMIT_MISSING');
+checks.push({ route: '/api/me (insistencia)', status: limited.status, request_id: limited.headers.get('x-request-id') });
 await request('/api/auth/sign-out', 200, {}); await request('/api/me', 401);
 await sweep(me.memberships[0].organization_id, { read: 401, write: 401 });
 await request(url, 200);

@@ -14,7 +14,7 @@
     { "id": "F08-07", "status": "BLOCKED_EXTERNAL", "evidence": "Sin pilotos ni facturas de proveedores. GET /usage ya da el coste por video para reconciliarlo." },
     { "id": "F08-08", "status": "BLOCKED_EXTERNAL", "evidence": "Sin App Review de Meta ni material de pilotos. La aprobación por hash ya bloquea licencias vencidas y claims sin fuente." },
     { "id": "F08-09", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "docs/17 con los códigos de error reales del worker. Sin responsables de guardia, y nadie de soporte ha ejecutado un incidente simulado." },
-    { "id": "F08-10", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "npm audit: 0 en runtime y 0 altas o críticas; 16 moderadas solo de desarrollo. Secret scan 0. CSP comprobada en test:http y sin violaciones en /login. Falta un pentest hecho por una persona." },
+    { "id": "F08-10", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "npm audit: 0 en runtime y 0 altas o críticas; 16 moderadas solo de desarrollo. Secret scan 0. CSP comprobada en test:http y sin violaciones en /login. Límite de 300 peticiones por minuto y cuenta, con 429 y Retry-After, probado en PostgreSQL y en test:http. Falta un pentest hecho por una persona." },
     { "id": "F08-11", "status": "PARTIAL_NEEDS_HUMAN", "evidence": "README por fase con ejecución, rollback y diferencias, y scripts de arranque para DEV. Preview con base de datos solo para F01 (PR #8), y ningún desarrollador nuevo lo ha recreado." },
     { "id": "F08-12", "status": "NO_GO", "evidence": "Gates de F00 a F07 sin firmar; Meta, TTS y LLM bloqueados, y Neon solo con un Preview de F01. Sin acta ni stakeholders. Registro de deudas y riesgos en el README." }
   ]

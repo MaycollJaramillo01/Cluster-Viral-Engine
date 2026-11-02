@@ -5,11 +5,11 @@ import { cp, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import os from 'node:os';
 import path from 'node:path';
 import { Pool } from 'pg';
-import { AppError, type VerifiedIdentity } from '@cluster/contracts';
+import { AppError, apiRateLimit, type VerifiedIdentity } from '@cluster/contracts';
 import { migrate } from '../src/server/migrations';
 import { provisionRoles, seedDevelopmentIdentity } from '../src/server/development';
 import { TenantDatabase } from '../src/server/database';
-import { createIdentityService } from '../src/server/auth';
+import { consumeApiQuota, createIdentityService } from '../src/server/auth';
 import { parseConfig } from '../src/server/config';
 import { getMigrations } from 'better-auth/db/migration';
 import { requestHandler } from '../src/server/observability';
@@ -112,6 +112,15 @@ test('foundation: real PostgreSQL, migrations, authentication, MFA and tenant is
     await t.test('versioned identity DDL matches installed library including MFA/rate limiting',async()=>{
       const check=await getMigrations(service.options);
       assert.equal(check.toBeCreated.length,0); assert.equal(check.toBeAdded.length,0); assert.equal(check.toBeAddedIndexes.length,0);
+    });
+    await t.test('API quota with the identity role: exactly one of max+1 concurrent requests is refused; window and account apart',async()=>{
+      const now=Date.now();
+      const results=await Promise.allSettled(Array.from({length:apiRateLimit.max+1},()=>consumeApiQuota(authPool!,a.subject,now)));
+      const refused=results.filter(r=>r.status==='rejected');
+      assert.equal(refused.length,1);
+      assert(refused[0].reason instanceof AppError&&refused[0].reason.code==='RATE_LIMITED'&&refused[0].reason.status===429);
+      await consumeApiQuota(authPool!,b.subject,now);
+      await consumeApiQuota(authPool!,a.subject,now+apiRateLimit.windowSeconds*1000);
     });
     let cookie='';
     const request=async(endpoint:string,body?:unknown,extra:Record<string,string>={})=>{
