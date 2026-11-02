@@ -144,6 +144,16 @@ export async function freezeDossier(client: Client, context: Context, projectId:
   await emit(client, context, 'dossier', row.rows[0].id, 'DOSSIER_READY_FOR_REVIEW', { project_id: projectId, revision: row.rows[0].revision });
   return { ...row.rows[0], gate: evaluateGate(content, verified) };
 }
+// Lo que el panel muestra de un proyecto: estado, plan, fuentes y claims vivos con su gate, y las revisiones del dossier.
+export async function readProject(client: Client, projectId: string) {
+  const project = (await client.query('SELECT id,title,status,created_at,updated_at FROM projects WHERE id=$1', [projectId])).rows[0];
+  if (!project) throw new AppError('NOT_FOUND', 404);
+  const live = await loadDossier(client, project);
+  const plan = (await client.query('SELECT revision,plan,created_at FROM research_plans WHERE project_id=$1 ORDER BY revision DESC LIMIT 1', [projectId])).rows[0] ?? null;
+  const dossiers = (await client.query('SELECT revision,status,content_sha256,created_at FROM dossier_revisions WHERE project_id=$1 ORDER BY revision DESC', [projectId])).rows;
+  return { ...project, plan, sources: live.content.sources, claims: live.content.claims.map(claim => ({ ...claim, verified: live.verified.has(claim.id) })),
+    conflicts: live.content.conflicts, live_sha256: live.sha256, gate: evaluateGate(live.content, live.verified), dossiers };
+}
 export async function readDossier(client: Client, projectId: string, revision: number) {
   const row = await client.query('SELECT id,project_id,revision,status,content,content_sha256,created_by,created_at FROM dossier_revisions WHERE project_id=$1 AND revision=$2', [projectId, revision]);
   if (!row.rowCount) throw new AppError('NOT_FOUND', 404);
