@@ -26,6 +26,8 @@ Este paquete es una **propuesta técnica ejecutable por fases**, no una aplicaci
 
 ## Qué se puede ejecutar realmente
 
+**Panel interno** (`/panel`, tras `/login`): interfaz para usar la API de las fases 02 a 07 sin `curl`. La publicación sigue deshabilitada. Se aparta de la regla 2 de `AGENTS.md` por decisión del propietario: ver ADR-011 en [docs/03-ADRS.md](docs/03-ADRS.md).
+
 La preparación de **Fase 03** añade la API de guiones versionados, escenas y revisión de la versión exacta, sin interfaz ni LLM real. Consultar [docs/phase03/README.md](docs/phase03/README.md).
 
 La preparación de **Fase 08** solo endurece lo existente: barrido de acceso de todas las rutas de organización, CSP, auditoría de dependencias, runbook del worker y un plan de pilotos en borrador. Sin pilotos, costes reales, restore ni firmas, el gate final es **NO_GO**. Consultar [docs/phase08/README.md](docs/phase08/README.md).
